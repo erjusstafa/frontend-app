@@ -7,28 +7,25 @@ class ProductsList extends Component {
   render() {
     const { selectedCategory } = this.props;
     return (
-      <div>
-        <Query query={GET_PRODUCTS} variables={{ category: selectedCategory }}>
-          {({
-            loading: productsLoading,
-            error: productsError,
-            data: productsData,
-          }) => {
-            if (productsLoading) return <p>Loading products...</p>;
-            if (productsError)
-              return <p>Error fetching products: {productsError.message}</p>;
+      <Query query={GET_PRODUCTS} variables={{ category: selectedCategory }}>
+        {({
+          loading: productsLoading,
+          error: productsError,
+          data: productsData,
+        }) => {
+          if (productsLoading) return <p>Loading products...</p>;
+          if (productsError)
+            return <p>Error fetching products: {productsError.message}</p>;
 
-            return (
-              <ul>
-                {/* Render products */}
-                {productsData.productsByCategory.map((product, id) => (
-                  <li key={id}>{product.name}</li>
-                ))}
-              </ul>
-            );
-          }}
-        </Query>
-      </div>
+          return (
+            <ul>
+               {productsData.productsByCategory.map((product, id) => (
+                <li key={id}>{product.name}</li>
+              ))}
+            </ul>
+          );
+        }}
+      </Query>
     );
   }
 }

@@ -1,4 +1,4 @@
-.header__contaier {
+.Navbar {
   color: #000000;
   height: 80px;
   padding: 0 20px;
@@ -7,12 +7,12 @@
   align-items: center;
 }
 
-.header__contaier ul {
+.Navbar > .nav-items {
   list-style-type: none;
   display: flex;
 }
 
-.header__contaier ul li {
+.Navbar ul li {
   display: inherit;
   align-items: center;
   margin-right: 40px;
@@ -21,55 +21,130 @@
   font-family: "Raleway", sans-serif;
   font-size: 16px;
   font-weight: 400;
-}
-
-.header__contaier ul li {
   text-decoration: none;
 }
 
-.header__contaier ul li.active {
-  color: #5ece7b;
+.Navbar > .nav-items > li.active {
   border-bottom: 2px solid #5ece7b;
 }
 
-.header__contaier ul li a:hover {
-  text-decoration: underline;
-}
-
-.header__contaier .nav__toggle,
-.header__contaier .basket {
+.Navbar > .nav-basket {
   display: inherit;
   justify-content: end;
   width: 100%;
   cursor: pointer;
 }
-.header__contaier .basket img {
+
+.Navbar > .nav-basket img {
   position: relative;
   right: 20px;
 }
 
-.header__contaier .nav__toggle {
+.Navbar > .nav-items > a:hover::before {
+  width: 100%;
+}
+
+.Navbar > .nav-toggle {
   display: none;
 }
 
-/* media*/
-
-@media screen and (max-width: 768px) {
-  .header__contaier {
-    padding: 0 10px;
+@media (max-width: 700px) {
+  .Navbar.open {
+    grid-template-columns: repeat(2, auto);
   }
-
-  .header__contaier .logo {
-    height: 25px;
-    margin-left: 20px;
-  }
-  .header__contaier ul,
-  .header__contaier .basket {
-    display: none;
-  }
-  .header__contaier .nav__toggle {
+  .Navbar > .nav-items {
+    position: absolute;
+    top: 67px;
     display: flex;
+    flex-direction: column;
+    background: #5ece7b;
+    left: 0px;
+    width: 100%;
+    min-height: 200px;
+    transform: translateX(-100%);
+    transition: all 0.45s;
+    color: white;
+    line-height: 40px;
+    justify-content: center;
+  }
+  .Navbar > .nav-items > li {
     position: relative;
+    left: 23px;
+  }
+
+  .Navbar > .nav-items > li::before {
+    background: transparent;
+  }
+
+  .Navbar > .nav-items > li.active {
+    border-bottom: none;
+  }
+  .nav-basket {
+    transform: translateX(-600px);
+  }
+  .Navbar > .nav-basket.open {
+    display: block;
+    position: absolute;
+    transition: all 0.45s;
+    transform: translate(466px, 129px);
+  }
+  .Navbar > .nav-basket.open img {
+    width: 30px;
+    height: 30px;
+  }
+  .Navbar > .nav-items.open {
+    transform: translateX(0);
+  }
+
+  .Navbar > .nav-toggle {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    justify-content: end;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+
+  .nav-toggle > .bar {
+    position: relative;
+    width: 32px;
+    height: 2px;
+    background: #5ece7b;
+    transition: all 0.45s ease-in-out;
+  }
+
+  .nav-toggle > .bar::before,
+  .nav-toggle > .bar::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    background: #5ece7b;
+    border-radius: 2px;
+    transition: all 0.45s ease-in-out;
+  }
+
+  .nav-toggle > .bar::before {
+    width: 25px;
+    transform: translateY(-8px);
     right: 0;
+  }
+
+  .nav-toggle > .bar::after {
+    width: 32px;
+    transform: translateY(8px);
+  }
+
+  .nav-toggle.open > .bar {
+    transform: translateX(-40px);
+    background: transparent;
+  }
+
+  .nav-toggle.open > .bar::before {
+    width: 32px;
+    transform: rotate(45deg) translate(26px, -26px);
+  }
+
+  .nav-toggle.open > .bar::after {
+    transform: rotate(-45deg) translate(26px, 26px);
   }
 }

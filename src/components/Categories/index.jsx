@@ -6,8 +6,6 @@ import "./index.css";
 import logo from "../../assets/logo.png";
 import basket from "../../assets/basket.png";
 import Img from "../../UI/Img";
-import { FaBarsStaggered } from "react-icons/fa6";
-
 
 class Categories extends Component {
   constructor(props) {
@@ -17,17 +15,7 @@ class Categories extends Component {
       toggle: false,
     };
   }
-  componentDidMount() {
-    window.addEventListener("scroll", () => {
-      const header = document.querySelector(".header__contaier");
-      if (window.scrollY >= 768) header.classList.add("scroll-header");
-      else header.classList.remove("scroll-header");
-    });
-  }
 
-  componentWillUnmount() {
-    window.removeEventListener("scroll", () => {});
-  }
   handleToggle = () => {
     this.setState({ toggle: !this.state.toggle });
   };
@@ -51,8 +39,8 @@ class Categories extends Component {
             return <p>Error fetching categories: {categoriesError.message}</p>;
 
           return (
-            <header className="header__contaier">
-              <ul className={toggle ? "nav__menu    show-menu" : "nav__menu  "}>
+            <header className={`Navbar ${toggle && "open"}`}>
+              <ul className={`nav-items ${toggle && "open"}`}>
                 {/* Render category names */}
                 {Array.isArray(categoriesData.categories) &&
                   categoriesData.categories.map((category) => (
@@ -62,16 +50,17 @@ class Categories extends Component {
                       onClick={() => {
                         handleCategoryClick(category.name);
                         this.handleActiveLinkClick(category.name);
+                        this.setState({ toggle: false });
                       }}
                     >
                       {category.name.toUpperCase()}
                     </li>
                   ))}
               </ul>
-              <div className="logo">
+              <div className="nav-logo">
                 <Img src={logo} height={"41px"} width={"41px"} alt={"logo"} />
               </div>
-              <div className={toggle ? "basket  show-menu" : "basket"}>
+              <div className={` ${toggle  ?   "nav-basket  open" : "nav-basket"}`}>
                 <Img
                   src={basket}
                   height={"18px"}
@@ -79,9 +68,12 @@ class Categories extends Component {
                   alt={"basket"}
                 />
               </div>
-              <span onClick={this.handleToggle} className="nav__close"></span>
-              <div className="nav__toggle" onClick={this.handleToggle}>
-              <FaBarsStaggered />
+
+              <div
+                className={`nav-toggle ${toggle && "open"}`}
+                onClick={this.handleToggle}
+              >
+                <div className="bar"></div>
               </div>
             </header>
           );
