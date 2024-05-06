@@ -40,6 +40,12 @@ class Categories extends Component {
 
           return (
             <header className={`Navbar ${toggle && "open"}`}>
+              <div
+                className={`nav-toggle ${toggle && "open"}`}
+                onClick={this.handleToggle}
+              >
+                <div className="bar"></div>
+              </div>
               <ul className={`nav-items ${toggle && "open"}`}>
                 {/* Render category names */}
                 {Array.isArray(categoriesData.categories) &&
@@ -60,20 +66,13 @@ class Categories extends Component {
               <div className="nav-logo">
                 <Img src={logo} height={"41px"} width={"41px"} alt={"logo"} />
               </div>
-              <div className={` ${toggle  ?   "nav-basket  open" : "nav-basket"}`}>
+              <div className={` ${toggle ? "nav-basket  open" : "nav-basket"}`}>
                 <Img
                   src={basket}
-                  height={"18px"}
-                  width={"20px"}
+                  height={"30px"}
+                  width={"30px"}
                   alt={"basket"}
                 />
-              </div>
-
-              <div
-                className={`nav-toggle ${toggle && "open"}`}
-                onClick={this.handleToggle}
-              >
-                <div className="bar"></div>
               </div>
             </header>
           );
