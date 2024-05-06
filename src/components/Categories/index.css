@@ -1,0 +1,75 @@
+.header__contaier {
+  color: #000000;
+  height: 80px;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  align-items: center;
+}
+
+.header__contaier ul {
+  list-style-type: none;
+  display: flex;
+}
+
+.header__contaier ul li {
+  display: inherit;
+  align-items: center;
+  margin-right: 40px;
+  cursor: pointer;
+  height: inherit;
+  font-family: "Raleway", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.header__contaier ul li {
+  text-decoration: none;
+}
+
+.header__contaier ul li.active {
+  color: #5ece7b;
+  border-bottom: 2px solid #5ece7b;
+}
+
+.header__contaier ul li a:hover {
+  text-decoration: underline;
+}
+
+.header__contaier .nav__toggle,
+.header__contaier .basket {
+  display: inherit;
+  justify-content: end;
+  width: 100%;
+  cursor: pointer;
+}
+.header__contaier .basket img {
+  position: relative;
+  right: 20px;
+}
+
+.header__contaier .nav__toggle {
+  display: none;
+}
+
+/* media*/
+
+@media screen and (max-width: 768px) {
+  .header__contaier {
+    padding: 0 10px;
+  }
+
+  .header__contaier .logo {
+    height: 25px;
+    margin-left: 20px;
+  }
+  .header__contaier ul,
+  .header__contaier .basket {
+    display: none;
+  }
+  .header__contaier .nav__toggle {
+    display: flex;
+    position: relative;
+    right: 0;
+  }
+}
