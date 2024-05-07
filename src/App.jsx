@@ -1,8 +1,10 @@
 import { Component } from "react";
-import ProductsList from "./components/Products";
+import Products from "./components/Products";
 import client from "./apollo";
 import { ApolloProvider } from "@apollo/client";
 import Categories from "./components/Categories";
+import { AppProvider } from "./context";
+import "./App.css";
 
 class App extends Component {
   state = {
@@ -17,8 +19,12 @@ class App extends Component {
     const { selectedCategory } = this.state;
     return (
       <ApolloProvider client={client}>
-        <Categories handleCategoryClick={this.handleCategoryClick} />
-        <ProductsList selectedCategory={selectedCategory} />
+        <AppProvider>
+         <div className="wrapper"> 
+         <Categories handleCategoryClick={this.handleCategoryClick} />
+          <Products selectedCategory={selectedCategory} />
+         </div>
+        </AppProvider>
       </ApolloProvider>
     );
   }

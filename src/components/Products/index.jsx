@@ -1,9 +1,12 @@
 import { Component } from "react";
 import { GET_PRODUCTS } from "../../apollo/queries";
 import { Query } from "@apollo/client/react/components";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
+import "./style.css";
+import Loader from "../Loader";
+import ProductList from "./ProductList";
 
-class ProductsList extends Component {
+class Products extends Component {
   render() {
     const { selectedCategory } = this.props;
     return (
@@ -13,16 +16,15 @@ class ProductsList extends Component {
           error: productsError,
           data: productsData,
         }) => {
-          if (productsLoading) return <p>Loading products...</p>;
+          if (productsLoading) return <Loader />;
           if (productsError)
             return <p>Error fetching products: {productsError.message}</p>;
 
           return (
-            <ul>
-               {productsData.productsByCategory.map((product, id) => (
-                <li key={id}>{product.name}</li>
-              ))}
-            </ul>
+            <ProductList
+              selectedCategory={selectedCategory}
+              productsData={productsData.productsByCategory}
+            />
           );
         }}
       </Query>
@@ -30,8 +32,7 @@ class ProductsList extends Component {
   }
 }
 
-// Define prop types for ProductsList component
-ProductsList.propTypes = {
+Products.propTypes = {
   selectedCategory: PropTypes.string.isRequired,
 };
-export default ProductsList;
+export default Products;

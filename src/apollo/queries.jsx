@@ -13,15 +13,16 @@ query GetProducts($category: String!) {
   productsByCategory(category: $category) {
     id
     name
+    gallery
     inStock
+    description
     category
-    attributes {
-      id
-    }
-    prices {
+    prices{
       amount
+      currency{
+        symbol
+      }
     }
-    brand
   }
 }
 `;
