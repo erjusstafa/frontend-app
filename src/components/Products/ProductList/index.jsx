@@ -9,7 +9,6 @@ class ProductList extends Component {
     super(props);
     this.state = {
       hoveredProduct: "",
-      clickedBasket: [],
     };
   }
 
@@ -26,33 +25,12 @@ class ProductList extends Component {
   };
 
   render() {
-    const { hoveredProduct, clickedBasket } = this.state;
-    const {
-      selectedCategory,
-      productsData,
-      addToCart,
-      removeFromCart,
-    } = this.props;
+    const { hoveredProduct } = this.state;
+    const { selectedCategory, clickedBasket, productsData, addToCart } =
+      this.props;
 
-    
-    const handleClick = (product) => {
-       const productIndex = this.state.clickedBasket.findIndex(
-        (item) => item === product.id
-      );
-      if (productIndex !== -1) {
-        this.setState((prevState) => ({
-          clickedBasket: prevState.clickedBasket.filter(
-            (item, index) => index !== productIndex
-          ),
-        }));
-        removeFromCart(product.id);
-      } else {
-        this.setState({
-          clickedBasket: [...clickedBasket, hoveredProduct],
-        });
-        addToCart(product)
-      }
- 
+    const addRemoveToCart = (product) => {
+      addToCart(product, hoveredProduct); //add an item
     };
 
     return (
@@ -87,7 +65,9 @@ class ProductList extends Component {
                   {!product.inStock && <p>Out of stock</p>}
                   {product.inStock &&
                     (hoveredProduct === product.id || productIsAdded) && (
-                      <Basket addToCart={() => handleClick(product)} />
+                      <Basket
+                        addRemoveToCart={() => addRemoveToCart(product)}
+                      />
                     )}
                 </div>
                 <div className="description-item">
@@ -109,6 +89,7 @@ class ProductList extends Component {
 }
 ProductList.propTypes = {
   basket: PropTypes.array,
+  clickedBasket: PropTypes.array,
   addToCart: PropTypes.func,
   removeFromCart: PropTypes.func,
   selectedCategory: PropTypes.string,

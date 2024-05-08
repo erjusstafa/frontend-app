@@ -10,44 +10,41 @@ class App extends Component {
   state = {
     selectedCategory: "all", // Default to "all" category
     basket: [],
+    clickedBasket: [],
   };
 
   handleCategoryClick = (category) => {
     this.setState({ selectedCategory: category });
   };
 
-  // Function to add a product to the cart
-  addToCart = (product) => {
+  addToCart = (product, hoveredProduct) => {
     //check if products exist
     const productIndex = this.state.basket.findIndex(
       (item) => item.id === product.id
     );
-    if (productIndex !== -1) {
-      this.removeFromCart(productIndex);
+    const clickedBasketIndex = this.state.clickedBasket.includes(product.id);
+    if (productIndex !== -1 && clickedBasketIndex) {
+      this.removeFromCart(product.id);
     } else {
       this.setState((prevState) => ({
         basket: [...prevState.basket, product],
       }));
+
+      this.setState((prevState) => ({
+        clickedBasket: [...prevState.clickedBasket, hoveredProduct],
+      }));
     }
-    localStorage.setItem("basket", JSON.stringify(this.state.basket));
   };
 
-  // Function to remove a product from the cart
-  removeFromCart = (id) => {
+  removeFromCart = (productId) => {
     this.setState((prevState) => ({
-      basket: prevState.basket.filter((item) => item.id !== id),
+      basket: prevState.basket.filter((item) => item.id !== productId),
+      clickedBasket: prevState.clickedBasket.filter((id) => id !== productId),
     }));
   };
 
-  componentDidMount() {
-    const savedBasket = localStorage.getItem("basket");
-    if (savedBasket) {
-      this.setState({ basket: JSON.parse(savedBasket) });
-    }
-  }
-
   render() {
-    const { selectedCategory, basket } = this.state;
+    const { selectedCategory, basket, clickedBasket } = this.state;
 
     return (
       <ApolloProvider client={client}>
@@ -60,6 +57,7 @@ class App extends Component {
             />
             <Products
               basket={basket}
+              clickedBasket={clickedBasket}
               removeFromCart={this.removeFromCart}
               addToCart={this.addToCart}
               selectedCategory={selectedCategory}

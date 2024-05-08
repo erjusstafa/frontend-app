@@ -8,8 +8,13 @@ import ProductList from "./ProductList";
 
 class Products extends Component {
   render() {
-    const { selectedCategory, basket, addToCart,removeFromCart} =
-      this.props;
+    const {
+      selectedCategory,
+      basket,
+      clickedBasket,
+      addToCart,
+      removeFromCart,
+    } = this.props;
     return (
       <Query query={GET_PRODUCTS} variables={{ category: selectedCategory }}>
         {({
@@ -24,9 +29,10 @@ class Products extends Component {
           return (
             <ProductList
               basket={basket}
-               addToCart={addToCart}
-               removeFromCart={removeFromCart}
-               selectedCategory={selectedCategory}
+              clickedBasket={clickedBasket}
+              addToCart={addToCart}
+              removeFromCart={removeFromCart}
+              selectedCategory={selectedCategory}
               productsData={productsData.productsByCategory}
             />
           );
@@ -38,8 +44,9 @@ class Products extends Component {
 
 Products.propTypes = {
   basket: PropTypes.array,
-   addToCart: PropTypes.func,
-   removeFromCart: PropTypes.func,
-   selectedCategory: PropTypes.string,
+  clickedBasket: PropTypes.array,
+  addToCart: PropTypes.func,
+  removeFromCart: PropTypes.func,
+  selectedCategory: PropTypes.string,
 };
 export default Products;

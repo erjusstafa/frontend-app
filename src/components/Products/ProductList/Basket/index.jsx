@@ -5,15 +5,15 @@ import PropTypes from "prop-types";
 
 class Basket extends Component {
   render() {
-    const { addToCart } = this.props;
+    const { addRemoveToCart } = this.props;
     return (
-      <div className="quickshop-wrapper" onClick={() => addToCart()}>
+      <div className="quickshop-wrapper" onClick={() => addRemoveToCart()}>
         <SlBasket className="quickshop-basket" />
       </div>
     );
   }
 }
 Basket.propTypes = {
-  addToCart: PropTypes.func,
+  addRemoveToCart: PropTypes.func,
 };
 export default Basket;
