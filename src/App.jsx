@@ -18,20 +18,29 @@ class App extends Component {
 
   // Function to add a product to the cart
   addToCart = (product) => {
-    this.setState((prevState) => ({
-      basket: [...prevState.basket, product],
-    }));
-    localStorage.setItem("basket", JSON.stringify(this.state.basket));  
-   };
+    const productIndex = this.state.basket.findIndex(
+      (item) => item.id === product.id
+    );
+    if (productIndex !== -1) {
+      this.setState((prevState) => ({
+        basket: prevState.basket.filter(
+          (item, index) => index !== productIndex
+        ),
+      }));
+    } else {
+      this.setState((prevState) => ({
+        basket: [...prevState.basket, product],
+      }));
+    }
+    localStorage.setItem("basket", JSON.stringify(this.state.basket));
+  };
 
-  
-
-    componentDidMount() {
+  componentDidMount() {
     const savedBasket = localStorage.getItem("basket");
     if (savedBasket) {
       this.setState({ basket: JSON.parse(savedBasket) });
     }
-  }  
+  }
 
   render() {
     const { selectedCategory, basket } = this.state;
@@ -44,7 +53,6 @@ class App extends Component {
               handleCategoryClick={this.handleCategoryClick}
             />
             <Products
-              basket={basket}
               addToCart={this.addToCart}
               selectedCategory={selectedCategory}
             />

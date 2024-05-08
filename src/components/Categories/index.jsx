@@ -15,7 +15,7 @@ class Categories extends Component {
     this.state = {
       activeLink: "all", // Initially set active link to 'all'
       toggle: false,
-      openQuickShop: true,
+      openQuickShop: false,
     };
   }
 

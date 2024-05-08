@@ -7,8 +7,6 @@ import Button from "../../UI/Button";
 class QuickShop extends Component {
   render() {
     const { openQuickShop, basket } = this.props;
-
-    console.log(" 😊", basket);
     return (
       <div
         className={openQuickShop ? "modal-container open" : "modal-container"}
@@ -27,12 +25,13 @@ class QuickShop extends Component {
                     <div className="item-name-add">
                       <p>{item.name}</p>
                     </div>
-                    {item.prices.map((item, id) => (
-                      <span key={id} className="item-price">
-                        <p>{item.currency.symbol}</p>
-                        <p>{item.amount.toFixed(2)}</p>
-                      </span>
-                    ))}
+                    {Array.isArray(item.prices) &&
+                      item.prices.map((item, id) => (
+                        <span key={id} className="item-price">
+                          <p>{item.currency.symbol}</p>
+                          <p>{item.amount.toFixed(2)}</p>
+                        </span>
+                      ))}
                     {Array.isArray(item.attributes) &&
                       item.attributes.map((atr) => (
                         <div key={atr.id} className="atr-size">
@@ -57,10 +56,6 @@ class QuickShop extends Component {
                                 ))}
                             </div>
                           </div>
-                          {/* <div>
-                            <span>{atr.name}</span>
-                            <span>1</span>
-                          </div> */}
                         </div>
                       ))}
                   </div>
