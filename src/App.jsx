@@ -18,21 +18,25 @@ class App extends Component {
 
   // Function to add a product to the cart
   addToCart = (product) => {
+    //check if products exist
     const productIndex = this.state.basket.findIndex(
       (item) => item.id === product.id
     );
     if (productIndex !== -1) {
-      this.setState((prevState) => ({
-        basket: prevState.basket.filter(
-          (item, index) => index !== productIndex
-        ),
-      }));
+      this.removeFromCart(productIndex);
     } else {
       this.setState((prevState) => ({
         basket: [...prevState.basket, product],
       }));
     }
     localStorage.setItem("basket", JSON.stringify(this.state.basket));
+  };
+
+  // Function to remove a product from the cart
+  removeFromCart = (id) => {
+    this.setState((prevState) => ({
+      basket: prevState.basket.filter((item) => item.id !== id),
+    }));
   };
 
   componentDidMount() {
@@ -44,15 +48,19 @@ class App extends Component {
 
   render() {
     const { selectedCategory, basket } = this.state;
+
     return (
       <ApolloProvider client={client}>
         <AppProvider>
           <div className="wrapper">
             <Categories
               basket={basket}
+              removeFromCart={this.removeFromCart}
               handleCategoryClick={this.handleCategoryClick}
             />
             <Products
+              basket={basket}
+              removeFromCart={this.removeFromCart}
               addToCart={this.addToCart}
               selectedCategory={selectedCategory}
             />

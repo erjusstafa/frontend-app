@@ -35,7 +35,7 @@ class Categories extends Component {
     this.setState({ openQuickShop: false });
   };
   render() {
-    const { basket, handleCategoryClick } = this.props;
+    const { basket, handleCategoryClick, removeFromCart } = this.props;
     const { activeLink, toggle, openQuickShop } = this.state;
     return (
       <Query query={GET_CATEGORIES}>
@@ -90,11 +90,15 @@ class Categories extends Component {
                 onClick={this.handleOpenQuickShop}
               >
                 <SlBasket className="basket-icon" />
-              {basket.length > 0  && <span>{basket && basket.length}</span>}
+                {basket.length > 0 && <span>{basket && basket.length}</span>}
               </div>
               {
                 /* basket.length>0  &&  */ openQuickShop && (
-                  <QuickShop openQuickShop={openQuickShop} basket={basket} />
+                  <QuickShop
+                    openQuickShop={openQuickShop}
+                    basket={basket}
+                    removeFromCart={removeFromCart}
+                  />
                 )
               }
             </header>
@@ -108,6 +112,7 @@ class Categories extends Component {
 Categories.propTypes = {
   openQuickShop: PropTypes.bool,
   basket: PropTypes.array.isRequired,
+  removeFromCart: PropTypes.func,
   handleCategoryClick: PropTypes.func.isRequired,
 };
 export default Categories;

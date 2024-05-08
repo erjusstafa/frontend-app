@@ -4,16 +4,16 @@ import "./style.css";
 import PropTypes from "prop-types";
 
 class Basket extends Component {
-    render() {
-        return (
-          <div className="quickshop-wrapper" onClick={this.props.addToCart}>
-            <SlBasket className="quickshop-basket" />
-          </div>
-        );
-      }
+  render() {
+    const { addToCart } = this.props;
+    return (
+      <div className="quickshop-wrapper" onClick={() => addToCart()}>
+        <SlBasket className="quickshop-basket" />
+      </div>
+    );
+  }
 }
 Basket.propTypes = {
-    addToCart: PropTypes.func.isRequired,
-    
-  };
+  addToCart: PropTypes.func,
+};
 export default Basket;

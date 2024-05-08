@@ -25,37 +25,35 @@ class ProductList extends Component {
     });
   };
 
-  handleClick = (product) => {
-    const productIndex = this.state.clickedBasket.findIndex(
-      (item) => item === product.id
-    );
-    if (productIndex !== -1) {
-      this.setState((prevState) => ({
-        clickedBasket: prevState.clickedBasket.filter(
-          (item, index) => index !== productIndex
-        ),
-      }));
-    } else {
-      this.setState({
-        clickedBasket: [...this.state.clickedBasket, this.state.hoveredProduct],
-      });
-    }
-    localStorage.setItem(
-      "clickedBasket",
-      JSON.stringify(this.state.clickedBasket)
-    );
-  };
-
-  componentDidMount() {
-    const savedClickedBasket = localStorage.getItem("clickedBasket");
-    if (savedClickedBasket) {
-      this.setState({ clickedBasket: JSON.parse(savedClickedBasket) });
-    }
-  }
-
   render() {
     const { hoveredProduct, clickedBasket } = this.state;
-    const { selectedCategory, productsData } = this.props;
+    const {
+      selectedCategory,
+      productsData,
+      addToCart,
+      removeFromCart,
+    } = this.props;
+
+    
+    const handleClick = (product) => {
+       const productIndex = this.state.clickedBasket.findIndex(
+        (item) => item === product.id
+      );
+      if (productIndex !== -1) {
+        this.setState((prevState) => ({
+          clickedBasket: prevState.clickedBasket.filter(
+            (item, index) => index !== productIndex
+          ),
+        }));
+        removeFromCart(product.id);
+      } else {
+        this.setState({
+          clickedBasket: [...clickedBasket, hoveredProduct],
+        });
+        addToCart(product)
+      }
+ 
+    };
 
     return (
       <div className="container-products">
@@ -63,7 +61,6 @@ class ProductList extends Component {
         <div className="wrapper-product">
           {productsData.map((product) => {
             const productIsAdded = clickedBasket.includes(product.id);
-            console.log("☀️", hoveredProduct + "-->" + productIsAdded);
 
             return (
               <li
@@ -71,7 +68,6 @@ class ProductList extends Component {
                 className="card-item"
                 onMouseOver={() => this.handleMouseOver(product.id)}
                 onMouseOut={this.handleMouseOut}
-                onClick={() => this.handleClick(product)}
               >
                 <div
                   className={`wrapper-img-card ${
@@ -91,7 +87,7 @@ class ProductList extends Component {
                   {!product.inStock && <p>Out of stock</p>}
                   {product.inStock &&
                     (hoveredProduct === product.id || productIsAdded) && (
-                      <Basket addToCart={() => this.props.addToCart(product)} />
+                      <Basket addToCart={() => handleClick(product)} />
                     )}
                 </div>
                 <div className="description-item">
@@ -112,7 +108,9 @@ class ProductList extends Component {
   }
 }
 ProductList.propTypes = {
+  basket: PropTypes.array,
   addToCart: PropTypes.func,
+  removeFromCart: PropTypes.func,
   selectedCategory: PropTypes.string,
   productsData: PropTypes.array,
 };

@@ -6,7 +6,7 @@ import Button from "../../UI/Button";
 
 class QuickShop extends Component {
   render() {
-    const { openQuickShop, basket } = this.props;
+    const { openQuickShop, basket, removeFromCart } = this.props;
     return (
       <div
         className={openQuickShop ? "modal-container open" : "modal-container"}
@@ -17,7 +17,7 @@ class QuickShop extends Component {
           </span>
           <div>
             {Array.isArray(basket) &&
-              basket.map((item) => (
+              basket.reverse().map((item) => (
                 <div key={item.id} className="item-added">
                   {/**desc */}
                   <div className="wrapper-item">
@@ -66,6 +66,7 @@ class QuickShop extends Component {
                       icon={"+"}
                       height="20px"
                       width="20px"
+                      OnClick={() => alert(item.id)}
                     />
                     <span>1</span>
                     <Button
@@ -73,6 +74,7 @@ class QuickShop extends Component {
                       icon={"-"}
                       height="20px"
                       width="20px"
+                      OnClick={() => removeFromCart(item.id)}
                     />
                   </div>
 
@@ -80,7 +82,7 @@ class QuickShop extends Component {
                   <div className="item-image">
                     <Img
                       className=""
-                      src={item.gallery.join(",")}
+                      src={item.gallery.join(",") ?? ""}
                       height="100%"
                       width="100%"
                       alt={item.name}
@@ -97,5 +99,6 @@ class QuickShop extends Component {
 QuickShop.propTypes = {
   openQuickShop: PropTypes.bool,
   basket: PropTypes.array,
+  removeFromCart: PropTypes.func,
 };
 export default QuickShop;
