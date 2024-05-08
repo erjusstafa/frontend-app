@@ -2,8 +2,12 @@
   color: #000000;
   height: 80px;
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: auto 40% 15%;
   align-items: center;
+  position: fixed;
+  width: 100vw;
+  background: white;
+  z-index: 7;
 }
 
 .Navbar > .nav-items {
@@ -31,15 +35,22 @@
 
 .Navbar > .nav-basket {
   display: inherit;
-  justify-content: end;
   width: 100%;
   cursor: pointer;
+  z-index: 99;
   position: relative;
 }
 
-.Navbar > .nav-basket span {
+.Navbar > .nav-basket > span {
+  width: 25px;
+  height: 25px;
+  background-color: #000000;
+  color: white;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
   position: absolute;
-  right: 5px;
+  left: 0;
   top: -6px;
 }
 
@@ -47,7 +58,7 @@
   position: relative;
   right: 20px;
   font-size: 25px;
-  color: #645ece;
+  color: #4f4f4f;
 }
 
 .Navbar > .nav-items > a:hover::before {
@@ -59,8 +70,8 @@
 }
 
 @media screen and (max-width: 700px) {
-  .Navbar.open {
-    grid-template-columns: repeat(3, auto);
+  .Navbar {
+    grid-template-columns: 10% 80% 10%;
   }
   .Navbar > .nav-items {
     position: absolute;
@@ -68,7 +79,7 @@
     display: flex;
     flex-direction: column;
     background: #5ece7b;
-    left: 0px;
+    left: -10px;
     width: 100%;
     min-height: 200px;
     transform: translateX(-100%);

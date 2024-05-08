@@ -2,7 +2,7 @@ import { Component } from "react";
 import "./style.css";
 import PropTypes from "prop-types";
 import Img from "../../../UI/Img";
-import QuickShop from "../QuickShop";
+ import Basket from "./Basket";
 
 class ProductList extends Component {
   constructor(props) {
@@ -27,6 +27,7 @@ class ProductList extends Component {
   render() {
     const { hoveredProduct } = this.state;
     const { selectedCategory, productsData } = this.props;
+
     return (
       <div className="container-products">
         <h2 className="selected-category">{selectedCategory.toUpperCase()}</h2>
@@ -42,7 +43,6 @@ class ProductList extends Component {
                 className={`wrapper-img-card ${
                   !product.inStock && " disable-item"
                 } `}
-                onClick={() => alert("clickable")}
               >
                 <Img
                   className={`card-img ${
@@ -56,7 +56,7 @@ class ProductList extends Component {
 
                 {!product.inStock && <p>Out of stock</p>}
                 {product.inStock && hoveredProduct === product.id && (
-                  <QuickShop />
+                  <Basket addToCart={() => this.props.addToCart(product)} />
                 )}
               </div>
               <div className="description-item">
@@ -76,12 +76,9 @@ class ProductList extends Component {
   }
 }
 ProductList.propTypes = {
+  addToCart: PropTypes.func.isRequired,
   selectedCategory: PropTypes.string.isRequired,
-  productsData: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  productsData: PropTypes.array.isRequired,
 };
 
 export default ProductList;

@@ -17,7 +17,7 @@ class Img extends Component {
   }
 }
 Img.propTypes = {
-  src: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired ,
   className: PropTypes.string.isRequired,
   height: PropTypes.string.isRequired,
   width: PropTypes.string.isRequired,

@@ -10,12 +10,18 @@ class AppProvider extends Component {
       addedProduct: [],
     };
   }
+
+  handleAddProduct = () => {
+    this.setState({ addedProduct: [...this.state.addedProduct] });
+  };
   render() {
     const { addedProduct } = this.state;
+
     return (
       <AppContext.Provider
         value={{
           addedProduct: addedProduct,
+          handleAddProduct: this.handleAddProduct,
         }}
       >
         {this.props.children}

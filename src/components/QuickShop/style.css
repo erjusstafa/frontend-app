@@ -1,0 +1,131 @@
+.wraper {
+  max-height: 450px;
+  width: 328px;
+  padding: 32px 16px 32px 16px;
+  background-color: white;
+  opacity: 1 !important;
+  position: absolute;
+  right: 60px;
+  top: 0;
+  z-index: 999;
+  font-family: "Raleway", sans-serif;
+  overflow-y: auto;
+}
+
+.modal-container.open {
+  position: fixed;
+  height: auto;
+  width: auto;
+  background: #39374838;
+  z-index: 9;
+  left: 0;
+  right: 0;
+  top: 78px;
+  bottom: 0;
+}
+
+.wraper .wraper-title {
+  display: inline-flex;
+  font-weight: 700;
+}
+
+.wraper .wraper-title p {
+  font-weight: 300;
+}
+
+.wraper .item-added {
+  display: grid;
+  grid-template-columns: 50% auto 40%;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.wraper .wrapper-item,
+.wraper .item-added .quickshop-button {
+  text-align: center;
+  height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.wraper .wrapper-item {
+  text-align: unset;
+}
+
+.wraper .item-price {
+  font-weight: 500;
+  font-size: 18px;
+  font-family: "Raleway", sans-serif;
+  display: inline-flex;
+}
+
+.wraper .atr-size .attributes-nested {
+  display: flex;
+  gap: 5px;
+}
+
+.wraper .atr-size .attributes-items {
+  width: 25px;
+  height: 25px;
+  border: 1px solid rgb(138, 138, 138);
+  font-size: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  cursor: pointer;
+}
+
+.wraper .atr-size .attributes-items span {
+  font-weight: 600;
+}
+
+.wraper .atr-size .attributes-items.color-box {
+  width: 15px;
+  height: 15px;
+}
+
+/* 
+.wraper .item-added {
+  display: grid;
+  grid-template-columns: 55% auto;
+  justify-content: space-between;
+  height: 300px;
+  align-items: center;
+}
+.wraper .wrapper-item {
+  display: inherit;
+  justify-content: space-evenly;
+  flex-direction: column;
+  height: 200px;
+  width: max-content;
+  z-index: 9;
+}
+
+.wraper .item-name-add {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  z-index: 8;
+}
+
+ 
+  */
+
+.wraper .item-added .item-image img {
+  object-fit: contain;
+}
+
+@media screen and (max-width: 700px) {
+  .wraper {
+    width: 280px;
+    right: 16px;
+  }
+
+  .modal-container.open {
+    top: 67px;
+  }
+}

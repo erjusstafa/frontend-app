@@ -7,7 +7,7 @@ import logo from "../../assets/logo.png";
 import Img from "../../UI/Img";
 import { SlBasket } from "react-icons/sl";
 import Loader from "../Loader";
-import { AppContext } from "../../context";
+import QuickShop from "../QuickShop";
 
 class Categories extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class Categories extends Component {
     this.state = {
       activeLink: "all", // Initially set active link to 'all'
       toggle: false,
+      openQuickShop: true,
     };
   }
 
@@ -25,10 +26,17 @@ class Categories extends Component {
   handleActiveLinkClick = (link) => {
     this.setState({ activeLink: link });
   };
-  render() {
-    const { handleCategoryClick } = this.props;
-    const { activeLink, toggle } = this.state;
 
+  handleOpenQuickShop = () => {
+    this.setState({ openQuickShop: !this.state.openQuickShop });
+  };
+
+  handleCloseQuickShop = () => {
+    this.setState({ openQuickShop: false });
+  };
+  render() {
+    const { basket, handleCategoryClick } = this.props;
+    const { activeLink, toggle, openQuickShop } = this.state;
     return (
       <Query query={GET_CATEGORIES}>
         {({
@@ -41,56 +49,55 @@ class Categories extends Component {
             return <p>Error fetching categories: {categoriesError.message}</p>;
 
           return (
-            <AppContext.Consumer>
-              {({ addedProduct }) => (
-                <header className={`Navbar ${toggle && "open"}`}>
-                  {" "}
-                  <div
-                    className={`nav-toggle ${toggle && "open"}`}
-                    onClick={this.handleToggle}
-                  >
-                    <div className="bar"></div>
-                  </div>
-                  <ul className={`nav-items ${toggle && "open"}`}>
-                    {/* Render category names */}
-                    {Array.isArray(categoriesData.categories) &&
-                      categoriesData.categories.map((category) => {
-                        
-                        return (
-                          <li
-                            className={
-                              activeLink === category.name ? "active" : ""
-                            }
-                            key={category.name}
-                            onClick={() => {
-                              handleCategoryClick(category.name);
-                              this.handleActiveLinkClick(category.name);
-                              this.setState({ toggle: false });
-                            }}
-                          >
-                            {category.name.toUpperCase()}
-                          </li>
-                        );
-                      })}
-                  </ul>
-                  <div className="nav-logo">
-                    <Img
-                      className={"logo"}
-                      src={logo}
-                      height={"41px"}
-                      width={"41px"}
-                      alt={"logo"}
-                    />
-                  </div>
-                  <div
-                    className={` ${toggle ? "nav-basket  open" : "nav-basket"}`}
-                  >
-                    <SlBasket className="basket-icon" />
-                    <span>{addedProduct && addedProduct.length}</span>
-                  </div>
-                </header>
-              )}
-            </AppContext.Consumer>
+            <header className={`Navbar ${toggle && "open"}`}>
+              {" "}
+              <div
+                className={`nav-toggle ${toggle && "open"}`}
+                onClick={this.handleToggle}
+              >
+                <div className="bar"></div>
+              </div>
+              <ul className={`nav-items ${toggle && "open"}`}>
+                {/* Render category names */}
+                {Array.isArray(categoriesData.categories) &&
+                  categoriesData.categories.map((category) => {
+                    return (
+                      <li
+                        className={activeLink === category.name ? "active" : ""}
+                        key={category.name}
+                        onClick={() => {
+                          handleCategoryClick(category.name);
+                          this.handleActiveLinkClick(category.name);
+                          this.setState({ toggle: false });
+                        }}
+                      >
+                        {category.name.toUpperCase()}
+                      </li>
+                    );
+                  })}
+              </ul>
+              <div className="nav-logo">
+                <Img
+                  className={"logo"}
+                  src={logo}
+                  height={"41px"}
+                  width={"41px"}
+                  alt={"logo"}
+                />
+              </div>
+              <div
+                className={` ${toggle ? "nav-basket  open" : "nav-basket"}`}
+                onClick={this.handleOpenQuickShop}
+              >
+                <SlBasket className="basket-icon" />
+              {basket.length > 0  && <span>{basket && basket.length}</span>}
+              </div>
+              {
+                /* basket.length>0  &&  */ openQuickShop && (
+                  <QuickShop openQuickShop={openQuickShop} basket={basket} />
+                )
+              }
+            </header>
           );
         }}
       </Query>
@@ -99,6 +106,8 @@ class Categories extends Component {
 }
 
 Categories.propTypes = {
+  openQuickShop: PropTypes.bool,
+  basket: PropTypes.array.isRequired,
   handleCategoryClick: PropTypes.func.isRequired,
 };
 export default Categories;

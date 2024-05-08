@@ -1,6 +1,10 @@
+.container-products {
+  padding: 120px 0;
+}
+
 .container-products > h2 {
-  padding: 50px 0;
   line-height: 67px;
+  margin-bottom: 30px;
   font-family: "Raleway", sans-serif;
   font-size: 42px;
   font-weight: 400;
@@ -52,18 +56,18 @@
 }
 
 .description-item {
-
-padding: 18px 0;}
+  padding: 18px 0;
+}
 .wrapper-product .card-item .description-item .product-name {
   font-weight: 300;
-   font-size: 18px;
+  font-size: 18px;
   font-family: "Raleway", sans-serif;
   color: #1d1f22;
 }
 
 .wrapper-product .card-item .description-item .price-item {
   font-weight: 400;
-   font-size: 18px;
+  font-size: 18px;
   font-family: "Raleway", sans-serif;
   display: flex;
 }
