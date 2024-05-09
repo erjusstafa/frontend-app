@@ -29,6 +29,8 @@
   list-style: none;
   padding: 16px;
   cursor: pointer;
+  text-decoration: none;
+  color: #1d1f22;
 }
 .wrapper-product .card-item:hover {
   box-shadow: 0px 4px 35px 0px #a8acb030;

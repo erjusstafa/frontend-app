@@ -11,9 +11,7 @@ class AppProvider extends Component {
     };
   }
 
-  handleAddProduct = () => {
-    this.setState({ addedProduct: [...this.state.addedProduct] });
-  };
+
   render() {
     const { addedProduct } = this.state;
 
@@ -21,8 +19,7 @@ class AppProvider extends Component {
       <AppContext.Provider
         value={{
           addedProduct: addedProduct,
-          handleAddProduct: this.handleAddProduct,
-        }}
+         }}
       >
         {this.props.children}
       </AppContext.Provider>

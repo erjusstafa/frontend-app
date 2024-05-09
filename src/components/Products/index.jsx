@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { GET_PRODUCTS } from "../../apollo/queries";
+import { GET_PRODUCTS_BY_CATEGORY } from "../../apollo/queries";
 import { Query } from "@apollo/client/react/components";
 import PropTypes from "prop-types";
 import "./style.css";
@@ -16,7 +16,7 @@ class Products extends Component {
       removeFromCart,
     } = this.props;
     return (
-      <Query query={GET_PRODUCTS} variables={{ category: selectedCategory }}>
+      <Query query={GET_PRODUCTS_BY_CATEGORY} variables={{ category: selectedCategory }}>
         {({
           loading: productsLoading,
           error: productsError,
@@ -25,15 +25,14 @@ class Products extends Component {
           if (productsLoading) return <Loader />;
           if (productsError)
             return <p>Error fetching products: {productsError.message}</p>;
-
-          return (
+           return (
             <ProductList
               basket={basket}
               clickedBasket={clickedBasket}
               addToCart={addToCart}
               removeFromCart={removeFromCart}
               selectedCategory={selectedCategory}
-              productsData={productsData.productsByCategory}
+              productsData={productsData.products}
             />
           );
         }}

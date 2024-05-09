@@ -2,8 +2,10 @@ import { Component } from "react";
 import Products from "./components/Products";
 import client from "./apollo";
 import { ApolloProvider } from "@apollo/client";
-import Categories from "./components/Categories";
-import { AppProvider } from "./context";
+import Header from "./components/Header";
+import Details from "./components/Details";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 import "./App.css";
 
 class App extends Component {
@@ -18,11 +20,10 @@ class App extends Component {
   };
 
   addToCart = (product, hoveredProduct) => {
-    //check if products exist
     const productIndex = this.state.basket.findIndex(
       (item) => item.id === product.id
     );
-    const clickedBasketIndex = this.state.clickedBasket.includes(product.id);
+    const clickedBasketIndex = this.state.clickedBasket.includes(product?.id);
     if (productIndex !== -1 && clickedBasketIndex) {
       this.removeFromCart(product.id);
     } else {
@@ -48,22 +49,34 @@ class App extends Component {
 
     return (
       <ApolloProvider client={client}>
-        <AppProvider>
+        <Router>
           <div className="wrapper">
-            <Categories
+            <Header
+              link={"/"}
               basket={basket}
               removeFromCart={this.removeFromCart}
               handleCategoryClick={this.handleCategoryClick}
-            />
-            <Products
-              basket={basket}
-              clickedBasket={clickedBasket}
-              removeFromCart={this.removeFromCart}
               addToCart={this.addToCart}
-              selectedCategory={selectedCategory}
             />
+
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={
+                  <Products
+                    basket={basket}
+                    clickedBasket={clickedBasket}
+                    removeFromCart={this.removeFromCart}
+                    addToCart={this.addToCart}
+                    selectedCategory={selectedCategory}
+                  />
+                }
+              />
+              <Route path="/details/:id" element={<Details />} />
+            </Routes>
           </div>
-        </AppProvider>
+        </Router>
       </ApolloProvider>
     );
   }

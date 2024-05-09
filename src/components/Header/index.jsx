@@ -8,8 +8,9 @@ import Img from "../../UI/Img";
 import { SlBasket } from "react-icons/sl";
 import Loader from "../Loader";
 import QuickShop from "../QuickShop";
+import { Link } from "react-router-dom";
 
-class Categories extends Component {
+class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,8 +36,10 @@ class Categories extends Component {
     this.setState({ openQuickShop: false });
   };
   render() {
-    const { basket, handleCategoryClick, removeFromCart } = this.props;
     const { activeLink, toggle, openQuickShop } = this.state;
+    const { link, basket, handleCategoryClick, addToCart, removeFromCart } =
+      this.props;
+
     return (
       <Query query={GET_CATEGORIES}>
         {({
@@ -62,8 +65,9 @@ class Categories extends Component {
                 {Array.isArray(categoriesData.categories) &&
                   categoriesData.categories.map((category) => {
                     return (
-                      <li
-                        className={activeLink === category.name ? "active" : ""}
+                      <Link
+                      to={link}
+                        className={activeLink === category.name ? "li active" : "li"}
                         key={category.name}
                         onClick={() => {
                           handleCategoryClick(category.name);
@@ -72,7 +76,7 @@ class Categories extends Component {
                         }}
                       >
                         {category.name.toUpperCase()}
-                      </li>
+                      </Link>
                     );
                   })}
               </ul>
@@ -92,15 +96,14 @@ class Categories extends Component {
                 <SlBasket className="basket-icon" />
                 {basket.length > 0 && <span>{basket && basket.length}</span>}
               </div>
-              {
-                /* basket.length>0  &&  */ openQuickShop && (
-                  <QuickShop
-                    openQuickShop={openQuickShop}
-                    basket={basket}
-                    removeFromCart={removeFromCart}
-                  />
-                )
-              }
+              { openQuickShop && (
+                <QuickShop
+                  openQuickShop={openQuickShop}
+                  basket={basket}
+                  removeFromCart={removeFromCart}
+                  addToCart={addToCart}
+                />
+              )}
             </header>
           );
         }}
@@ -109,10 +112,12 @@ class Categories extends Component {
   }
 }
 
-Categories.propTypes = {
+Header.propTypes = {
+  link: PropTypes.any,
   openQuickShop: PropTypes.bool,
-  basket: PropTypes.array.isRequired,
+  basket: PropTypes.array,
   removeFromCart: PropTypes.func,
-  handleCategoryClick: PropTypes.func.isRequired,
+  addToCart: PropTypes.func,
+  handleCategoryClick: PropTypes.func,
 };
-export default Categories;
+export default Header;

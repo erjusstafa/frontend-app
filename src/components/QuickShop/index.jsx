@@ -3,10 +3,12 @@ import "./style.css";
 import PropTypes from "prop-types"; // Import PropTypes
 import Img from "../../UI/Img";
 import Button from "../../UI/Button";
+import Price from "./Prices";
+import Attribute from "./Attribute";
 
 class QuickShop extends Component {
   render() {
-    const { openQuickShop, basket, removeFromCart } = this.props;
+    const { openQuickShop, basket, removeFromCart, addToCart } = this.props;
     return (
       <div
         className={openQuickShop ? "modal-container open" : "modal-container"}
@@ -26,37 +28,12 @@ class QuickShop extends Component {
                       <p>{item.name}</p>
                     </div>
                     {Array.isArray(item.prices) &&
-                      item.prices.map((item, id) => (
-                        <span key={id} className="item-price">
-                          <p>{item.currency.symbol}</p>
-                          <p>{item.amount.toFixed(2)}</p>
-                        </span>
+                      item.prices.map((item) => (
+                        <Price key={item.id} item={item} />
                       ))}
                     {Array.isArray(item.attributes) &&
-                      item.attributes.map((atr) => (
-                        <div key={atr.id} className="atr-size">
-                          <div>
-                            <span>{atr.name}</span>
-                            <div className="attributes-nested">
-                              {Array.isArray(atr.items) &&
-                                atr.items.map((it) => (
-                                  <div
-                                    key={it.id}
-                                    className={`${
-                                      atr.name === "Color"
-                                        ? "attributes-items color-box"
-                                        : " attributes-items"
-                                    }`}
-                                    style={{ backgroundColor: `${it.value}` }}
-                                  >
-                                    <span onClick={() => alert(it.value)}>
-                                      {atr.name !== "Color" && it.value}
-                                    </span>
-                                  </div>
-                                ))}
-                            </div>
-                          </div>
-                        </div>
+                      item.attributes.map((attribute) => (
+                        <Attribute key={attribute.id} attribute={attribute} />
                       ))}
                   </div>
                   {/**button */}
@@ -66,7 +43,7 @@ class QuickShop extends Component {
                       icon={"+"}
                       height="20px"
                       width="20px"
-                      OnClick={() => alert(item.id)}
+                      OnClick={() => addToCart(item)}
                     />
                     <span>1</span>
                     <Button
@@ -100,5 +77,6 @@ QuickShop.propTypes = {
   openQuickShop: PropTypes.bool,
   basket: PropTypes.array,
   removeFromCart: PropTypes.func,
+  addToCart: PropTypes.func,
 };
 export default QuickShop;

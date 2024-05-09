@@ -17,7 +17,7 @@
   gap: 30px;
 }
 
-.Navbar ul li {
+.Navbar ul .li {
   display: inherit;
   align-items: center;
   cursor: pointer;
@@ -26,9 +26,10 @@
   font-size: 16px;
   font-weight: 400;
   text-decoration: none;
+  color: #000000;
 }
 
-.Navbar > .nav-items > li.active {
+.Navbar > .nav-items > .li.active {
   border-bottom: 2px solid #5ece7b;
   color: #5ece7b;
 }
@@ -89,18 +90,18 @@
     justify-content: center;
     height: auto;
   }
-  .Navbar > .nav-items > li {
+  .Navbar > .nav-items > .li {
     position: relative;
     left: 23px;
   }
 
-  .Navbar > .nav-items > li::before {
+  .Navbar > .nav-items > .li::before {
     background: transparent;
   }
   .nav-logo {
     margin: auto;
   }
-  .Navbar > .nav-items > li.active {
+  .Navbar > .nav-items > .li.active {
     border-bottom: none;
     color: #645ece;
   }
