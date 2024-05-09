@@ -7,7 +7,7 @@ class Basket extends Component {
   render() {
     const { addRemoveToCart } = this.props;
     return (
-      <div className="quickshop-wrapper" onClick={() => addRemoveToCart()}>
+      <div className="quickshop-wrapper" onClick={addRemoveToCart}>
         <SlBasket className="quickshop-basket" />
       </div>
     );

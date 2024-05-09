@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./style.css";
 import PropTypes from "prop-types";
 import Img from "../../../UI/Img";
@@ -30,14 +30,15 @@ class ProductList extends Component {
     const { selectedCategory, clickedBasket, productsData, addToCart } =
       this.props;
 
-    const addRemoveToCart = ( product) => {
-       addToCart(product, hoveredProduct); //add an item
+    const addRemoveToCart = (event, product) => {
+      event.preventDefault(); // Prevent the default behavior of the link
+      event.stopPropagation(); // Prevent the event from bubbling up
+      addToCart(product, hoveredProduct);
     };
-
 
     return (
       <div className="container-products">
-        <h2 className="selected-category">{selectedCategory.toUpperCase()}</h2>
+        <h2 className="selected-category">{selectedCategory}</h2>
         <div className="wrapper-product">
           {productsData.map((product) => {
             const productIsAdded = clickedBasket.includes(product.id);
@@ -49,8 +50,7 @@ class ProductList extends Component {
                 className="card-item"
                 onMouseOver={() => this.handleMouseOver(product.id)}
                 onMouseOut={this.handleMouseOut}
-                onClick={(event) =>       event.preventDefault() }
-             >
+              >
                 <div
                   className={`wrapper-img-card ${
                     !product.inStock && " disable-item"
@@ -70,7 +70,9 @@ class ProductList extends Component {
                   {product.inStock &&
                     (hoveredProduct === product.id || productIsAdded) && (
                       <Basket
-                        addRemoveToCart={() => addRemoveToCart(product)}
+                        addRemoveToCart={(event) =>
+                          addRemoveToCart(event, product)
+                        }
                       />
                     )}
                 </div>

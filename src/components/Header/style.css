@@ -8,6 +8,7 @@
   width: 100vw;
   background: white;
   z-index: 7;
+  padding: 0  120px;
 }
 
 .Navbar > .nav-items {
@@ -40,6 +41,7 @@
   cursor: pointer;
   z-index: 99;
   position: relative;
+  place-content: end;
 }
 
 .Navbar > .nav-basket > span {
@@ -51,7 +53,7 @@
   display: grid;
   place-content: center;
   position: absolute;
-  left: 0;
+  right: 0;
   top: -6px;
 }
 
@@ -73,6 +75,8 @@
 @media screen and (max-width: 700px) {
   .Navbar {
     grid-template-columns: 10% 80% 10%;
+    padding: 0 10px;
+
   }
   .Navbar > .nav-items {
     position: absolute;
@@ -98,7 +102,7 @@
   .Navbar > .nav-items > .li::before {
     background: transparent;
   }
-  .nav-logo {
+  .Navbar .nav-logo {
     margin: auto;
   }
   .Navbar > .nav-items > .li.active {
