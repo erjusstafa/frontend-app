@@ -8,7 +8,7 @@
   width: 100vw;
   background: white;
   z-index: 7;
-  padding: 0  120px;
+  padding: 0 120px;
 }
 
 .Navbar > .nav-items {
@@ -76,7 +76,6 @@
   .Navbar {
     grid-template-columns: 10% 80% 10%;
     padding: 0 10px;
-
   }
   .Navbar > .nav-items {
     position: absolute;
@@ -84,7 +83,7 @@
     display: flex;
     flex-direction: column;
     background: #5ece7b;
-    left: -10px;
+    left: 0px;
     width: 100%;
     min-height: 200px;
     transform: translateX(-100%);
@@ -102,7 +101,7 @@
   .Navbar > .nav-items > .li::before {
     background: transparent;
   }
-  .Navbar .nav-logo {
+  .nav-logo {
     margin: auto;
   }
   .Navbar > .nav-items > .li.active {
@@ -162,5 +161,11 @@
 
   .nav-toggle.open > .bar::after {
     transform: rotate(-45deg) translate(26px, 26px);
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .Navbar .nav-logo {
+    margin: auto;
   }
 }

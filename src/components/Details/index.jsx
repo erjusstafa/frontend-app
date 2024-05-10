@@ -9,8 +9,8 @@ const Details = () => {
   return (
     <Query query={GET_PRODUCTS_BY_ID} variables={{ id }}>
       {({ loading, error, data }) => {
-        if (loading) return <p style={{ fontSize: "100px" }}>Loading...</p>;
-        if (error) return <p style={{ fontSize: "100px" }}>Error... </p>;
+        if (loading) return <p>Loading...</p>;
+        if (error) return <p>Error... </p>;
         return <ProductDetails data={data.products} />;
       }}
     </Query>

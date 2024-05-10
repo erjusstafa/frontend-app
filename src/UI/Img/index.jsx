@@ -5,7 +5,7 @@ class Img extends Component {
   render() {
     const { className, src, alt, height, width } = this.props;
 
-    return (
+     return (
       <img
         className={className}
         src={src}
@@ -17,10 +17,10 @@ class Img extends Component {
   }
 }
 Img.propTypes = {
-  src: PropTypes.string.isRequired ,
-  className: PropTypes.string.isRequired,
-  height: PropTypes.string.isRequired,
-  width: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
+  src: PropTypes.any,
+  className: PropTypes.string,
+  height: PropTypes.string,
+  width: PropTypes.string,
+  alt: PropTypes.string,
 };
 export default Img;

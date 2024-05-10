@@ -1,7 +1,15 @@
-.add-button{
- padding: 10px;
- border: 1px solid black;
- display: grid;
- place-content: center;
- font-size: 25px;
+.add-button {
+  padding: 10px;
+  border: 1px solid black;
+  display: grid;
+  place-content: center;
+  font-size: 25px;
+}
+
+.carousel-button {
+  background-color: rgba(5, 5, 5, 0.5);
+  color: white;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
 }

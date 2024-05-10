@@ -1,3 +1,16 @@
-.details-container{
-    padding: 120px 0;
+.details-container {
+  padding: 80px 0;
+}
+
+.details-container .details-wrapper {
+  display: grid;
+  grid-template-columns: 60% auto;
+  height: 541px;
+  padding: 0 120px;
+}
+
+.details-container .details-wrapper .details-wrapper-img {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
