@@ -94,7 +94,6 @@ class ProductList extends Component {
   }
 }
 ProductList.propTypes = {
-  basket: PropTypes.array,
   clickedBasket: PropTypes.array,
   addToCart: PropTypes.func,
   selectedCategory: PropTypes.string,

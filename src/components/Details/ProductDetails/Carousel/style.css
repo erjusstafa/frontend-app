@@ -12,11 +12,14 @@
   overflow-x: hidden;
   min-width: 79px;
   max-width: 80px;
+  position: relative;
+  right: 5px;
 }
 
 .vertical-image {
   width: auto;
-  height: 10vw;
+  height: 79px;
+  width: 80px;
   margin-bottom: 1vw;
 }
 
@@ -43,6 +46,9 @@
 .carousel-controls {
   display: flex;
   justify-content: space-around;
+  position: absolute;
+  top: 14px;
+  width: 100%;
 }
 
 .carousel-controls button {
@@ -55,18 +61,19 @@
     align-items: center;
   }
 
+  .carousel {
+    max-width: 300px;
+    min-width: 300px;
+  }
+
   .vertical-images {
     height: auto;
     max-height: 50vh;
     flex-direction: row;
   }
 
-  /*   .vertical-images   .vertical-image {
-    object-fit: contain;
-   } */
-
   .carousel-images img {
-    height: 35vw;
+    height: auto;
   }
 }
 ::-webkit-scrollbar {

@@ -4,12 +4,20 @@ import "./style.css";
 
 class Button extends Component {
   render() {
-    const { className, icon, height, width, backgroundColor, OnClick } =
-      this.props;
+    const {
+      id,
+      className,
+       icon,
+      height,
+      width,
+      backgroundColor,
+      OnClick,
+    } = this.props;
     return (
       <div
+      id={id}
         className={className}
-        style={{
+         style={{
           height: height,
           width: width,
           backgroundColor: backgroundColor,
@@ -22,7 +30,9 @@ class Button extends Component {
   }
 }
 Button.propTypes = {
+  id: PropTypes.string,
   icon: PropTypes.any,
+  disabled: PropTypes.bool,
   className: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,

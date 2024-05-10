@@ -33,7 +33,7 @@ class Carousel extends Component {
   };
 
   render() {
-    const { images } = this.props;
+    const { images, stock } = this.props;
     const { currentIndex } = this.state;
 
     return (
@@ -49,6 +49,7 @@ class Carousel extends Component {
                   ? "vertical-image active"
                   : "vertical-image"
               }
+               
               onClick={() => this.selectImage(index)}
             />
           ))}
@@ -77,7 +78,10 @@ class Carousel extends Component {
             <Img
               src={images[currentIndex]}
               alt={`Image ${currentIndex + 1}`}
-              className="main-image"
+              className={`card-img ${
+                stock ? " in-stock" : " out-stock"
+              } `}
+              /* className="main-image" */
             />
           </div>
         </div>
@@ -88,6 +92,7 @@ class Carousel extends Component {
 
 Carousel.propTypes = {
   images: PropTypes.array,
+  stock : PropTypes.bool
 };
 
 export default Carousel;

@@ -19,6 +19,7 @@ class App extends Component {
     this.setState({ selectedCategory: category });
   };
 
+  //accpet 2 arg : product && product.id
   addToCart = (product, hoveredProduct) => {
     const productIndex = this.state.basket.findIndex(
       (item) => item.id === product.id
@@ -65,7 +66,6 @@ class App extends Component {
                 path="/"
                 element={
                   <Products
-                    basket={basket}
                     clickedBasket={clickedBasket}
                     addToCart={this.addToCart}
                     selectedCategory={selectedCategory}

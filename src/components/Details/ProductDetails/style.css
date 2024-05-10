@@ -7,13 +7,15 @@
   grid-template-columns: 60% auto;
   height: 541px;
   padding: 0 120px;
-  gap: 70px;
+  gap: 40px;
 }
 
 .details-container .details-wrapper .details-wrapper-img {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: inherit;
+  position: relative;
 }
 
 .attributes-nested {
@@ -44,6 +46,11 @@
   border: 1px solid #d3d2d5;
 }
 
+div#\ attributes\ out {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .atr-size .atr-name {
   font-family: "Roboto Mono", monospace;
   font-size: 18px;
@@ -62,8 +69,8 @@
   flex-direction: column;
   justify-content: space-evenly;
   height: calc(100% - 108px);
+  row-gap: 20px;
 }
-
 
 .details-wrapper-description h2 {
   font-family: "Raleway", sans-serif;
@@ -71,11 +78,14 @@
   font-weight: 600;
   line-height: 27px;
 }
+
 .details-container .item-price {
   font-weight: 500;
   font-size: 18px;
   font-family: "Raleway", sans-serif;
   display: inline-flex;
+  position: relative;
+  bottom: 15px;
 }
 
 .details-container .details-wrapper-price {
@@ -87,12 +97,24 @@
 
 .details-wrapper-description #description {
   font-family: "Roboto Mono", monospace;
-  font-size: 16px;
   font-weight: 400;
   text-align: left;
   color: #1d1f22;
   line-height: 25.59px;
+  overflow-y: scroll;
+  height: 200px;
 }
+
+.details-wrapper-description #description * {
+  font-size: 16px !important;
+}
+
+.details-wrapper-description #description .show-les-button {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #7d7c7c;
+}
+
 @media (max-width: 700px) {
   .details-container .details-wrapper {
     padding: 0;
@@ -102,17 +124,23 @@
   .details-container .details-wrapper .details-wrapper-img {
     justify-content: center;
   }
+
   .details-wrapper-description {
     text-align: center;
     margin-top: 20px;
+    justify-content: center;
+    width: calc(100% - 150px);
+    margin: auto;
   }
 
   .attributes-nested {
     justify-content: center;
   }
+
   .details-wrapper-description h2 {
     font-size: 20px;
   }
+
   .atr-size .atr-name {
     font-size: 14px;
   }
@@ -127,4 +155,7 @@
     width: 23px !important;
     height: 23px;
   }
+}
+.details-wrapper-description #description::-webkit-scrollbar {
+  width: 3px !important;
 }

@@ -21,10 +21,8 @@ class QuickShop extends Component {
             {Array.isArray(basket) &&
               basket.reverse().map((item) => (
                 <div key={item.id} className="item-added">
-                  {/**desc */}
-                  <div className="wrapper-item">
-                    {/**desc */}
-                    <div className="item-name-add">
+                   <div className="wrapper-item">
+                     <div className="item-name-add">
                       <p>{item.name}</p>
                     </div>
                     {Array.isArray(item.prices) &&
@@ -33,17 +31,20 @@ class QuickShop extends Component {
                       ))}
                     {Array.isArray(item.attributes) &&
                       item.attributes.map((attribute) => (
-                        <Attribute key={attribute.id} attribute={attribute} />
+                        <Attribute
+                          key={attribute.id}
+                          attribute={attribute}
+                          stock={item.inStock}
+                        />
                       ))}
                   </div>
-                  {/**button */}
-                  <div className="quickshop-button">
+                   <div className="quickshop-button">
                     <Button
                       className="add-button"
                       icon={"+"}
                       height="20px"
                       width="20px"
-                      OnClick={() => addToCart(item)}
+                      OnClick={() => addToCart(item, item.id)}
                     />
                     <span>1</span>
                     <Button
@@ -54,9 +55,7 @@ class QuickShop extends Component {
                       OnClick={() => removeFromCart(item.id)}
                     />
                   </div>
-
-                  {/**img */}
-                  <div className="item-image">
+                   <div className="item-image">
                     <Img
                       className=""
                       src={item.gallery.join(",") ?? ""}

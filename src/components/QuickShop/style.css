@@ -86,7 +86,15 @@
   width: 15px;
   height: 15px;
 }
+.add-to-cart.out {
+  pointer-events: none;
+  opacity: 0.4;
+}
 
+ #attributes#out {
+  pointer-events: none;
+  opacity: 0.4;
+}
 /* 
 .wraper .item-added {
   display: grid;

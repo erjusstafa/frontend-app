@@ -33,8 +33,7 @@ class ProductDetails extends Component {
       return <span key={index}>{node.textContent}</span>;
     } else {
       const tagName = node.tagName.toLowerCase();
-      if (tagName === "li") {
-        // If it's an <li> element, return its children without rendering <li>
+       if (["ul", "li"].includes(tagName)) {
         return this.convertNodesToReact(Array.from(node.childNodes));
       }
       const props = {};
@@ -67,14 +66,18 @@ class ProductDetails extends Component {
               <div key={item.id} className="details-wrapper">
                 <div className="details-wrapper-img">
                   <div className="details-wrapper-list-img">
-                    <Carousel mainImg={item.gallery} images={data[0].gallery} />
+                    <Carousel
+                      stock={item.inStock}
+                      mainImg={item.gallery}
+                      images={data[0].gallery}
+                    />
                   </div>
                 </div>
                 <div key={item.id} className="details-wrapper-description">
                   <h2>{item.name}</h2>
                   {Array.isArray(item.attributes) &&
                     item.attributes.map((attribute) => (
-                      <Attribute key={attribute.id} attribute={attribute} />
+                      <Attribute key={attribute.id} attribute={attribute} stock = {item.inStock} />
                     ))}
                   <h2 className="details-wrapper-price">Price:</h2>
                   {Array.isArray(item.prices) &&
@@ -82,19 +85,25 @@ class ProductDetails extends Component {
                       <Price key={item.id} item={item} />
                     ))}
                   <Button
-                    className="add-to-cart"
-                    icon={"add to cart".toUpperCase()}
-                    height="52px"
-                    width="  100%"
-                    OnClick={() => addToCart(item)}
+                    className={
+                      item.inStock ? "add-to-cart in" : "add-to-cart out"
+                    }
+                    icon={
+                      item.inStock
+                        ? "add to cart".toUpperCase()
+                        : "out of stock".toUpperCase()
+                    }
+                    height="auto"
+                    width="100%"
+                    OnClick={() => addToCart(item, item.id)}
                   />
                   <div id="description">
                     {showAll
                       ? this.convertNodesToReact(parsedDescription)
-                      : this.convertNodesToReact(parsedDescription.slice(0, 2))}
+                      : this.convertNodesToReact(parsedDescription.slice(0, 1))}
                     {parsedDescription.length > 3 && (
                       <span
-                        style={{ cursor: "pointer", color: "blue" }}
+                        className="show-les-button"
                         onClick={this.toggleShow}
                       >
                         {showAll ? "Show less" : "Show more"}
@@ -114,6 +123,5 @@ ProductDetails.propTypes = {
   showAll: PropTypes.bool,
   data: PropTypes.array,
   addToCart: PropTypes.func,
-
 };
 export default ProductDetails;

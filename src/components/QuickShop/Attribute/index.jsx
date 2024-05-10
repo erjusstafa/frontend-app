@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Button from "../../../UI/Button";
 class Attribute extends Component {
   render() {
-    const { attribute } = this.props;
+    const { attribute,stock } = this.props;
 
     return (
       <div className="atr-size">
@@ -18,9 +18,14 @@ class Attribute extends Component {
                 <Button
                   key={it.id}
                   className={`${
-                    attribute.name === "Color"
+                    attribute.name === "Color" 
                       ? "attributes-items color-box"
-                      : " attributes-items"
+                      : " attributes-items out"
+                  }`}
+                  id={`${
+                    stock 
+                      ? "attributes in"
+                      : " attributes out"
                   }`}
                   backgroundColor={it.value}
                   icon={attribute.name !== "Color" && it.value}
@@ -35,6 +40,7 @@ class Attribute extends Component {
 }
 
 Attribute.propTypes = {
+  stock: PropTypes.bool,
   attribute: PropTypes.object,
 };
 export default Attribute;
