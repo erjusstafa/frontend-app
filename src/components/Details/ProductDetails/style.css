@@ -23,7 +23,7 @@
   gap: 5px;
 }
 
-.atr-size .attributes-items {
+.details-wrapper-description .atr-size .attributes-items {
   width: 63px;
   height: 45px;
   border: 1px solid var(--gray);
@@ -51,14 +51,14 @@ div#\ attributes\ out {
   pointer-events: none;
 }
 
-.atr-size .atr-name {
+.details-wrapper-description .atr-size .atr-name {
   font-family: "Roboto Mono", monospace;
   font-size: 18px;
   font-weight: 700;
   line-height: 18px;
 }
 
-.atr-size .attributes-items span {
+.details-wrapper-description .atr-size .attributes-items span {
   font-family: "Source Sans 3", sans-serif;
 }
 
@@ -80,13 +80,12 @@ div#\ attributes\ out {
 }
 
 .details-container .item-price {
-  font-weight: 500;
-  font-size: 18px;
   font-family: "Raleway", sans-serif;
   display: inline-flex;
-  position: relative;
-  bottom: 15px;
-}
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 18px;
+ }
 
 .details-container .details-wrapper-price {
   font-family: "Roboto Mono", monospace;
@@ -149,6 +148,10 @@ div#\ attributes\ out {
     width: 33px;
     height: 25px;
     font-size: 12px;
+  }
+  
+  .details-container .item-price {
+   justify-content: center;
   }
 
   .details-wrapper-description .atr-size .attributes-items.color-box {

@@ -33,7 +33,7 @@ class ProductDetails extends Component {
       return <span key={index}>{node.textContent}</span>;
     } else {
       const tagName = node.tagName.toLowerCase();
-       if (["ul", "li"].includes(tagName)) {
+      if (["ul", "li"].includes(tagName)) {
         return this.convertNodesToReact(Array.from(node.childNodes));
       }
       const props = {};
@@ -77,7 +77,12 @@ class ProductDetails extends Component {
                   <h2>{item.name}</h2>
                   {Array.isArray(item.attributes) &&
                     item.attributes.map((attribute) => (
-                      <Attribute key={attribute.id} attribute={attribute} stock = {item.inStock} />
+                      <Attribute
+                        key={attribute.id}
+                        attribute={attribute}
+                        stock={item.inStock}
+                        OnClick={() => alert("ProductDetails")}
+                      />
                     ))}
                   <h2 className="details-wrapper-price">Price:</h2>
                   {Array.isArray(item.prices) &&

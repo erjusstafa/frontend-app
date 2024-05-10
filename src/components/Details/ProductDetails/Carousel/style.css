@@ -75,6 +75,10 @@
   .carousel-images img {
     height: auto;
   }
+  .carousel-controls {
+    position: unset;
+    column-gap: 13vw;
+  }
 }
 ::-webkit-scrollbar {
   width: 0px !important;

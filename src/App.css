@@ -19,7 +19,9 @@
   --white: white;
   --black: black;
   --gray: #1d1f22;
-  --container-color: #fff;
+  --disabled-color: rgb(127, 127, 127);
+  --disabled-bg: lightgrey;
+
 
   /*========== Font and typography ==========*/
   --body-font: "Poppins", sans-serif;

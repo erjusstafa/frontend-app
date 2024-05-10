@@ -13,7 +13,7 @@ class QuickShop extends Component {
       <div
         className={openQuickShop ? "modal-container open" : "modal-container"}
       >
-        <div className="wraper">
+        <div className="wraper-quickshop">
           <span className="wraper-title">
             My Bag, &nbsp; <p>{basket.length} items</p>
           </span>
@@ -65,13 +65,17 @@ class QuickShop extends Component {
                 </div>
               </div>
             ))}
+          {basket.length > 0 && (
             <div className="total">
               <span>Total</span>
               <span>$0</span>
             </div>
+          )}
 
           <Button
-            className="place-order"
+            className={`${
+              basket.length > 0 ? "place-order" : "place-order-disabled"
+            }`}
             icon={"place order".toUpperCase()}
             height="43px"
             width="auto"
