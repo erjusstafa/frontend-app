@@ -9,12 +9,15 @@
   flex-direction: column;
   height: 35vw;
   overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 79px;
+  max-width: 80px;
 }
 
 .vertical-image {
-  width: 100px;
-  height: auto;
-  margin-bottom: 10px;
+  width: auto;
+  height: 10vw;
+  margin-bottom: 1vw;
 }
 
 .vertical-image.active {
@@ -48,14 +51,19 @@
 
 @media (max-width: 768px) {
   .carousel-container {
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: center;
   }
 
   .vertical-images {
     height: auto;
     max-height: 50vh;
+    flex-direction: row;
   }
+
+  /*   .vertical-images   .vertical-image {
+    object-fit: contain;
+   } */
 
   .carousel-images img {
     height: 35vw;

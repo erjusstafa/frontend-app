@@ -8,15 +8,12 @@ import ProductList from "./ProductList";
 
 class Products extends Component {
   render() {
-    const {
-      selectedCategory,
-      basket,
-      clickedBasket,
-      addToCart,
-      removeFromCart,
-    } = this.props;
+    const { selectedCategory, basket, clickedBasket, addToCart } = this.props;
     return (
-      <Query query={GET_PRODUCTS_BY_CATEGORY} variables={{ category: selectedCategory }}>
+      <Query
+        query={GET_PRODUCTS_BY_CATEGORY}
+        variables={{ category: selectedCategory }}
+      >
         {({
           loading: productsLoading,
           error: productsError,
@@ -25,12 +22,11 @@ class Products extends Component {
           if (productsLoading) return <Loader />;
           if (productsError)
             return <p>Error fetching products: {productsError.message}</p>;
-           return (
+          return (
             <ProductList
               basket={basket}
               clickedBasket={clickedBasket}
               addToCart={addToCart}
-              removeFromCart={removeFromCart}
               selectedCategory={selectedCategory}
               productsData={productsData.products}
             />
@@ -45,7 +41,6 @@ Products.propTypes = {
   basket: PropTypes.array,
   clickedBasket: PropTypes.array,
   addToCart: PropTypes.func,
-  removeFromCart: PropTypes.func,
   selectedCategory: PropTypes.string,
 };
 export default Products;

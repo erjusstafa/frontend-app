@@ -2,8 +2,9 @@ import { Component } from "react";
 import PropTypes from "prop-types";
 import "./style.css";
 import Button from "../../../../UI/Button";
+import Img from "../../../../UI/Img";
 
- class Carousel extends Component {
+class Carousel extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -53,6 +54,9 @@ import Button from "../../../../UI/Button";
           ))}
         </div>
         <div className="carousel">
+          {
+            images.length >= 2 &&
+          
           <div className="carousel-controls">
             <Button
               className="carousel-button "
@@ -68,9 +72,9 @@ import Button from "../../../../UI/Button";
               width="31.7px"
               OnClick={this.nextImage}
             />
-          </div>
+           </div>  }
           <div className="carousel-images">
-            <img
+            <Img
               src={images[currentIndex]}
               alt={`Image ${currentIndex + 1}`}
               className="main-image"

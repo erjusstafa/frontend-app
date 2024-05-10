@@ -1,39 +1,40 @@
-import{ Component } from 'react'
-import PropTypes from "prop-types"; 
- class Attribute extends Component {
+import { Component } from "react";
+import PropTypes from "prop-types";
+import Button from "../../../UI/Button";
+class Attribute extends Component {
   render() {
-    const { key, attribute } = this.props;
+    const { attribute } = this.props;
 
     return (
-        <div key={key} className="atr-size">
+      <div className="atr-size">
         <div>
-          <span>{attribute.name}</span>
+          <span className="atr-name">
+            {attribute.name}
+            {":"}
+          </span>
           <div className="attributes-nested">
             {Array.isArray(attribute.items) &&
               attribute.items.map((it) => (
-                <div
+                <Button
                   key={it.id}
                   className={`${
                     attribute.name === "Color"
                       ? "attributes-items color-box"
                       : " attributes-items"
                   }`}
-                  style={{ backgroundColor: `${it.value}` }}
-                >
-                  <span onClick={() => alert(it.value)}>
-                    {attribute.name !== "Color" && it.value}
-                  </span>
-                </div>
+                  backgroundColor={it.value}
+                  icon={attribute.name !== "Color" && it.value}
+                  OnClick={() => alert(it.value)}
+                ></Button>
               ))}
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
 Attribute.propTypes = {
-    key: PropTypes.string,
-    attribute: PropTypes.array,
-  };
+  attribute: PropTypes.object,
+};
 export default Attribute;

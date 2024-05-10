@@ -1,5 +1,5 @@
 .details-container {
-  padding: 80px 0;
+  padding-top: 150px;
 }
 
 .details-container .details-wrapper {
@@ -7,10 +7,124 @@
   grid-template-columns: 60% auto;
   height: 541px;
   padding: 0 120px;
+  gap: 70px;
 }
 
 .details-container .details-wrapper .details-wrapper-img {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.attributes-nested {
+  display: flex;
+  gap: 5px;
+}
+
+.atr-size .attributes-items {
+  width: 63px;
+  height: 45px;
+  border: 1px solid #1d1f22;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  cursor: pointer;
+  font-family: Source Sans Pro;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.details-wrapper-description .atr-size .attributes-items.color-box {
+  width: 36px !important;
+  height: 36px;
+  border: 1px solid #d3d2d5;
+}
+
+.atr-size .atr-name {
+  font-family: "Roboto Mono", monospace;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.atr-size .attributes-items span {
+  font-family: "Source Sans 3", sans-serif;
+}
+
+.details-wrapper-description {
+  display: flex;
+  margin: auto 0;
+  line-height: 30px;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: calc(100% - 108px);
+}
+
+
+.details-wrapper-description h2 {
+  font-family: "Raleway", sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 27px;
+}
+.details-container .item-price {
+  font-weight: 500;
+  font-size: 18px;
+  font-family: "Raleway", sans-serif;
+  display: inline-flex;
+}
+
+.details-container .details-wrapper-price {
+  font-family: "Roboto Mono", monospace;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.details-wrapper-description #description {
+  font-family: "Roboto Mono", monospace;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: left;
+  color: #1d1f22;
+  line-height: 25.59px;
+}
+@media (max-width: 700px) {
+  .details-container .details-wrapper {
+    padding: 0;
+    display: block;
+  }
+
+  .details-container .details-wrapper .details-wrapper-img {
+    justify-content: center;
+  }
+  .details-wrapper-description {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .attributes-nested {
+    justify-content: center;
+  }
+  .details-wrapper-description h2 {
+    font-size: 20px;
+  }
+  .atr-size .atr-name {
+    font-size: 14px;
+  }
+
+  .atr-size .attributes-items {
+    width: 33px;
+    height: 25px;
+    font-size: 12px;
+  }
+
+  .details-wrapper-description .atr-size .attributes-items.color-box {
+    width: 23px !important;
+    height: 23px;
+  }
 }

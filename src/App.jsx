@@ -67,13 +67,15 @@ class App extends Component {
                   <Products
                     basket={basket}
                     clickedBasket={clickedBasket}
-                    removeFromCart={this.removeFromCart}
                     addToCart={this.addToCart}
                     selectedCategory={selectedCategory}
                   />
                 }
               />
-              <Route path="/details/:id" element={<Details />} />
+              <Route
+                path="/details/:id"
+                element={<Details addToCart={this.addToCart} />}
+              />
             </Routes>
           </div>
         </Router>

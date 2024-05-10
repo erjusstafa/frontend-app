@@ -4,19 +4,29 @@ import "./style.css";
 
 class Button extends Component {
   render() {
-    const { className, icon, height, width, OnClick } = this.props;
+    const { className, icon, height, width, backgroundColor, OnClick } =
+      this.props;
     return (
-      <div className={className} style={{ height: height, width: width }} onClick={OnClick}>
+      <div
+        className={className}
+        style={{
+          height: height,
+          width: width,
+          backgroundColor: backgroundColor,
+        }}
+        onClick={OnClick}
+      >
         {icon}
       </div>
     );
   }
 }
 Button.propTypes = {
-  icon: PropTypes.string,
+  icon: PropTypes.any,
   className: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,
-  OnClick:PropTypes.func
+  backgroundColor: PropTypes.any,
+  OnClick: PropTypes.func,
 };
 export default Button;

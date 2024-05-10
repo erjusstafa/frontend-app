@@ -97,7 +97,6 @@ ProductList.propTypes = {
   basket: PropTypes.array,
   clickedBasket: PropTypes.array,
   addToCart: PropTypes.func,
-  removeFromCart: PropTypes.func,
   selectedCategory: PropTypes.string,
   productsData: PropTypes.array,
 };
