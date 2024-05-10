@@ -17,56 +17,66 @@ class QuickShop extends Component {
           <span className="wraper-title">
             My Bag, &nbsp; <p>{basket.length} items</p>
           </span>
-          <div>
-            {Array.isArray(basket) &&
-              basket.reverse().map((item) => (
-                <div key={item.id} className="item-added">
-                   <div className="wrapper-item">
-                     <div className="item-name-add">
-                      <p>{item.name}</p>
-                    </div>
-                    {Array.isArray(item.prices) &&
-                      item.prices.map((item) => (
-                        <Price key={item.id} item={item} />
-                      ))}
-                    {Array.isArray(item.attributes) &&
-                      item.attributes.map((attribute) => (
-                        <Attribute
-                          key={attribute.id}
-                          attribute={attribute}
-                          stock={item.inStock}
-                        />
-                      ))}
+          {Array.isArray(basket) &&
+            basket.reverse().map((item) => (
+              <div key={item.id} className="item-added">
+                <div className="wrapper-item">
+                  <div className="item-name-add">
+                    <p>{item.name}</p>
                   </div>
-                   <div className="quickshop-button">
-                    <Button
-                      className="add-button"
-                      icon={"+"}
-                      height="20px"
-                      width="20px"
-                      OnClick={() => addToCart(item, item.id)}
-                    />
-                    <span>1</span>
-                    <Button
-                      className="add-button"
-                      icon={"-"}
-                      height="20px"
-                      width="20px"
-                      OnClick={() => removeFromCart(item.id)}
-                    />
-                  </div>
-                   <div className="item-image">
-                    <Img
-                      className=""
-                      src={item.gallery.join(",") ?? ""}
-                      height="100%"
-                      width="100%"
-                      alt={item.name}
-                    />{" "}
-                  </div>
+                  {Array.isArray(item.prices) &&
+                    item.prices.map((item) => (
+                      <Price key={item.id} item={item} />
+                    ))}
+                  {Array.isArray(item.attributes) &&
+                    item.attributes.map((attribute) => (
+                      <Attribute
+                        key={attribute.id}
+                        attribute={attribute}
+                        stock={item.inStock}
+                      />
+                    ))}
                 </div>
-              ))}
-          </div>
+                <div className="quickshop-button">
+                  <Button
+                    className="add-button"
+                    icon={"+"}
+                    height="20px"
+                    width="20px"
+                    OnClick={() => addToCart(item, item.id)}
+                  />
+                  <span>1</span>
+                  <Button
+                    className="add-button"
+                    icon={"-"}
+                    height="20px"
+                    width="20px"
+                    OnClick={() => removeFromCart(item.id)}
+                  />
+                </div>
+                <div className="item-image">
+                  <Img
+                    className=""
+                    src={item.gallery.join(",") ?? ""}
+                    height="100%"
+                    width="100%"
+                    alt={item.name}
+                  />{" "}
+                </div>
+              </div>
+            ))}
+            <div className="total">
+              <span>Total</span>
+              <span>$0</span>
+            </div>
+
+          <Button
+            className="place-order"
+            icon={"place order".toUpperCase()}
+            height="43px"
+            width="auto"
+            OnClick={() => alert("rrjrng")}
+          />
         </div>
       </div>
     );

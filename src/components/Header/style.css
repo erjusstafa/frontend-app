@@ -6,7 +6,7 @@
   align-items: center;
   position: fixed;
   width: 100vw;
-  background: white;
+  background: var(--white);
   z-index: 7;
   padding: 0 120px;
 }
@@ -31,8 +31,8 @@
 }
 
 .Navbar > .nav-items > .li.active {
-  border-bottom: 2px solid #5ece7b;
-  color: #5ece7b;
+  border-bottom: 2px solid var(--green);
+  color: var(--green);
 }
 
 .Navbar > .nav-basket {
@@ -48,7 +48,7 @@
   width: 25px;
   height: 25px;
   background-color: #000000;
-  color: white;
+  color: var(--white);
   border-radius: 50%;
   display: grid;
   place-content: center;
@@ -82,13 +82,13 @@
     top: 67px;
     display: flex;
     flex-direction: column;
-    background: #5ece7b;
+    background: var(--green);
     left: 0px;
     width: 100%;
     min-height: 200px;
     transform: translateX(-100%);
     transition: all 0.45s;
-    color: white;
+    color:  var(--white);
     line-height: 40px;
     justify-content: center;
     height: auto;
@@ -134,7 +134,7 @@
     content: "";
     position: absolute;
     height: 2px;
-    background: #5ece7b;
+    background: var(--green);
     border-radius: 2px;
     transition: all 0.45s ease-in-out;
   }

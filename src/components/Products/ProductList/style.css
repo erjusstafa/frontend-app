@@ -34,7 +34,7 @@
   padding: 16px;
   cursor: pointer;
   text-decoration: none;
-  color: #1d1f22;
+  color: var(--gray);
 }
 .wrapper-product .card-item:hover {
   box-shadow: 0px 4px 35px 0px #a8acb030;
@@ -70,7 +70,7 @@
   font-weight: 300;
   font-size: 18px;
   font-family: "Raleway", sans-serif;
-  color: #1d1f22;
+  color: var(--gray);
 }
 
 .wrapper-product .card-item .description-item .price-item {

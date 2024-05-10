@@ -66,8 +66,10 @@ class Header extends Component {
                   categoriesData.categories.map((category) => {
                     return (
                       <Link
-                      to={link}
-                        className={activeLink === category.name ? "li active" : "li"}
+                        to={link}
+                        className={
+                          activeLink === category.name ? "li active" : "li"
+                        }
                         key={category.name}
                         onClick={() => {
                           handleCategoryClick(category.name);
@@ -96,7 +98,7 @@ class Header extends Component {
                 <SlBasket className="basket-icon" />
                 {basket.length > 0 && <span>{basket && basket.length}</span>}
               </div>
-              { openQuickShop && (
+              {openQuickShop && (
                 <QuickShop
                   openQuickShop={openQuickShop}
                   basket={basket}

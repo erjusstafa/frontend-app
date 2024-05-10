@@ -1,22 +1,22 @@
 .add-button {
   padding: 10px;
-  border: 1px solid black;
+  border: 1px solid var(--black);
   display: grid;
   place-content: center;
   font-size: 25px;
 }
 
 .carousel-button {
-  background-color: rgba(5, 5, 5, 0.5);
-  color: white;
+  background-color: var(--black);
+  color: var(--white);
   display: grid;
   place-items: center;
   cursor: pointer;
 }
-
+.place-order,
 .add-to-cart {
-  background: #5ece7b;
-  color: white;
+  background: var(--green);
+  color: var(--white);
   text-align: center;
   cursor: pointer;
   font-family: "Raleway", sans-serif;
@@ -25,7 +25,6 @@
   padding: 12px 0;
 }
 
- 
 @media (max-width: 700px) {
   .carousel-button {
     width: 22px !important;
