@@ -65,12 +65,11 @@ class QuickShop extends Component {
                 </div>
               </div>
             ))}
-          {basket.length > 0 && (
-            <div className="total">
-              <span>Total</span>
-              <span>$0</span>
-            </div>
-          )}
+
+          <div className="total">
+            <span>Total</span>
+            <span>$0</span>
+          </div>
 
           <Button
             className={`${

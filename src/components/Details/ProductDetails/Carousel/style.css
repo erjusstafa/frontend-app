@@ -48,7 +48,7 @@
   justify-content: space-around;
   position: absolute;
   top: 14px;
-  width: 100%;
+  width: -webkit-fill-available;
 }
 
 .carousel-controls button {

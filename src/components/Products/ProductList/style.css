@@ -14,17 +14,15 @@
 
 .wrapper-product {
   display: grid;
-  grid-template-columns: repeat(3, auto);
-  /*   grid-template-columns: repeat(
-    auto-fill,
-    minmax(206px, 3fr)
-  );  
- */
-  justify-content: space-evenly;
+
   overflow: hidden;
   row-gap: 100px;
   gap: 10px;
   padding: 30px 59px;
+
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
 }
 
 .wrapper-product .card-item {
@@ -81,8 +79,6 @@
 }
 
 .wrapper-img-card .card-img.in-stock {
-  /*  width: 354px;
-  height: 330px; */
   object-fit: cover;
   width: 100%;
 }
