@@ -55,7 +55,7 @@ class ProductDetails extends Component {
   };
   render() {
     const { showAll } = this.state;
-    const { data, addToCart } = this.props;
+    const { data, handleClickButton } = this.props;
 
     return (
       <div className="details-container">
@@ -100,7 +100,7 @@ class ProductDetails extends Component {
                     }
                     height="auto"
                     width="100%"
-                    OnClick={() => addToCart(item, item.id)}
+                    OnClick={() => handleClickButton("TOGGLE",item, item.id)}
                   />
                   <div id="description">
                     {showAll
@@ -127,6 +127,6 @@ class ProductDetails extends Component {
 ProductDetails.propTypes = {
   showAll: PropTypes.bool,
   data: PropTypes.array,
-  addToCart: PropTypes.func,
+  handleClickButton: PropTypes.func,
 };
 export default ProductDetails;

@@ -5,7 +5,6 @@ import { ApolloProvider } from "@apollo/client";
 import Header from "./components/Header";
 import Details from "./components/Details";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
 import "./App.css";
 
 class App extends Component {
@@ -13,31 +12,44 @@ class App extends Component {
     selectedCategory: "all", // Default to "all" category
     basket: [],
     clickedBasket: [],
+    total: 0,
   };
 
   handleCategoryClick = (category) => {
     this.setState({ selectedCategory: category });
   };
 
-  //accpet 2 arg : product && product.id
-  addToCart = (product, hoveredProduct) => {
-    const productIndex = this.state.basket.findIndex(
-      (item) => item.id === product.id
-    );
+  handleClickButton = (action, product, hoveredProduct) => {
+    const productIndex = this.state.basket.findIndex(  (item) => item.id === product.id);
     const clickedBasketIndex = this.state.clickedBasket.includes(product?.id);
-    if (productIndex !== -1 && clickedBasketIndex) {
-      this.removeFromCart(product.id);
-    } else {
-      this.setState((prevState) => ({
-        basket: [...prevState.basket, product],
-      }));
-
-      this.setState((prevState) => ({
-        clickedBasket: [...prevState.clickedBasket, hoveredProduct],
-      }));
+    
+    switch (action) {
+      case "TOGGLE":
+        if (productIndex !== -1 && clickedBasketIndex) {
+          this.removeFromCart(product.id);
+        } else {
+          this.setState((prevState) => ({
+            basket: [...prevState.basket, product],
+          }));
+          this.setState((prevState) => ({
+            clickedBasket: [...prevState.clickedBasket, hoveredProduct],
+          }));
+        }
+        break;
+      case "ADD":
+        this.setState({
+          basket: [...this.state.basket, product],
+        });
+        break;
+      case "DELETE":
+        this.setState((prevState) => ({
+          basket: prevState.basket.filter((item) => item.id !== product.id),
+        }));
+        break;
+      default:
+        break;
     }
   };
-
   removeFromCart = (productId) => {
     this.setState((prevState) => ({
       basket: prevState.basket.filter((item) => item.id !== productId),
@@ -45,8 +57,12 @@ class App extends Component {
     }));
   };
 
+  updateBasket = (upd) => {
+    this.setState({ basket: upd });
+  };
+
   render() {
-    const { selectedCategory, basket, clickedBasket } = this.state;
+    const { selectedCategory, basket, total, clickedBasket } = this.state;
 
     return (
       <ApolloProvider client={client}>
@@ -55,11 +71,12 @@ class App extends Component {
             <Header
               link={"/"}
               basket={basket}
+              total={total}
               removeFromCart={this.removeFromCart}
               handleCategoryClick={this.handleCategoryClick}
-              addToCart={this.addToCart}
+              handleClickButton={this.handleClickButton}
+              updateBasket={this.updateBasket}
             />
-
             <Routes>
               <Route
                 exact
@@ -67,14 +84,14 @@ class App extends Component {
                 element={
                   <Products
                     clickedBasket={clickedBasket}
-                    addToCart={this.addToCart}
+                    handleClickButton={this.handleClickButton}
                     selectedCategory={selectedCategory}
                   />
                 }
               />
               <Route
                 path="/details/:id"
-                element={<Details addToCart={this.addToCart} />}
+                element={<Details handleClickButton={this.handleClickButton} />}
               />
             </Routes>
           </div>

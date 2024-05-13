@@ -8,7 +8,7 @@ import ProductList from "./ProductList";
 
 class Products extends Component {
   render() {
-    const { selectedCategory, clickedBasket, addToCart } = this.props;
+    const { selectedCategory, clickedBasket, handleClickButton } = this.props;
     return (
       <Query
         query={GET_PRODUCTS_BY_CATEGORY}
@@ -25,7 +25,7 @@ class Products extends Component {
           return (
             <ProductList
               clickedBasket={clickedBasket}
-              addToCart={addToCart}
+              handleClickButton={handleClickButton}
               selectedCategory={selectedCategory}
               productsData={productsData.products}
             />
@@ -38,7 +38,7 @@ class Products extends Component {
 
 Products.propTypes = {
   clickedBasket: PropTypes.array,
-  addToCart: PropTypes.func,
+  handleClickButton: PropTypes.func,
   selectedCategory: PropTypes.string,
 };
 export default Products;

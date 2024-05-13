@@ -8,7 +8,52 @@ import Attribute from "./Attribute";
 
 class QuickShop extends Component {
   render() {
-    const { openQuickShop, basket, removeFromCart, addToCart } = this.props;
+    const { openQuickShop, basket, handleClickButton, updateBasket } =
+      this.props;
+
+    //get Total in $
+    const getTotal = basket.reduce((accumulator, currentValue) => {
+      const productTotal = currentValue.prices.reduce(
+        (acc, curr) => acc + curr.amount,
+        0
+      );
+      return accumulator + productTotal;
+    }, 0);
+
+    let productQuantities = {};
+    basket.forEach((product) => {
+      const key = JSON.stringify({
+        id: product.id,
+        attributes: product.attributes,
+      });
+
+      if (Object.prototype.hasOwnProperty.call(productQuantities, key)) {
+        const existingProduct = { ...productQuantities[key] };
+        existingProduct.quantity += 1;
+        productQuantities[key] = existingProduct;
+      } else {
+        productQuantities[key] = {
+          product: product,
+          quantity: 1,
+        };
+      }
+    });
+
+    const removeEachItem = (product) => {
+      const existingProductIndex = basket.findIndex(
+        (item) => item.id === product.id
+      );
+      if (existingProductIndex !== -1) {
+        const updatedBasket = [...basket];
+        if (updatedBasket[existingProductIndex].quantity > 1) {
+          updatedBasket[existingProductIndex].quantity -= 1;
+        } else {
+          updatedBasket.splice(existingProductIndex, 1);
+        }
+        updateBasket(updatedBasket);
+      }
+    };
+
     return (
       <div
         className={openQuickShop ? "modal-container open" : "modal-container"}
@@ -17,23 +62,23 @@ class QuickShop extends Component {
           <span className="wraper-title">
             My Bag, &nbsp; <p>{basket.length} items</p>
           </span>
-          {Array.isArray(basket) &&
-            basket.reverse().map((item) => (
-              <div key={item.id} className="item-added">
+          {Object.entries(productQuantities).map(
+            ([key, { product, quantity }]) => (
+              <div key={product.id} className="item-added">
                 <div className="wrapper-item">
                   <div className="item-name-add">
-                    <p>{item.name}</p>
+                    <p>{product.name}</p>
                   </div>
-                  {Array.isArray(item.prices) &&
-                    item.prices.map((item) => (
+                  {Array.isArray(product.prices) &&
+                    product.prices.map((item) => (
                       <Price key={item.id} item={item} />
                     ))}
-                  {Array.isArray(item.attributes) &&
-                    item.attributes.map((attribute) => (
+                  {Array.isArray(product.attributes) &&
+                    product.attributes.map((attribute) => (
                       <Attribute
                         key={attribute.id}
                         attribute={attribute}
-                        stock={item.inStock}
+                        stock={product.inStock}
                       />
                     ))}
                 </div>
@@ -43,32 +88,33 @@ class QuickShop extends Component {
                     icon={"+"}
                     height="20px"
                     width="20px"
-                    OnClick={() => addToCart(item, item.id)}
+                    OnClick={() => handleClickButton("ADD", product)}
                   />
-                  <span>1</span>
+                  <span>{quantity}</span>
                   <Button
                     className="add-button"
                     icon={"-"}
                     height="20px"
                     width="20px"
-                    OnClick={() => removeFromCart(item.id)}
+                    OnClick={() => removeEachItem(product)}
                   />
                 </div>
                 <div className="item-image">
                   <Img
                     className=""
-                    src={item.gallery.join(",") ?? ""}
+                    src={product.gallery.join(",") ?? ""}
                     height="100%"
                     width="100%"
-                    alt={item.name}
+                    alt={product.name}
                   />{" "}
                 </div>
               </div>
-            ))}
+            )
+          )}
 
           <div className="total">
             <span>Total</span>
-            <span>$0</span>
+            <span>${getTotal.toFixed(2)}</span>
           </div>
 
           <Button
@@ -87,8 +133,9 @@ class QuickShop extends Component {
 }
 QuickShop.propTypes = {
   openQuickShop: PropTypes.bool,
+  total: PropTypes.number,
   basket: PropTypes.array,
-  removeFromCart: PropTypes.func,
-  addToCart: PropTypes.func,
+  updateBasket: PropTypes.func,
+  handleClickButton: PropTypes.func,
 };
 export default QuickShop;

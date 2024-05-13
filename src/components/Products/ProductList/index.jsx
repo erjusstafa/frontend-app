@@ -27,13 +27,13 @@ class ProductList extends Component {
 
   render() {
     const { hoveredProduct } = this.state;
-    const { selectedCategory, clickedBasket, productsData, addToCart } =
+    const { selectedCategory, clickedBasket, productsData, handleClickButton } =
       this.props;
 
     const addRemoveToCart = (event, product) => {
       event.preventDefault(); // Prevent the default behavior of the link
       event.stopPropagation(); // Prevent the event from bubbling up
-      addToCart(product, hoveredProduct);
+      handleClickButton("TOGGLE", product, hoveredProduct);
     };
 
     return (
@@ -95,7 +95,7 @@ class ProductList extends Component {
 }
 ProductList.propTypes = {
   clickedBasket: PropTypes.array,
-  addToCart: PropTypes.func,
+  handleClickButton: PropTypes.func,
   selectedCategory: PropTypes.string,
   productsData: PropTypes.array,
 };

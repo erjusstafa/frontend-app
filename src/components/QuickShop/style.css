@@ -110,6 +110,10 @@
   object-fit: contain;
 }
 
+.wraper-quickshop::-webkit-scrollbar {
+  width: 3px !important;
+}
+
 @media screen and (max-width: 700px) {
   .wraper-quickshop {
     width: 280px;

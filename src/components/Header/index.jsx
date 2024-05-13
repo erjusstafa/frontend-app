@@ -37,7 +37,7 @@ class Header extends Component {
   };
   render() {
     const { activeLink, toggle, openQuickShop } = this.state;
-    const { link, basket, handleCategoryClick, addToCart, removeFromCart } =
+    const { link,total, basket, handleCategoryClick, handleClickButton, updateBasket } =
       this.props;
 
     return (
@@ -102,8 +102,9 @@ class Header extends Component {
                 <QuickShop
                   openQuickShop={openQuickShop}
                   basket={basket}
-                  removeFromCart={removeFromCart}
-                  addToCart={addToCart}
+                  total={total}
+                  handleClickButton={handleClickButton}
+                  updateBasket={updateBasket}
                 />
               )}
             </header>
@@ -116,10 +117,11 @@ class Header extends Component {
 
 Header.propTypes = {
   link: PropTypes.any,
+  total: PropTypes.number,
   openQuickShop: PropTypes.bool,
   basket: PropTypes.array,
-  removeFromCart: PropTypes.func,
-  addToCart: PropTypes.func,
+  updateBasket: PropTypes.func,
+  handleClickButton: PropTypes.func,
   handleCategoryClick: PropTypes.func,
 };
 export default Header;

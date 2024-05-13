@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import Button from "../../../UI/Button";
 class Attribute extends Component {
   render() {
-    const { attribute, stock, OnClick } = this.props;
+    const { key, attribute, stock, OnClick } = this.props;
 
     return (
-      <div className="atr-size">
+      <div className="atr-size" key={key}>
         <div>
           <span className="atr-name">
             {attribute.name}
@@ -36,8 +36,9 @@ class Attribute extends Component {
 }
 
 Attribute.propTypes = {
+  key: PropTypes.string,
   stock: PropTypes.bool,
   attribute: PropTypes.object,
-  OnClick :PropTypes.func
+  OnClick: PropTypes.func,
 };
 export default Attribute;
