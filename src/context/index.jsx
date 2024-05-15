@@ -7,18 +7,18 @@ class AppProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      addedProduct: [],
+      selectedAttributes: [],
     };
   }
 
 
   render() {
-    const { addedProduct } = this.state;
+    const { selectedAttributes } = this.state;
 
     return (
       <AppContext.Provider
         value={{
-          addedProduct: addedProduct,
+          selectedAttributes: selectedAttributes,
          }}
       >
         {this.props.children}

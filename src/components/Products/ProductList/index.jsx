@@ -34,7 +34,7 @@ class ProductList extends Component {
       event.preventDefault(); // Prevent the default behavior of the link
       event.stopPropagation(); // Prevent the event from bubbling up
       handleClickButton("TOGGLE", product, hoveredProduct);
-    };
+     };
 
     return (
       <div className="container-products">
@@ -94,7 +94,7 @@ class ProductList extends Component {
   }
 }
 ProductList.propTypes = {
-  clickedBasket: PropTypes.array,
+  clickedBasket: PropTypes.any,
   handleClickButton: PropTypes.func,
   selectedCategory: PropTypes.string,
   productsData: PropTypes.array,

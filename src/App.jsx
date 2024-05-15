@@ -20,9 +20,10 @@ class App extends Component {
   };
 
   handleClickButton = (action, product, hoveredProduct) => {
-    const productIndex = this.state.basket.findIndex(  (item) => item.id === product.id);
+    const productIndex = this.state.basket.findIndex(
+      (item) => item.id === product.id
+    );
     const clickedBasketIndex = this.state.clickedBasket.includes(product?.id);
-    
     switch (action) {
       case "TOGGLE":
         if (productIndex !== -1 && clickedBasketIndex) {
@@ -46,6 +47,9 @@ class App extends Component {
           basket: prevState.basket.filter((item) => item.id !== product.id),
         }));
         break;
+
+      case "TEST":
+        break;
       default:
         break;
     }
@@ -57,8 +61,11 @@ class App extends Component {
     }));
   };
 
-  updateBasket = (upd) => {
-    this.setState({ basket: upd });
+  updateBasketState = (updBasket) => {
+    this.setState({ basket: updBasket });
+    if (this.state.basket.length === 1) {
+      this.setState({ clickedBasket: updBasket });
+    }
   };
 
   render() {
@@ -75,7 +82,7 @@ class App extends Component {
               removeFromCart={this.removeFromCart}
               handleCategoryClick={this.handleCategoryClick}
               handleClickButton={this.handleClickButton}
-              updateBasket={this.updateBasket}
+              updateBasketState={this.updateBasketState}
             />
             <Routes>
               <Route
@@ -91,7 +98,13 @@ class App extends Component {
               />
               <Route
                 path="/details/:id"
-                element={<Details handleClickButton={this.handleClickButton} />}
+                element={
+                  <Details
+                    basket={basket}
+                    updateBasketState={this.updateBasketState}
+                    handleClickButton={this.handleClickButton}
+                  />
+                }
               />
             </Routes>
           </div>

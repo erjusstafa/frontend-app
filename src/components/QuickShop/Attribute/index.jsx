@@ -2,32 +2,67 @@ import { Component } from "react";
 import PropTypes from "prop-types";
 import Button from "../../../UI/Button";
 class Attribute extends Component {
-  render() {
-    const { key, attribute, stock, OnClick } = this.props;
+  constructor(props) {
+    super(props);
+  }
 
+  render() {
+    const {
+      key,
+      item,
+      attribute,
+      stock,
+      clicked,
+      OnClick,
+      singleProductDetails,
+    } = this.props;
     return (
       <div className="atr-size" key={key}>
-        <div>
+        <div className={attribute.name}>
           <span className="atr-name">
-            {attribute.name}
-            {":"}
+            {!Array.isArray(attribute.items)
+              ? singleProductDetails?.attributeName
+              : attribute?.name}
           </span>
+
           <div className="attributes-nested">
-            {Array.isArray(attribute.items) &&
-              attribute.items.map((it) => (
-                <Button
-                  key={it.id}
-                  className={`${
-                    attribute.name === "Color"
-                      ? "attributes-items color-box"
-                      : " attributes-items out"
-                  }`}
-                  id={`${stock ? "attributes in" : " attributes out"}`}
-                  backgroundColor={it.value}
-                  icon={attribute.name !== "Color" && it.value}
-                  OnClick={OnClick}
-                ></Button>
-              ))}
+            {!Array.isArray(attribute.items) ? (
+              <Button
+                key={attribute.id}
+                className={`${
+                  attribute.name === "Color"
+                    ? "attributes-items color-box"
+                    : " attributes-items out "
+                }`}
+                id={`${"attributes in"}`}
+                backgroundColor={attribute.value}
+                icon={
+                  singleProductDetails?.attributeName !== "Color" &&
+                  attribute.value
+                }
+              ></Button>
+            ) : (
+              attribute.items.map((atr) => {
+                return (
+                  <Button
+                    key={atr.id}
+                    className={`${
+                      attribute.name === "Color"
+                        ? "attributes-items color-box"
+                        : " attributes-items out "
+                    }`}
+                    id={`${
+                      Array.isArray(clicked) && clicked.includes(atr.id)
+                        ? "active "
+                        : "  "
+                    }  ${stock ? "attributes in" : " attributes out"}`}
+                    backgroundColor={atr.value}
+                    icon={attribute.name !== "Color" && atr.value}
+                    OnClick={() => OnClick(atr, item, attribute.id)}
+                  ></Button>
+                );
+              })
+            )}
           </div>
         </div>
       </div>
@@ -36,9 +71,12 @@ class Attribute extends Component {
 }
 
 Attribute.propTypes = {
+  singleProductDetails: PropTypes.any,
   key: PropTypes.string,
   stock: PropTypes.bool,
+  clicked: PropTypes.any,
   attribute: PropTypes.object,
+  item: PropTypes.object,
   OnClick: PropTypes.func,
 };
 export default Attribute;

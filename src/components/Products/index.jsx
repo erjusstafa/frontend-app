@@ -37,7 +37,7 @@ class Products extends Component {
 }
 
 Products.propTypes = {
-  clickedBasket: PropTypes.array,
+  clickedBasket: PropTypes.any,
   handleClickButton: PropTypes.func,
   selectedCategory: PropTypes.string,
 };

@@ -76,6 +76,7 @@
   align-items: center;
   flex-direction: row;
   cursor: pointer;
+ 
 }
 
 .wraper-quickshop .atr-size .attributes-items span {
@@ -85,7 +86,7 @@
 .wraper-quickshop .atr-size .attributes-items.color-box {
   width: 15px;
   height: 15px;
-}
+ }
 .add-to-cart.out {
   pointer-events: none;
   background-color: var(--disabled-bg);
@@ -122,5 +123,8 @@
 
   .modal-container.open {
     top: 67px;
+  }
+  .wraper-quickshop .atr-size .attributes-nested {
+    justify-content: start;
   }
 }

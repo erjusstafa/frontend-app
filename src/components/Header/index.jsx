@@ -37,7 +37,7 @@ class Header extends Component {
   };
   render() {
     const { activeLink, toggle, openQuickShop } = this.state;
-    const { link,total, basket, handleCategoryClick, handleClickButton, updateBasket } =
+    const { link,total, basket, handleCategoryClick, handleClickButton, updateBasketState } =
       this.props;
 
     return (
@@ -104,7 +104,7 @@ class Header extends Component {
                   basket={basket}
                   total={total}
                   handleClickButton={handleClickButton}
-                  updateBasket={updateBasket}
+                  updateBasketState={updateBasketState}
                 />
               )}
             </header>
@@ -119,8 +119,8 @@ Header.propTypes = {
   link: PropTypes.any,
   total: PropTypes.number,
   openQuickShop: PropTypes.bool,
-  basket: PropTypes.array,
-  updateBasket: PropTypes.func,
+  basket: PropTypes.any,
+  updateBasketState: PropTypes.func,
   handleClickButton: PropTypes.func,
   handleCategoryClick: PropTypes.func,
 };

@@ -11,6 +11,8 @@ class ProductDetails extends Component {
     super(props);
     this.state = {
       showAll: false,
+      selectedAttributes: [],
+      clicked: [],
     };
   }
 
@@ -53,10 +55,43 @@ class ProductDetails extends Component {
   convertNodesToReact = (nodes) => {
     return nodes.map((node, index) => this.convertNodeToReact(node, index));
   };
-  render() {
-    const { showAll } = this.state;
-    const { data, handleClickButton } = this.props;
 
+  render() {
+    const { showAll, selectedAttributes, clicked } = this.state;
+    const { data, updateBasketState } = this.props;
+
+    //get clicked data
+    const handleSelect = (attributes, productItem, testId) => {
+      const index = productItem.attributes.findIndex(
+        (item) => item.id === testId
+      );
+
+      this.setState({
+        selectedAttributes: {
+          ...selectedAttributes,
+          attributes: Object.values([attributes]),
+          attributeName: productItem.attributes[index].id,
+          name: productItem.name,
+          gallery: productItem.gallery,
+          price: productItem.prices[0].amount,
+        },
+      });
+      this.setState((prevState) => {
+        const isActiveAtribute = clicked.includes(attributes?.id);
+        return {
+          clicked: isActiveAtribute
+            ? prevState.clicked.filter((itemId) => {itemId !== attributes.id})
+            : [...prevState.clicked, attributes.id],
+        };
+      });
+    };
+
+    const handleAdd = () => {
+      updateBasketState([selectedAttributes]);
+    };
+
+/*     console.log("🥳", clicked);
+ */
     return (
       <div className="details-container">
         {Array.isArray(data) &&
@@ -66,28 +101,26 @@ class ProductDetails extends Component {
               <div key={item.id} className="details-wrapper">
                 <div className="details-wrapper-img">
                   <div className="details-wrapper-list-img">
-                    <Carousel
-                      stock={item.inStock}
-                      mainImg={item.gallery}
-                      images={data[0].gallery}
-                    />
+                    <Carousel stock={item.inStock} images={data[0].gallery} />
                   </div>
                 </div>
-                <div key={item.id} className="details-wrapper-description">
+                <div className="details-wrapper-description">
                   <h2>{item.name}</h2>
                   {Array.isArray(item.attributes) &&
                     item.attributes.map((attribute) => (
                       <Attribute
+                        item={item}
+                        clicked={clicked}
                         key={attribute.id}
                         attribute={attribute}
                         stock={item.inStock}
-                        OnClick={() => alert("ProductDetails")}
+                        OnClick={handleSelect}
                       />
                     ))}
                   <h2 className="details-wrapper-price">Price:</h2>
                   {Array.isArray(item.prices) &&
-                    item.prices.map((item) => (
-                      <Price key={item.id} item={item} />
+                    item.prices.map((price) => (
+                      <Price item={item} key={price.id} price={price} />
                     ))}
                   <Button
                     className={
@@ -100,7 +133,7 @@ class ProductDetails extends Component {
                     }
                     height="auto"
                     width="100%"
-                    OnClick={() => handleClickButton("TOGGLE",item, item.id)}
+                    OnClick={handleAdd}
                   />
                   <div id="description">
                     {showAll
@@ -126,6 +159,8 @@ class ProductDetails extends Component {
 
 ProductDetails.propTypes = {
   showAll: PropTypes.bool,
+  basket: PropTypes.any,
+  updateBasketState: PropTypes.func,
   data: PropTypes.array,
   handleClickButton: PropTypes.func,
 };
