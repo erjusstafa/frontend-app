@@ -12,7 +12,6 @@ class ProductDetails extends Component {
     super(props);
     this.state = {
       showAll: false,
-      clicked: [],
     };
   }
 

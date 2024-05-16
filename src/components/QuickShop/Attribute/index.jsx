@@ -17,7 +17,6 @@ class Attribute extends Component {
       singleProductDetails,
     } = this.props;
 
-    console.log("product", singleProductDetails);
     return (
       <div className="atr-size" key={key}>
         <div className={attribute.name}>
