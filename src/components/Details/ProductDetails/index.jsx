@@ -57,38 +57,29 @@ class ProductDetails extends Component {
   };
 
   render() {
-    const { showAll, clicked } = this.state;
-    const { data, updateBasketState, basket } = this.props;
+    const { showAll } = this.state;
+    const { data } = this.props;
 
     return (
       <AppContext.Consumer>
         {(context) => {
           const {
+            basket,
+            clicked,
             selectedAttributes,
             addSingleAttribute,
-            emptySelectedAttributes,
+            updateBasketState,
+            isClickedAtribute,
           } = context;
 
           //get clicked data
           const handleClickOption = (attributes, productItem, id, test) => {
             addSingleAttribute(attributes, productItem, id, test); //call functio from context-API
-            this.setState((prevState) => {
-              const isActiveAtribute =
-                Array.isArray(clicked) && clicked.includes(attributes?.id);
-              return {
-                clicked: isActiveAtribute
-                  ? prevState.clicked.filter((itemId) => {
-                      itemId !== attributes.id;
-                    })
-                  : [...prevState.clicked, attributes.id],
-              };
-            });
+            isClickedAtribute(attributes);
           };
 
           const handleAddSelectedAttrToCart = () => {
             updateBasketState([...basket, selectedAttributes]);
-            this.setState({ clicked: [] });
-            emptySelectedAttributes();//call functio from context-API
           };
 
           return (
@@ -171,9 +162,6 @@ class ProductDetails extends Component {
 
 ProductDetails.propTypes = {
   showAll: PropTypes.bool,
-  basket: PropTypes.any,
-  updateBasketState: PropTypes.func,
   data: PropTypes.array,
-  handleClickButton: PropTypes.func,
 };
 export default ProductDetails;

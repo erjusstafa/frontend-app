@@ -7,13 +7,12 @@ class AppProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      basket : [],
+      basket: [],
       clickedBasket: [],
       selectedAttributes: [],
-     };    
+      clicked: [],
+    };
   }
-
-
 
   handleClickButton = (action, product, hoveredProduct) => {
     const productIndex = this.state.basket.findIndex(
@@ -58,14 +57,12 @@ class AppProvider extends Component {
     }));
   };
 
-  
   updateBasketState = (updBasket) => {
     this.setState({ basket: updBasket });
     if (this.state.basket.length === 1) {
       this.setState({ clickedBasket: updBasket });
     }
   };
-
 
   addSingleAttribute = (attributes, productItem, id) => {
     const index = productItem.attributes.findIndex((item) => item.id === id);
@@ -86,21 +83,42 @@ class AppProvider extends Component {
     this.setState({ selectedAttributes: [] });
   };
 
+  emptyClicked = () => {
+    this.setState({ clicked: [] });
+  };
+
+  isClickedAtribute = (attributes) => {
+    const { clicked } = this.state;
+    this.setState((prevState) => {
+      const isActiveAtribute =
+        Array.isArray(clicked) && clicked.includes(attributes?.id);
+      return {
+        clicked: isActiveAtribute
+          ? prevState.clicked.filter((itemId) => {
+              itemId !== attributes.id;
+            })
+          : [...prevState.clicked, attributes.id],
+      };
+    });
+  };
 
   render() {
-    const { basket, clickedBasket, selectedAttributes  } = this.state;
+    const { basket, clickedBasket, selectedAttributes, clicked } = this.state;
 
     return (
       <AppContext.Provider
         value={{
-           basket: basket,
-           clickedBasket:clickedBasket,
+          basket: basket,
+          clickedBasket: clickedBasket,
           selectedAttributes: selectedAttributes,
+          clicked: clicked,
           handleClickButton: this.handleClickButton,
-          removeFromCart:this.removeFromCart,
+          removeFromCart: this.removeFromCart,
           updateBasketState: this.updateBasketState,
           emptySelectedAttributes: this.emptySelectedAttributes,
           addSingleAttribute: this.addSingleAttribute,
+          emptyClicked: this.emptyClicked,
+          isClickedAtribute: this.isClickedAtribute,
         }}
       >
         {this.props.children}
@@ -112,6 +130,5 @@ class AppProvider extends Component {
 AppProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
- 
 
 export { AppProvider, AppContext };

@@ -9,6 +9,7 @@ import { SlBasket } from "react-icons/sl";
 import Loader from "../Loader";
 import QuickShop from "../QuickShop";
 import { Link } from "react-router-dom";
+import { AppContext } from "../../context";
 
 class Header extends Component {
   constructor(props) {
@@ -37,8 +38,7 @@ class Header extends Component {
   };
   render() {
     const { activeLink, toggle, openQuickShop } = this.state;
-    const { link,total, basket, handleCategoryClick, handleClickButton, updateBasketState } =
-      this.props;
+    const { link, handleCategoryClick } = this.props;
 
     return (
       <Query query={GET_CATEGORIES}>
@@ -52,62 +52,75 @@ class Header extends Component {
             return <p>Error fetching categories: {categoriesError.message}</p>;
 
           return (
-            <header className={`Navbar ${toggle && "open"}`}>
-              {" "}
-              <div
-                className={`nav-toggle ${toggle && "open"}`}
-                onClick={this.handleToggle}
-              >
-                <div className="bar"></div>
-              </div>
-              <ul className={`nav-items ${toggle && "open"}`}>
-                {/* Render category names */}
-                {Array.isArray(categoriesData.categories) &&
-                  categoriesData.categories.map((category) => {
-                    return (
-                      <Link
-                        to={link}
-                        className={
-                          activeLink === category.name ? "li active" : "li"
-                        }
-                        key={category.name}
-                        onClick={() => {
-                          handleCategoryClick(category.name);
-                          this.handleActiveLinkClick(category.name);
-                          this.setState({ toggle: false });
-                        }}
-                      >
-                        {category.name.toUpperCase()}
-                      </Link>
-                    );
-                  })}
-              </ul>
-              <div className="nav-logo">
-                <Img
-                  className={"logo"}
-                  src={logo}
-                  height={"41px"}
-                  width={"41px"}
-                  alt={"logo"}
-                />
-              </div>
-              <div
-                className={` ${toggle ? "nav-basket  open" : "nav-basket"}`}
-                onClick={this.handleOpenQuickShop}
-              >
-                <SlBasket className="basket-icon" />
-                {basket.length > 0 && <span>{basket && basket.length}</span>}
-              </div>
-              {openQuickShop && (
-                <QuickShop
-                  openQuickShop={openQuickShop}
-                  basket={basket}
-                  total={total}
-                  handleClickButton={handleClickButton}
-                  updateBasketState={updateBasketState}
-                />
-              )}
-            </header>
+            <AppContext.Consumer>
+              {(context) => {
+                const { basket, emptySelectedAttributes, emptyClicked } =
+                  context;
+                const handleOpenQuickShop = () => {
+                  this.setState({ openQuickShop: !this.state.openQuickShop });
+                  emptySelectedAttributes();
+                  emptyClicked();
+                };
+                return (
+                  <header className={`Navbar ${toggle && "open"}`}>
+                    {" "}
+                    <div
+                      className={`nav-toggle ${toggle && "open"}`}
+                      onClick={this.handleToggle}
+                    >
+                      <div className="bar"></div>
+                    </div>
+                    <ul className={`nav-items ${toggle && "open"}`}>
+                      {/* Render category names */}
+                      {Array.isArray(categoriesData.categories) &&
+                        categoriesData.categories.map((category) => {
+                          return (
+                            <Link
+                              to={link}
+                              className={
+                                activeLink === category.name
+                                  ? "li active"
+                                  : "li"
+                              }
+                              key={category.name}
+                              onClick={() => {
+                                handleCategoryClick(category.name);
+                                this.handleActiveLinkClick(category.name);
+                                this.setState({ toggle: false });
+                              }}
+                            >
+                              {category.name.toUpperCase()}
+                            </Link>
+                          );
+                        })}
+                    </ul>
+                    <div className="nav-logo">
+                      <Img
+                        className={"logo"}
+                        src={logo}
+                        height={"41px"}
+                        width={"41px"}
+                        alt={"logo"}
+                      />
+                    </div>
+                    <div
+                      className={` ${
+                        toggle ? "nav-basket  open" : "nav-basket"
+                      }`}
+                      onClick={handleOpenQuickShop}
+                    >
+                      <SlBasket className="basket-icon" />
+                      {basket.length > 0 && (
+                        <span>{basket && basket.length}</span>
+                      )}
+                    </div>
+                    {openQuickShop && (
+                      <QuickShop openQuickShop={openQuickShop} />
+                    )}
+                  </header>
+                );
+              }}
+            </AppContext.Consumer>
           );
         }}
       </Query>
@@ -117,11 +130,7 @@ class Header extends Component {
 
 Header.propTypes = {
   link: PropTypes.any,
-  total: PropTypes.number,
   openQuickShop: PropTypes.bool,
-  basket: PropTypes.any,
-  updateBasketState: PropTypes.func,
-  handleClickButton: PropTypes.func,
   handleCategoryClick: PropTypes.func,
 };
 export default Header;
