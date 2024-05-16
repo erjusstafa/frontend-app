@@ -55,6 +55,7 @@ class QuickShop extends Component {
       }
     };
 
+    console.log("🥳", productQuantities);
 
     return (
       <div
@@ -71,10 +72,21 @@ class QuickShop extends Component {
                   <div className="item-name-add">
                     <p>{product.name ?? ""}</p>
                   </div>
-                  {Array.isArray(product.prices) &&
+                  {product?.price ? (
+                    <span key={key} className="item-price">
+                      <p>{product?.currency}</p>
+                      <p>{product?.price.toFixed(2)}</p>
+                    </span>
+                  ) : (
+                    Array.isArray(product.prices) &&
                     product.prices.map((price) => (
-                      <Price key={price.id} price={price} />
-                    ))}
+                      <Price
+                        key={price.id}
+                        price={price}
+                        singleProductDetails={product}
+                      />
+                    ))
+                  )}
                   {Array.isArray(product?.attributes) &&
                     product.attributes.map((attribute) => (
                       <Attribute
@@ -127,7 +139,7 @@ class QuickShop extends Component {
             icon={"place order".toUpperCase()}
             height="43px"
             width="auto"
-            OnClick={() => alert("rrjrng")}
+            OnClick={() => alert("place-order")}
           />
         </div>
       </div>

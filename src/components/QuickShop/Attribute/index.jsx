@@ -16,6 +16,8 @@ class Attribute extends Component {
       OnClick,
       singleProductDetails,
     } = this.props;
+
+    console.log("product", singleProductDetails);
     return (
       <div className="atr-size" key={key}>
         <div className={attribute.name}>
@@ -58,7 +60,7 @@ class Attribute extends Component {
                     }  ${stock ? "attributes in" : " attributes out"}`}
                     backgroundColor={atr.value}
                     icon={attribute.name !== "Color" && atr.value}
-                    OnClick={() => OnClick(atr, item, attribute.id)}
+                    OnClick={() => OnClick(atr, item, attribute.id, attribute.name)}
                   ></Button>
                 );
               })

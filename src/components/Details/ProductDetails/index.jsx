@@ -58,13 +58,11 @@ class ProductDetails extends Component {
 
   render() {
     const { showAll, selectedAttributes, clicked } = this.state;
-    const { data, updateBasketState } = this.props;
+    const { data, updateBasketState, basket } = this.props;
 
     //get clicked data
-    const handleSelect = (attributes, productItem, testId) => {
-      const index = productItem.attributes.findIndex(
-        (item) => item.id === testId
-      );
+    const handleClickOption = (attributes, productItem, id, test) => {
+      const index = productItem.attributes.findIndex((item) => item.id === id);
 
       this.setState({
         selectedAttributes: {
@@ -74,23 +72,28 @@ class ProductDetails extends Component {
           name: productItem.name,
           gallery: productItem.gallery,
           price: productItem.prices[0].amount,
+          currency: productItem.prices[0].currency.symbol
         },
       });
       this.setState((prevState) => {
-        const isActiveAtribute = clicked.includes(attributes?.id);
+        const isActiveAtribute =
+          Array.isArray(clicked) && clicked.includes(attributes?.id);
         return {
           clicked: isActiveAtribute
-            ? prevState.clicked.filter((itemId) => {itemId !== attributes.id})
+            ? prevState.clicked.filter((itemId) => {
+                itemId !== attributes.id;
+              })
             : [...prevState.clicked, attributes.id],
         };
       });
     };
 
     const handleAdd = () => {
-      updateBasketState([selectedAttributes]);
+      updateBasketState([...basket, selectedAttributes]);
+      this.setState({clicked: []})
     };
 
-/*     console.log("🥳", clicked);
+/*     console.log("🥳", basket);
  */
     return (
       <div className="details-container">
@@ -114,13 +117,13 @@ class ProductDetails extends Component {
                         key={attribute.id}
                         attribute={attribute}
                         stock={item.inStock}
-                        OnClick={handleSelect}
+                        OnClick={handleClickOption}
                       />
                     ))}
                   <h2 className="details-wrapper-price">Price:</h2>
                   {Array.isArray(item.prices) &&
                     item.prices.map((price) => (
-                      <Price item={item} key={price.id} price={price} />
+                      <Price item={item} key={price.id} price={price}  atribute={item.attributes}/>
                     ))}
                   <Button
                     className={
