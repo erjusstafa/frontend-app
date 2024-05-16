@@ -69,6 +69,7 @@ class ProductDetails extends Component {
             addSingleAttribute,
             updateBasketState,
             isClickedAtribute,
+            handleClickButton,
           } = context;
 
           //get clicked data
@@ -130,7 +131,18 @@ class ProductDetails extends Component {
                           }
                           height="auto"
                           width="100%"
-                          OnClick={handleAddSelectedAttrToCart}
+                          OnClick={() => {
+                            //we check if an item has no attribute, we add it directly to the cart
+                            if (item.attributes.length === 0) {
+                              handleClickButton("TOGGLE", item);
+                            } else {
+                              if (clicked.length > 0) {
+                                handleAddSelectedAttrToCart();
+                              } else {
+                                alert("Please, click on an option!");
+                              }
+                            }
+                          }}
                         />
                         <div id="description">
                           {showAll

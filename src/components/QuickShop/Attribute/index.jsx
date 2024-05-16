@@ -17,17 +17,18 @@ class Attribute extends Component {
       singleProductDetails,
     } = this.props;
 
+    let checkIfIsArray = !Array.isArray(attribute.items);
     return (
       <div className="atr-size" key={key}>
         <div className={attribute.name}>
           <span className="atr-name">
-            {!Array.isArray(attribute.items)
+            {checkIfIsArray
               ? singleProductDetails?.attributeName
               : attribute?.name}
           </span>
 
           <div className="attributes-nested">
-            {!Array.isArray(attribute.items) ? (
+            {checkIfIsArray ? (
               <Button
                 key={attribute.id}
                 className={`${
@@ -59,7 +60,11 @@ class Attribute extends Component {
                     }  ${stock ? "attributes in" : " attributes out"}`}
                     backgroundColor={atr.value}
                     icon={attribute.name !== "Color" && atr.value}
-                    OnClick={() => OnClick(atr, item, attribute.id)}
+                    OnClick={
+                      checkIfIsArray
+                        ? null
+                        : () => OnClick(atr, item, attribute.id)
+                    }
                   ></Button>
                 );
               })

@@ -50,8 +50,23 @@ class QuickShop extends Component {
             }
           };
 
-          const totalPrice = 20;
+          const getTotalPrice = () => {
+            if (basket[0]?.price) {
+              return basket.reduce((accumulator, currentValue) => {
+                return accumulator + currentValue.price;
+              }, 0);
+            } else {
+              return basket.reduce((accumulator, currentValue) => {
+                const productTotal = currentValue?.prices.reduce(
+                  (acc, curr) => acc + curr.amount,
+                  0
+                );
+                return accumulator + productTotal;
+              }, 0);
+            }
+          };
 
+          const totalPrice = getTotalPrice();
           return (
             <div
               className={
@@ -65,8 +80,7 @@ class QuickShop extends Component {
                 {Object.entries(productQuantities)
                   .reverse()
                   .map(([key, { product, quantity }]) => {
-
-                     return (
+                    return (
                       <div key={product.id} className="item-added">
                         <div className="wrapper-item">
                           <div className="item-name-add">
@@ -117,7 +131,7 @@ class QuickShop extends Component {
                         <div className="item-image">
                           <Img
                             className=""
-                            src={product.gallery.join(",") || ""}
+                            src={product.gallery.join(",") ?? ""}
                             height="100%"
                             width="100%"
                             alt={product.name ?? ""}
@@ -151,6 +165,5 @@ class QuickShop extends Component {
 }
 QuickShop.propTypes = {
   openQuickShop: PropTypes.bool,
-  basket: PropTypes.any,
 };
 export default QuickShop;

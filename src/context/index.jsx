@@ -7,6 +7,7 @@ class AppProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: true,
       basket: [],
       clickedBasket: [],
       selectedAttributes: [],
@@ -14,22 +15,33 @@ class AppProvider extends Component {
     };
   }
 
+  componentDidMount() {
+    // Set a timer to change loading state to false after 5 seconds
+    this.loadingTimer = setTimeout(() => {
+      this.setState({ loading: false });
+    }, 5000);
+  }
+
+  componentWillUnmount() {
+    // Clear the timer if the component is unmounted
+    clearTimeout(this.loadingTimer);
+  }
+
   handleClickButton = (action, product, hoveredProduct) => {
     const productIndex = this.state.basket.findIndex(
       (item) => item.id === product.id
     );
     const clickedBasketIndex = this.state.clickedBasket.includes(product?.id);
-    switch (action) {
+     switch (action) {
       case "TOGGLE":
-        if (productIndex !== -1 && clickedBasketIndex) {
+        if (productIndex !== -1 || clickedBasketIndex ) {
           this.removeFromCart(product.id);
         } else {
           this.setState((prevState) => ({
             basket: [...prevState.basket, product],
+            clickedBasket: [...prevState.clickedBasket, hoveredProduct]
           }));
-          this.setState((prevState) => ({
-            clickedBasket: [...prevState.clickedBasket, hoveredProduct],
-          }));
+         
         }
         break;
       case "ADD":
@@ -103,11 +115,13 @@ class AppProvider extends Component {
   };
 
   render() {
-    const { basket, clickedBasket, selectedAttributes, clicked } = this.state;
+    const { loading, basket, clickedBasket, selectedAttributes, clicked } =
+      this.state;
 
     return (
       <AppContext.Provider
         value={{
+          loading: loading,
           basket: basket,
           clickedBasket: clickedBasket,
           selectedAttributes: selectedAttributes,

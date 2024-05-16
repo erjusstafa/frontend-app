@@ -6,7 +6,6 @@ import "./style.css";
 import logo from "../../assets/logo.png";
 import Img from "../../UI/Img";
 import { SlBasket } from "react-icons/sl";
-import Loader from "../Loader";
 import QuickShop from "../QuickShop";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context";
@@ -42,12 +41,7 @@ class Header extends Component {
 
     return (
       <Query query={GET_CATEGORIES}>
-        {({
-          loading: categoriesLoading,
-          error: categoriesError,
-          data: categoriesData,
-        }) => {
-          if (categoriesLoading) return <Loader />;
+        {({ error: categoriesError, data: categoriesData }) => {
           if (categoriesError)
             return <p>Error fetching categories: {categoriesError.message}</p>;
 
@@ -72,8 +66,7 @@ class Header extends Component {
                     </div>
                     <ul className={`nav-items ${toggle && "open"}`}>
                       {/* Render category names */}
-                      {Array.isArray(categoriesData.categories) &&
-                        categoriesData.categories.map((category) => {
+                      {Object.values(categoriesData?.categories || []).map((category) => {
                           return (
                             <Link
                               to={link}
