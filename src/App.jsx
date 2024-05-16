@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Details from "./components/Details";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
+import { AppProvider } from "./context";
 
 class App extends Component {
   state = {
@@ -73,6 +74,7 @@ class App extends Component {
 
     return (
       <ApolloProvider client={client}>
+        <AppProvider> 
         <Router>
           <div className="wrapper">
             <Header
@@ -109,6 +111,7 @@ class App extends Component {
             </Routes>
           </div>
         </Router>
+        </AppProvider>
       </ApolloProvider>
     );
   }

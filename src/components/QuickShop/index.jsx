@@ -55,9 +55,9 @@ class QuickShop extends Component {
       }
     };
 
-    console.log("🥳", productQuantities);
 
     return (
+      
       <div
         className={openQuickShop ? "modal-container open" : "modal-container"}
       >
@@ -65,7 +65,7 @@ class QuickShop extends Component {
           <span className="wraper-title">
             My Bag, &nbsp; <p>{basket.length} items</p>
           </span>
-          {Object.entries(productQuantities).map(
+          {Object.entries(productQuantities).reverse().map(
             ([key, { product, quantity }]) => (
               <div key={product.id} className="item-added">
                 <div className="wrapper-item">

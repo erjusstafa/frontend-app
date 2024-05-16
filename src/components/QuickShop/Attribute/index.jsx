@@ -60,7 +60,7 @@ class Attribute extends Component {
                     }  ${stock ? "attributes in" : " attributes out"}`}
                     backgroundColor={atr.value}
                     icon={attribute.name !== "Color" && atr.value}
-                    OnClick={() => OnClick(atr, item, attribute.id, attribute.name)}
+                    OnClick={() => OnClick(atr, item, attribute.id)}
                   ></Button>
                 );
               })
