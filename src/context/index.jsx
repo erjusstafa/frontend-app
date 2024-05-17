@@ -17,10 +17,10 @@ class AppProvider extends Component {
   handleClickButton = (action, product, hoveredProduct) => {
     const { basket, clickedBasket } = this.state;
     const productIndex = basket.findIndex((item) => item.id === product.id);
-    const clickedBasketIndex = clickedBasket.includes(product?.id);
+    const isProductInClickedBasket = clickedBasket.includes(product?.id);
     switch (action) {
       case "TOGGLE":
-        if (productIndex !== -1 || clickedBasketIndex) {
+        if (productIndex !== -1 || isProductInClickedBasket) {
           this.removeFromCart(product.id);
         } else {
           this.setState((prevState) => ({
@@ -36,7 +36,9 @@ class AppProvider extends Component {
         break;
       case "DELETE":
         this.setState((prevState) => ({
-          clickedBasket: prevState.clickedBasket.filter((id) => id !== product.id),
+          clickedBasket: prevState.clickedBasket.filter(
+            (id) => id !== product.id
+          ),
         }));
         break;
       default:
@@ -67,7 +69,9 @@ class AppProvider extends Component {
         attributeName: productItem.attributes[index].id,
         name: productItem.name,
         gallery: productItem.gallery,
-        prices: [{ amount: productItem.prices[0].amount }],
+        prices: [
+          { amount: productItem.prices[0].amount, currency: { symbol: "$" } },
+        ],
         currency: productItem.prices[0].currency.symbol,
       },
     });
@@ -94,12 +98,22 @@ class AppProvider extends Component {
           : [...prevState.isClicked, attributes.id],
       };
     });
+
+    // Check if the clicked item is already active
+    /*  this.setState(prevState => {
+      const isActive = prevState.isClicked[attributes.id] === id;
+      return {
+        isClicked: {
+          ...prevState.isClicked,
+          [attributes.id]: isActive ? null : id
+        }
+      };
+    }); */
   };
 
   render() {
     const { basket, clickedBasket, selectedAttributes, isClicked } = this.state;
 
-    console.log("clickedBasket",clickedBasket);
     return (
       <AppContext.Provider
         value={{

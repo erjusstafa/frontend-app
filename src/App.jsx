@@ -47,18 +47,14 @@ class App extends Component {
                     <Route
                       exact
                       path="/"
-                      element={
-                        <Products
-                          selectedCategory={selectedCategory}
-                        />
-                      }
+                      element={<Products selectedCategory={selectedCategory} />}
                     />
                     <Route path="/details/:id" element={<Details />} />
                   </Routes>
                 )}
               </Suspense>
-              {isLoading && <Loader />}
-            </div>
+{/*               {isLoading && <Loader />}
+ */}            </div>
           </Router>
         </AppProvider>
       </ApolloProvider>

@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import "./style.css";
 import PropTypes from "prop-types";
 import Img from "../../UI/Img";
@@ -84,21 +84,24 @@ class QuickShop extends Component {
                         </div>
                         {Array.isArray(product.prices) &&
                           product.prices.map((price) => (
-                            <Price
-                              key={price.id}
-                              price={price}
-                              singleProductDetails={product}
-                            />
+                            <React.Fragment key={price.id}>
+                              <Price
+                                price={price}
+                                singleProductDetails={product}
+                              />
+                            </React.Fragment>
                           ))}
 
                         {Array.isArray(product?.attributes) &&
                           product.attributes.map((attribute) => (
-                            <Attribute
-                              singleProductDetails={product}
-                              key={attribute?.id}
-                              attribute={attribute}
-                              stock={product?.inStock}
-                            />
+                            <React.Fragment key={attribute?.id}>
+                              <Attribute
+                                singleProductDetails={product}
+                                attribute={attribute}
+                                stock={product?.inStock}
+                                OnClick={() =>console.log()}
+                              />
+                            </React.Fragment>
                           ))}
                       </div>
                       <div className="quickshop-button">

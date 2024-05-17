@@ -98,6 +98,7 @@ class ProductDetails extends Component {
             }
           };
 
+          console.log("✨", basket);
           return (
             <div className="details-container">
               {Array.isArray(data) &&
@@ -116,23 +117,25 @@ class ProductDetails extends Component {
                         <h2>{item.name}</h2>
                         {Array.isArray(item.attributes) &&
                           item.attributes.map((attribute) => (
-                            <Attribute
-                              item={item}
-                              isClicked={isClicked}
-                              key={attribute.id}
-                              attribute={attribute}
-                              OnClick={handleClickOption}
-                            />
+                            <React.Fragment key={attribute.id}>
+                              <Attribute
+                                item={item}
+                                isClicked={isClicked}
+                                attribute={attribute}
+                                OnClick={handleClickOption}
+                              />
+                            </React.Fragment>
                           ))}
                         <h2 className="details-wrapper-price">Price:</h2>
                         {Array.isArray(item.prices) &&
                           item.prices.map((price) => (
-                            <Price
-                              item={item}
-                              key={price.id}
-                              price={price}
-                              atribute={item.attributes}
-                            />
+                            <React.Fragment key={price.id}>
+                              <Price
+                                item={item}
+                                price={price}
+                                atribute={item.attributes}
+                              />
+                            </React.Fragment>
                           ))}
                         <Button
                           className={
@@ -142,7 +145,7 @@ class ProductDetails extends Component {
                             item.inStock
                               ? !toggleButton
                                 ? "add to cart".toUpperCase()
-                                : "remove to cart".toUpperCase()
+                                : "remove from cart".toUpperCase()
                               : "out of stock".toUpperCase()
                           }
                           height="auto"

@@ -55,6 +55,9 @@ div#\ \ \ \ \ attributes\ out {
 
 div#active\ \ \ attributes\ in {
   transform: scale(1.1);
+  background: var(--black);
+  color: var(--white);
+  border: 1px solid var(--green);
 }
 .details-wrapper-description .atr-size .atr-name {
   font-family: "Roboto Mono", monospace;
