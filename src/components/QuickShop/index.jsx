@@ -51,22 +51,18 @@ class QuickShop extends Component {
           };
 
           const getTotalPrice = () => {
-            if (basket[0]?.price) {
-              return basket.reduce((accumulator, currentValue) => {
-                return accumulator + currentValue.price;
-              }, 0);
-            } else {
-              return basket.reduce((accumulator, currentValue) => {
-                const productTotal = currentValue?.prices.reduce(
+            return basket.reduce((accumulator, currentValue) => {
+              const productTotal =
+                Array.isArray(currentValue?.prices) &&
+                currentValue?.prices.reduce(
                   (acc, curr) => acc + curr.amount,
                   0
                 );
-                return accumulator + productTotal;
-              }, 0);
-            }
+              return accumulator + productTotal;
+            }, 0);
           };
-
           const totalPrice = getTotalPrice();
+
           return (
             <div
               className={
@@ -79,67 +75,59 @@ class QuickShop extends Component {
                 </span>
                 {Object.entries(productQuantities)
                   .reverse()
-                  .map(([key, { product, quantity }]) => {
-                    return (
-                      <div key={product.id} className="item-added">
-                        <div className="wrapper-item">
-                          <div className="item-name-add">
-                            <p>{product.name ?? ""}</p>
-                          </div>
-                          {product?.price ? (
-                            <span className="item-price">
-                              <p>{product?.currency}</p>
-                              <p>{product?.price.toFixed(2)}</p>
-                            </span>
-                          ) : (
-                            Array.isArray(product.prices) &&
-                            product.prices.map((price) => (
-                              <Price
-                                key={price.id}
-                                price={price}
-                                singleProductDetails={product}
-                              />
-                            ))
-                          )}
-                          {Array.isArray(product?.attributes) &&
-                            product.attributes.map((attribute) => (
-                              <Attribute
-                                singleProductDetails={product}
-                                key={attribute?.id}
-                                attribute={attribute}
-                                stock={product?.inStock}
-                              />
-                            ))}
+                  .map(([key, { product, quantity }]) => (
+                    <div key={product.id} className="item-added">
+                      <div className="wrapper-item">
+                        <div className="item-name-add">
+                          <p>{product.name ?? ""}</p>
                         </div>
-                        <div className="quickshop-button">
-                          <Button
-                            className="add-button"
-                            icon={"+"}
-                            height="20px"
-                            width="20px"
-                            OnClick={() => handleClickButton("ADD", product)}
-                          />
-                          <span>{quantity}</span>
-                          <Button
-                            className="add-button"
-                            icon={"-"}
-                            height="20px"
-                            width="20px"
-                            OnClick={() => removeEachItem(product)}
-                          />
-                        </div>
-                        <div className="item-image">
-                          <Img
-                            className=""
-                            src={product.gallery.join(",") ?? ""}
-                            height="100%"
-                            width="100%"
-                            alt={product.name ?? ""}
-                          />{" "}
-                        </div>
+                        {Array.isArray(product.prices) &&
+                          product.prices.map((price) => (
+                            <Price
+                              key={price.id}
+                              price={price}
+                              singleProductDetails={product}
+                            />
+                          ))}
+
+                        {Array.isArray(product?.attributes) &&
+                          product.attributes.map((attribute) => (
+                            <Attribute
+                              singleProductDetails={product}
+                              key={attribute?.id}
+                              attribute={attribute}
+                              stock={product?.inStock}
+                            />
+                          ))}
                       </div>
-                    );
-                  })}
+                      <div className="quickshop-button">
+                        <Button
+                          className="add-button"
+                          icon={"+"}
+                          height="20px"
+                          width="20px"
+                          OnClick={() => handleClickButton("ADD", product)}
+                        />
+                        <span>{quantity}</span>
+                        <Button
+                          className="add-button"
+                          icon={"-"}
+                          height="20px"
+                          width="20px"
+                          OnClick={() => removeEachItem(product)}
+                        />
+                      </div>
+                      <div className="item-image">
+                        <Img
+                          className=""
+                          src={product.gallery.join(",") ?? ""}
+                          height="100%"
+                          width="100%"
+                          alt={product.name ?? ""}
+                        />{" "}
+                      </div>
+                    </div>
+                  ))}
 
                 <div className="total">
                   <span>Total</span>

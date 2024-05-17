@@ -66,7 +66,7 @@ class ProductDetails extends Component {
         {(context) => {
           const {
             basket,
-            clicked,
+            isClicked,
             selectedAttributes,
             addSingleAttribute,
             updateBasketState,
@@ -90,7 +90,7 @@ class ProductDetails extends Component {
               handleClickButton("TOGGLE", item);
               this.setState({ toggleButton: !toggleButton });
             } else {
-              if (clicked.length > 0) {
+              if (isClicked.length > 0) {
                 handleAddSelectedAttrToCart();
               } else {
                 alert("Please, click on an option!");
@@ -118,7 +118,7 @@ class ProductDetails extends Component {
                           item.attributes.map((attribute) => (
                             <Attribute
                               item={item}
-                              clicked={clicked}
+                              isClicked={isClicked}
                               key={attribute.id}
                               attribute={attribute}
                               OnClick={handleClickOption}

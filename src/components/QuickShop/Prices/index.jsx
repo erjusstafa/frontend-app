@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 class Price extends Component {
   render() {
     const { key, price } = this.props;
-    return (
+     return (
       <span key={key} className="item-price">
-        <p>{price.currency.symbol}</p>
+        <p>{price?.currency?.symbol}</p>
         <p>{price.amount.toFixed(2)}</p>
       </span>
     );

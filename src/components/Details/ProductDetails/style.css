@@ -45,9 +45,11 @@
   height: 36px;
   border: 1px solid #d3d2d5;
 }
-div#\ \ \ \ \ attributes\ out,
 div#\ attributes\ out {
   opacity: 0.5;
+  pointer-events: none;
+}
+div#\ \ \ \ \ attributes\ out {
   pointer-events: none;
 }
 

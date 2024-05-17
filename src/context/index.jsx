@@ -10,27 +10,23 @@ class AppProvider extends Component {
       basket: [],
       clickedBasket: [],
       selectedAttributes: [],
-      clicked: [],
+      isClicked: [],
     };
   }
- 
-  handleClickButton = (action, product, hoveredProduct) => {
 
-    const {basket, clickedBasket} = this.state;
-    const productIndex = basket.findIndex(
-      (item) => item.id === product.id
-    );
+  handleClickButton = (action, product, hoveredProduct) => {
+    const { basket, clickedBasket } = this.state;
+    const productIndex = basket.findIndex((item) => item.id === product.id);
     const clickedBasketIndex = clickedBasket.includes(product?.id);
-     switch (action) {
+    switch (action) {
       case "TOGGLE":
-        if (productIndex !== -1  ||  clickedBasketIndex) {
+        if (productIndex !== -1 || clickedBasketIndex) {
           this.removeFromCart(product.id);
         } else {
           this.setState((prevState) => ({
             basket: [...prevState.basket, product],
             clickedBasket: [...prevState.clickedBasket, hoveredProduct],
           }));
-
         }
         break;
       case "ADD":
@@ -74,7 +70,7 @@ class AppProvider extends Component {
         attributeName: productItem.attributes[index].id,
         name: productItem.name,
         gallery: productItem.gallery,
-        price: productItem.prices[0].amount,
+        prices: [{ amount: productItem.prices[0].amount }],
         currency: productItem.prices[0].currency.symbol,
       },
     });
@@ -85,27 +81,26 @@ class AppProvider extends Component {
   };
 
   emptyClicked = () => {
-    this.setState({ clicked: [] });
+    this.setState({ isClicked: [] });
   };
 
   isClickedAtribute = (attributes) => {
-    const { clicked } = this.state;
+    const { isClicked } = this.state;
     this.setState((prevState) => {
       const isActiveAtribute =
-        Array.isArray(clicked) && clicked.includes(attributes?.id);
+        Array.isArray(isClicked) && isClicked.includes(attributes?.id);
       return {
-        clicked: isActiveAtribute
-          ? prevState.clicked.filter((itemId) => {
+        isClicked: isActiveAtribute
+          ? prevState.isClicked.filter((itemId) => {
               itemId !== attributes.id;
             })
-          : [...prevState.clicked, attributes.id],
+          : [...prevState.isClicked, attributes.id],
       };
     });
   };
 
   render() {
-    const { basket, clickedBasket, selectedAttributes, clicked } =
-      this.state;
+    const { basket, clickedBasket, selectedAttributes, isClicked } = this.state;
 
     return (
       <AppContext.Provider
@@ -113,7 +108,7 @@ class AppProvider extends Component {
           basket: basket,
           clickedBasket: clickedBasket,
           selectedAttributes: selectedAttributes,
-          clicked: clicked,
+          isClicked: isClicked,
           handleClickButton: this.handleClickButton,
           removeFromCart: this.removeFromCart,
           updateBasketState: this.updateBasketState,
