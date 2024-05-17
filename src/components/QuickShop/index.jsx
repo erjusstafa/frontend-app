@@ -1,6 +1,6 @@
 import { Component } from "react";
 import "./style.css";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
 import Img from "../../UI/Img";
 import Button from "../../UI/Button";
 import Price from "./Prices";
@@ -87,7 +87,7 @@ class QuickShop extends Component {
                             <p>{product.name ?? ""}</p>
                           </div>
                           {product?.price ? (
-                            <span key={key} className="item-price">
+                            <span className="item-price">
                               <p>{product?.currency}</p>
                               <p>{product?.price.toFixed(2)}</p>
                             </span>

@@ -11,7 +11,6 @@ class Attribute extends Component {
       key,
       item,
       attribute,
-      stock,
       clicked,
       OnClick,
       singleProductDetails,
@@ -54,10 +53,10 @@ class Attribute extends Component {
                         : " attributes-items out "
                     }`}
                     id={`${
-                      Array.isArray(clicked) && clicked.includes(atr.id)
+                      Array.isArray(clicked) && clicked.includes(atr.id) && item.inStock
                         ? "active "
                         : "  "
-                    }  ${stock ? "attributes in" : " attributes out"}`}
+                    }  ${item.inStock ? "attributes in" : " attributes out"}`}
                     backgroundColor={atr.value}
                     icon={attribute.name !== "Color" && atr.value}
                     OnClick={
@@ -79,7 +78,6 @@ class Attribute extends Component {
 Attribute.propTypes = {
   singleProductDetails: PropTypes.any,
   key: PropTypes.string,
-  stock: PropTypes.bool,
   clicked: PropTypes.any,
   attribute: PropTypes.object,
   item: PropTypes.object,

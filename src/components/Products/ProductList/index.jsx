@@ -102,6 +102,7 @@ class ProductList extends Component {
   }
 }
 ProductList.propTypes = {
+  isLoading:PropTypes.bool,
   selectedCategory: PropTypes.string,
   productsData: PropTypes.array,
 };

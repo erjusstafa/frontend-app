@@ -6,12 +6,14 @@ import Attribute from "../../QuickShop/Attribute";
 import Price from "../../QuickShop/Prices";
 import Button from "../../../UI/Button";
 import { AppContext } from "../../../context";
+import Description from "./Description";
 
 class ProductDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showAll: false,
+      toggleButton: false,
     };
   }
 
@@ -56,7 +58,7 @@ class ProductDetails extends Component {
   };
 
   render() {
-    const { showAll } = this.state;
+    const { showAll, toggleButton } = this.state;
     const { data } = this.props;
 
     return (
@@ -82,11 +84,24 @@ class ProductDetails extends Component {
             updateBasketState([...basket, selectedAttributes]);
           };
 
+          const addProductToCart = (item) => {
+            //we check if an item has no attribute, we add it directly to the cart
+            if (item.attributes.length === 0) {
+              handleClickButton("TOGGLE", item);
+              this.setState({ toggleButton: !toggleButton });
+            } else {
+              if (clicked.length > 0) {
+                handleAddSelectedAttrToCart();
+              } else {
+                alert("Please, click on an option!");
+              }
+            }
+          };
+
           return (
             <div className="details-container">
               {Array.isArray(data) &&
                 data.map((item) => {
-                  const parsedDescription = this.parseHTML(item.description);
                   return (
                     <div key={item.id} className="details-wrapper">
                       <div className="details-wrapper-img">
@@ -106,7 +121,6 @@ class ProductDetails extends Component {
                               clicked={clicked}
                               key={attribute.id}
                               attribute={attribute}
-                              stock={item.inStock}
                               OnClick={handleClickOption}
                             />
                           ))}
@@ -126,39 +140,22 @@ class ProductDetails extends Component {
                           }
                           icon={
                             item.inStock
-                              ? "add to cart".toUpperCase()
+                              ? !toggleButton
+                                ? "add to cart".toUpperCase()
+                                : "remove to cart".toUpperCase()
                               : "out of stock".toUpperCase()
                           }
                           height="auto"
                           width="100%"
-                          OnClick={() => {
-                            //we check if an item has no attribute, we add it directly to the cart
-                            if (item.attributes.length === 0) {
-                              handleClickButton("TOGGLE", item);
-                            } else {
-                              if (clicked.length > 0) {
-                                handleAddSelectedAttrToCart();
-                              } else {
-                                alert("Please, click on an option!");
-                              }
-                            }
-                          }}
+                          OnClick={() => addProductToCart(item)}
                         />
-                        <div id="description">
-                          {showAll
-                            ? this.convertNodesToReact(parsedDescription)
-                            : this.convertNodesToReact(
-                                parsedDescription.slice(0, 1)
-                              )}
-                          {parsedDescription.length > 3 && (
-                            <span
-                              className="show-les-button"
-                              onClick={this.toggleShow}
-                            >
-                              {showAll ? "Show less" : "Show more"}
-                            </span>
-                          )}{" "}
-                        </div>
+
+                        <Description
+                          showAll={showAll}
+                          parsedDescription={this.parseHTML(item.description)}
+                          toggleShow={this.toggleShow}
+                          convertNodesToReact={this.convertNodesToReact}
+                        />
                       </div>
                     </div>
                   );

@@ -1,24 +1,36 @@
-import { Component } from "react";
-import Products from "./components/Products";
+import React, { Component, Suspense } from "react";
 import client from "./apollo";
 import { ApolloProvider } from "@apollo/client";
 import Header from "./components/Header";
-import Details from "./components/Details";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { AppProvider } from "./context";
+import Loader from "./components/Loader";
+
+// Lazy load the Products and Details components
+const Products = React.lazy(() => import("./components/Products"));
+const Details = React.lazy(() => import("./components/Details"));
 
 class App extends Component {
   state = {
     selectedCategory: "all", // Default to "all" category
+    isLoading: true, // Initially set loading to true
   };
 
   handleCategoryClick = (category) => {
-    this.setState({ selectedCategory: category });
+    this.setState({ isLoading: true });
+    setTimeout(() => {
+      this.setState({ selectedCategory: category, isLoading: false });
+    }, 1000);
   };
-
+  componentDidMount() {
+    // Simulate loading for 1.5 seconds, then set isLoading to false
+    setTimeout(() => {
+      this.setState({ isLoading: false });
+    }, 1000);
+  }
   render() {
-    const { selectedCategory } = this.state;
+    const { selectedCategory, isLoading } = this.state;
 
     return (
       <ApolloProvider client={client}>
@@ -29,19 +41,23 @@ class App extends Component {
                 link={"/"}
                 handleCategoryClick={this.handleCategoryClick}
               />
-              <Routes>
-                <Route
-                  exact
-                  path="/"
-                  element={
-                    <Products
-                      handleClickButton={this.handleClickButton}
-                      selectedCategory={selectedCategory}
+              <Suspense fallback={<Loader />}>
+                {!isLoading && (
+                  <Routes>
+                    <Route
+                      exact
+                      path="/"
+                      element={
+                        <Products
+                          selectedCategory={selectedCategory}
+                        />
+                      }
                     />
-                  }
-                />
-                <Route path="/details/:id" element={<Details />} />
-              </Routes>
+                    <Route path="/details/:id" element={<Details />} />
+                  </Routes>
+                )}
+              </Suspense>
+              {isLoading && <Loader />}
             </div>
           </Router>
         </AppProvider>
