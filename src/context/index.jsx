@@ -36,11 +36,8 @@ class AppProvider extends Component {
         break;
       case "DELETE":
         this.setState((prevState) => ({
-          basket: prevState.basket.filter((item) => item.id !== product.id),
+          clickedBasket: prevState.clickedBasket.filter((id) => id !== product.id),
         }));
-        break;
-
-      case "TEST":
         break;
       default:
         break;
@@ -102,6 +99,7 @@ class AppProvider extends Component {
   render() {
     const { basket, clickedBasket, selectedAttributes, isClicked } = this.state;
 
+    console.log("clickedBasket",clickedBasket);
     return (
       <AppContext.Provider
         value={{

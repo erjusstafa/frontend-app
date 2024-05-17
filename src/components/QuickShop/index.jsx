@@ -48,6 +48,7 @@ class QuickShop extends Component {
               }
               updateBasketState(updatedBasket);
             }
+            handleClickButton("DELETE", product);
           };
 
           const getTotalPrice = () => {
