@@ -67,3 +67,9 @@ export const GET_PRODUCTS_BY_ID= gql`
     }
   }
 `;
+
+export const INSERT_NEW_PRODUCT = gql`
+  mutation InsertNewProduct($productInput: ProductInput!) {
+    insertNewProduct(productInput: $productInput)
+  }
+`;

@@ -53,8 +53,8 @@ class App extends Component {
                   </Routes>
                 )}
               </Suspense>
-{/*               {isLoading && <Loader />}
- */}            </div>
+              {isLoading && <Loader />}
+            </div>
           </Router>
         </AppProvider>
       </ApolloProvider>

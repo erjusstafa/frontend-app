@@ -10,7 +10,7 @@ class AppProvider extends Component {
       basket: [],
       clickedBasket: [],
       selectedAttributes: [],
-      isClicked: [],
+      isClicked: {},
     };
   }
 
@@ -65,7 +65,7 @@ class AppProvider extends Component {
     this.setState({
       selectedAttributes: {
         ...this.state.selectedAttributes,
-        attributes: Object.values([attributes]),
+        attributes: [attributes] ,
         attributeName: productItem.attributes[index].id,
         name: productItem.name,
         gallery: productItem.gallery,
@@ -85,30 +85,17 @@ class AppProvider extends Component {
     this.setState({ isClicked: [] });
   };
 
-  isClickedAtribute = (attributes) => {
-    const { isClicked } = this.state;
-    this.setState((prevState) => {
-      const isActiveAtribute =
-        Array.isArray(isClicked) && isClicked.includes(attributes?.id);
-      return {
-        isClicked: isActiveAtribute
-          ? prevState.isClicked.filter((itemId) => {
-              itemId !== attributes.id;
-            })
-          : [...prevState.isClicked, attributes.id],
-      };
-    });
-
+  isClickedAtribute = (id, atributeId) => {
     // Check if the clicked item is already active
-    /*  this.setState(prevState => {
-      const isActive = prevState.isClicked[attributes.id] === id;
+    this.setState((prevState) => {
+      const isActive = prevState.isClicked[id] === atributeId;
       return {
         isClicked: {
           ...prevState.isClicked,
-          [attributes.id]: isActive ? null : id
-        }
+          [id]: isActive ? null : atributeId,
+        },
       };
-    }); */
+    });
   };
 
   render() {

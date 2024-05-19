@@ -6,8 +6,58 @@ import Button from "../../UI/Button";
 import Price from "./Prices";
 import Attribute from "./Attribute";
 import { AppContext } from "../../context";
+import { INSERT_NEW_PRODUCT } from "../../apollo/queries";
+import { Mutation } from "@apollo/client/react/components";
+import { ApolloError } from "@apollo/client";
 
 class QuickShop extends Component {
+  handleInsertProduct = (insertNewProduct) => {
+    const product = {
+      id: "Erjus",
+      name: "test",
+      inStock: true,
+      gallery: ["test.jpg"],
+      description: "Lorem ipsum...",
+      category: "clothes",
+      attributes: [
+        {
+          id: "test",
+          items: [
+            {
+              displayValue: "43",
+              value: "43",
+              id: "43",
+            },
+          ],
+          name: "test",
+          type: "text",
+        },
+      ],
+      prices: [
+        {
+          amount: 99.99,
+          currency: {
+            label: "EUR",
+            symbol: "€",
+          },
+        },
+      ],
+      brand: "dior",
+    };
+
+    insertNewProduct({ variables: { productInput: product } })
+      .then((response) => {
+        console.log("Product inserted:", response.data);
+      })
+      .catch((error) => {
+        if (error instanceof ApolloError) {
+          console.error("ApolloError inserting product:", error.message);
+        } else {
+          console.error("Error inserting product:", error);
+        }
+      });
+  };
+
   render() {
     const { openQuickShop } = this.props;
 
@@ -20,7 +70,6 @@ class QuickShop extends Component {
           basket.forEach((product) => {
             const key = JSON.stringify({
               id: product.id,
-              attributes: product.attributes,
             });
 
             if (Object.prototype.hasOwnProperty.call(productQuantities, key)) {
@@ -65,90 +114,111 @@ class QuickShop extends Component {
           const totalPrice = getTotalPrice();
 
           return (
-            <div
-              className={
-                openQuickShop ? "modal-container open" : "modal-container"
-              }
-            >
-              <div className="wraper-quickshop">
-                <span className="wraper-title">
-                  My Bag, &nbsp; <p>{basket.length} items</p>
-                </span>
-                {Object.entries(productQuantities)
-                  .reverse()
-                  .map(([key, { product, quantity }]) => (
-                    <div key={product.id} className="item-added">
-                      <div className="wrapper-item">
-                        <div className="item-name-add">
-                          <p>{product.name ?? ""}</p>
-                        </div>
-                        {Array.isArray(product.prices) &&
-                          product.prices.map((price) => (
-                            <React.Fragment key={price.id}>
-                              <Price
-                                price={price}
-                                singleProductDetails={product}
-                              />
-                            </React.Fragment>
-                          ))}
+            <Mutation mutation={INSERT_NEW_PRODUCT}>
+              {(insertNewProduct, { data, loading, error }) => (
+                <div
+                  className={
+                    openQuickShop ? "modal-container open" : "modal-container"
+                  }
+                >
+                  <div className="wraper-quickshop">
+                    <span className="wraper-title">
+                      My Bag, &nbsp; <p>{basket.length} items</p>
+                    </span>
+                    {Object.entries(productQuantities)
+                      .reverse()
+                      .map(([key, { product, quantity }]) => {
+                        return (
+                          <div key={product.id} className="item-added">
+                            <div className="wrapper-item">
+                              <div className="item-name-add">
+                                <p>{product.name ?? ""}</p>
+                              </div>
+                              {Array.isArray(product.prices) &&
+                                product.prices.map((price) => (
+                                  <React.Fragment key={price.id}>
+                                    <Price
+                                      price={price}
+                                      singleProductDetails={product}
+                                    />
+                                  </React.Fragment>
+                                ))}
 
-                        {Array.isArray(product?.attributes) &&
-                          product.attributes.map((attribute) => (
-                            <React.Fragment key={attribute?.id}>
-                              <Attribute
-                                singleProductDetails={product}
-                                attribute={attribute}
-                                stock={product?.inStock}
-                                OnClick={() =>console.log()}
+                              {Array.isArray(product?.attributes) &&
+                                product.attributes.map((attribute) => (
+                                  <React.Fragment key={attribute?.id}>
+                                    <Attribute
+                                      singleProductDetails={product}
+                                      attribute={attribute}
+                                      stock={product?.inStock}
+                                      OnClick={() => console.log()}
+                                    />
+                                  </React.Fragment>
+                                ))}
+                            </div>
+                            <div className="quickshop-button">
+                              <Button
+                                className="add-button"
+                                icon={"+"}
+                                height="20px"
+                                width="20px"
+                                OnClick={() =>
+                                  handleClickButton("ADD", product)
+                                }
                               />
-                            </React.Fragment>
-                          ))}
-                      </div>
-                      <div className="quickshop-button">
-                        <Button
-                          className="add-button"
-                          icon={"+"}
-                          height="20px"
-                          width="20px"
-                          OnClick={() => handleClickButton("ADD", product)}
-                        />
-                        <span>{quantity}</span>
-                        <Button
-                          className="add-button"
-                          icon={"-"}
-                          height="20px"
-                          width="20px"
-                          OnClick={() => removeEachItem(product)}
-                        />
-                      </div>
-                      <div className="item-image">
-                        <Img
-                          className=""
-                          src={product.gallery.join(",") ?? ""}
-                          height="100%"
-                          width="100%"
-                          alt={product.name ?? ""}
-                        />{" "}
-                      </div>
+                              <span>{quantity}</span>
+                              <Button
+                                className="add-button"
+                                icon={"-"}
+                                height="20px"
+                                width="20px"
+                                OnClick={() => removeEachItem(product)}
+                              />
+                            </div>
+                            <div className="item-image">
+                              <Img
+                                className=""
+                                src={product.gallery.join(",") ?? ""}
+                                height="100%"
+                                width="100%"
+                                alt={product.name ?? ""}
+                              />{" "}
+                            </div>
+                          </div>
+                        );
+                      })}
+
+                    <div className="total">
+                      <span>Total</span>
+                      <span>$ {totalPrice.toFixed(2)} </span>
                     </div>
-                  ))}
 
-                <div className="total">
-                  <span>Total</span>
-                  <span>$ {totalPrice.toFixed(2)} </span>
+                    <Button
+                      className={`${
+                        basket.length > 0
+                          ? "place-order"
+                          : "place-order-disabled"
+                      }`}
+                      icon={"place order".toUpperCase()}
+                      height="43px"
+                      width="auto"
+                      OnClick={() => this.handleInsertProduct(insertNewProduct)}
+                    />
+                    {loading && <p>Placing order...</p>}
+                    {error && (
+                      <p style={{ color: "red" }}>
+                        Error placing order: {error.message}
+                      </p>
+                    )}
+                    {data && (
+                      <p style={{ color: "green" }}>
+                        Order placed successfully!
+                      </p>
+                    )}
+                  </div>
                 </div>
-
-                <Button
-                  className={`${
-                    basket.length > 0 ? "place-order" : "place-order-disabled"
-                  }`}
-                  icon={"place order".toUpperCase()}
-                  height="43px"
-                  width="auto"
-                  OnClick={() => alert("place-order")}
-                />
-              </div>
-            </div>
+              )}
+            </Mutation>
           );
         }}
       </AppContext.Consumer>

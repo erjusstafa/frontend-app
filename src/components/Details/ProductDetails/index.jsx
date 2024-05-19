@@ -75,10 +75,10 @@ class ProductDetails extends Component {
           } = context;
 
           //get clicked data
-          const handleClickOption = (attributes, productItem, id, test) => {
-            addSingleAttribute(attributes, productItem, id, test); //call functio from context-API
-            isClickedAtribute(attributes);
-          };
+          const handleClickOption = (attributes, productItem, id) => {
+            addSingleAttribute(attributes, productItem, id); //call functio from context-API
+            isClickedAtribute(id, attributes.id);
+           };
 
           const handleAddSelectedAttrToCart = () => {
             updateBasketState([...basket, selectedAttributes]);
@@ -90,7 +90,7 @@ class ProductDetails extends Component {
               handleClickButton("TOGGLE", item);
               this.setState({ toggleButton: !toggleButton });
             } else {
-              if (isClicked.length > 0) {
+              if (Object.keys(isClicked).length > 0) {
                 handleAddSelectedAttrToCart();
               } else {
                 alert("Please, click on an option!");
@@ -98,7 +98,6 @@ class ProductDetails extends Component {
             }
           };
 
-          console.log("✨", basket);
           return (
             <div className="details-container">
               {Array.isArray(data) &&

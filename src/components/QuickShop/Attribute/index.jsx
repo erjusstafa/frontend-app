@@ -48,8 +48,8 @@ class Attribute extends Component {
                         : " attributes-items out "
                     }`}
                     id={`${
-                      Array.isArray(isClicked) &&
-                      isClicked.includes(atr.id) &&
+                      isClicked &&
+                      isClicked[attribute?.id] === atr?.id &&
                       item?.inStock
                         ? "active "
                         : "  "
