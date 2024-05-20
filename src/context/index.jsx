@@ -11,6 +11,7 @@ class AppProvider extends Component {
       clickedBasket: [],
       selectedAttributes: [],
       isClicked: {},
+      test : {}
     };
   }
 
@@ -60,21 +61,15 @@ class AppProvider extends Component {
     }
   };
 
-  addSingleAttribute = (attributes, productItem, id) => {
-    const index = productItem.attributes.findIndex((item) => item.id === id);
-    this.setState({
-      selectedAttributes: {
-        ...this.state.selectedAttributes,
-        attributes: [attributes] ,
-        attributeName: productItem.attributes[index].id,
-        name: productItem.name,
-        gallery: productItem.gallery,
-        prices: [
-          { amount: productItem.prices[0].amount, currency: { symbol: "$" } },
-        ],
-        currency: productItem.prices[0].currency.symbol,
-      },
-    });
+  addSingleAttribute = (attributes, attrName) => {
+    this.setState((prevState) => ({
+      selectedAttributes: [
+        ...prevState.selectedAttributes,
+        { attributes, attrName },
+      ],
+       
+        
+    }));
   };
 
   emptySelectedAttributes = () => {

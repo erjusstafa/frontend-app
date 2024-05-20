@@ -14,6 +14,7 @@ class ProductDetails extends Component {
     this.state = {
       showAll: false,
       toggleButton: false,
+      attrName: "",
     };
   }
 
@@ -58,7 +59,7 @@ class ProductDetails extends Component {
   };
 
   render() {
-    const { showAll, toggleButton } = this.state;
+    const { showAll, toggleButton, attrName } = this.state;
     const { data } = this.props;
 
     return (
@@ -75,13 +76,32 @@ class ProductDetails extends Component {
           } = context;
 
           //get clicked data
-          const handleClickOption = (attributes, productItem, id) => {
-            addSingleAttribute(attributes, productItem, id); //call functio from context-API
-            isClickedAtribute(id, attributes.id);
-           };
-
-          const handleAddSelectedAttrToCart = () => {
-            updateBasketState([...basket, selectedAttributes]);
+          const handleClickOption = (attributes, id) => {
+            this.setState({ attrName: id }, () => {
+              addSingleAttribute(attributes, id); // Use the updated value of id directly
+              isClickedAtribute(id, attributes.id);
+            });
+          };
+          
+          const handleAddSelectedAttrToCart = (item) => {
+            updateBasketState([
+              ...basket,
+              {
+                attributes: selectedAttributes ,
+                optionClicked: true,
+                name: item.name,
+                gallery: item.gallery,
+                prices: [
+                  {
+                    amount: item.prices[0].amount,
+                    currency: {
+                      symbol: item.prices[0].currency.symbol,
+                      label: item.prices[0].currency.label,
+                    },
+                  },
+                ],
+              },
+            ]);
           };
 
           const addProductToCart = (item) => {
@@ -91,12 +111,15 @@ class ProductDetails extends Component {
               this.setState({ toggleButton: !toggleButton });
             } else {
               if (Object.keys(isClicked).length > 0) {
-                handleAddSelectedAttrToCart();
+                handleAddSelectedAttrToCart(item);
               } else {
-                alert("Please, click on an option!");
+                handleClickButton("TOGGLE", item);
               }
             }
           };
+
+          console.log("basket", basket);          console.log("vvvv", attrName);
+
 
           return (
             <div className="details-container">
