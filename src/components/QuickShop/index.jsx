@@ -68,7 +68,7 @@ class QuickShop extends Component {
           const { basket, handleClickButton, updateBasketState } = context;
 
           let productQuantities = {};
-          basket.forEach((product) => {
+          [...basket].reverse().forEach((product) => {
             const key = JSON.stringify({
               id: product.id,
             });
@@ -127,8 +127,7 @@ class QuickShop extends Component {
                       My Bag, &nbsp; <p>{basket.length} items</p>
                     </span>
                     {Object.entries(productQuantities)
-                      .reverse()
-                      .map(([key, { product, quantity }]) => {
+                       .map(([key, { product, quantity }]) => {
                         return (
                           <div key={product.id} className="item-added">
                             <div className="wrapper-item">
@@ -136,8 +135,8 @@ class QuickShop extends Component {
                                 <p>{product.name ?? ""}</p>
                               </div>
                               {Array.isArray(product.prices) &&
-                                product.prices.map((price) => (
-                                  <React.Fragment key={price.id}>
+                                product.prices.map((price, index) => (
+                                  <React.Fragment key={index}>
                                     <Price
                                       price={price}
                                       singleProductDetails={product}
@@ -146,9 +145,9 @@ class QuickShop extends Component {
                                 ))}
 
                               {product.optionClicked
-                                ? product.attributes.map((opt) => {
+                                ? product.attributes.map((opt, index) => {
                                     return (
-                                      <React.Fragment key={opt.id}>
+                                      <React.Fragment key={index}>
                                         <SingleAttribute opt={opt} />
                                       </React.Fragment>
                                     );
@@ -195,7 +194,8 @@ class QuickShop extends Component {
                             </div>
                           </div>
                         );
-                      })}
+                      })                       
+                    }
 
                     <div className="total">
                       <span>Total</span>

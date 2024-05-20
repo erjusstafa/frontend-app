@@ -146,8 +146,8 @@ class ProductDetails extends Component {
                           ))}
                         <h2 className="details-wrapper-price">Price:</h2>
                         {Array.isArray(item.prices) &&
-                          item.prices.map((price) => (
-                            <React.Fragment key={price.id}>
+                          item.prices.map((price, index) => (
+                            <React.Fragment key={index}>
                               <Price
                                 item={item}
                                 price={price}

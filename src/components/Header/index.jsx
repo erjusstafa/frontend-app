@@ -16,8 +16,19 @@ class Header extends Component {
     this.state = {
       activeLink: "all", // Initially set active link to 'all'
       toggle: false,
-      openQuickShop: false,
+      openQuickShop: JSON.parse(localStorage.getItem("openQuickShop")) || false, // Load from localStorage
     };
+  }
+  componentDidMount() {
+    const { openQuickShop } = this.state;
+    localStorage.setItem("openQuickShop", JSON.stringify(openQuickShop)); // Save to localStorage
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { openQuickShop } = this.state;
+    if (prevState.openQuickShop !== openQuickShop) {
+      localStorage.setItem("openQuickShop", JSON.stringify(openQuickShop)); // Update localStorage
+    }
   }
 
   handleToggle = () => {
@@ -29,7 +40,9 @@ class Header extends Component {
   };
 
   handleOpenQuickShop = () => {
-    this.setState({ openQuickShop: !this.state.openQuickShop });
+    this.setState((prevState) => ({
+      openQuickShop: !prevState.openQuickShop,
+    }));
   };
 
   handleCloseQuickShop = () => {
@@ -66,10 +79,16 @@ class Header extends Component {
                     </div>
                     <ul className={`nav-items ${toggle && "open"}`}>
                       {/* Render category names */}
-                      {Object.values(categoriesData?.categories || []).map((category) => {
+                      {Object.values(categoriesData?.categories || []).map(
+                        (category) => {
                           return (
                             <Link
                               to={link}
+                              data-testid={
+                                activeLink === category.name
+                                  ? "active-category-link"
+                                  : "category-link"
+                              }
                               className={
                                 activeLink === category.name
                                   ? "li active"
@@ -85,7 +104,8 @@ class Header extends Component {
                               {category.name.toUpperCase()}
                             </Link>
                           );
-                        })}
+                        }
+                      )}
                     </ul>
                     <div className="nav-logo">
                       <Img

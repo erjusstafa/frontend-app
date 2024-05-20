@@ -14,6 +14,17 @@ class AppProvider extends Component {
     };
   }
 
+  componentDidMount() {
+    const storedState = localStorage.getItem("appState");
+    if (storedState) {
+      this.setState(JSON.parse(storedState));
+    }
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem("appState", JSON.stringify(this.state));
+  }
+
   handleClickButton = (action, product, hoveredProduct) => {
     const { basket, clickedBasket } = this.state;
     const productIndex = basket.findIndex((item) => item.id === product.id);
