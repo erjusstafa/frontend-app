@@ -11,7 +11,6 @@ class AppProvider extends Component {
       clickedBasket: [],
       selectedAttributes: [],
       isClicked: {},
-      test : {}
     };
   }
 
@@ -62,14 +61,27 @@ class AppProvider extends Component {
   };
 
   addSingleAttribute = (attributes, attrName) => {
-    this.setState((prevState) => ({
-      selectedAttributes: [
-        ...prevState.selectedAttributes,
-        { attributes, attrName },
-      ],
-       
-        
-    }));
+    this.setState((prevState) => {
+      // Check if the attribute already exists
+      const existingAttributeIndex = prevState.selectedAttributes.findIndex(
+        (attr) => attr.attrName === attrName
+      );
+
+      // If the attribute exists, remove it; otherwise, add a new one
+      if (existingAttributeIndex !== -1) {
+        const updatedAttributes = prevState.selectedAttributes.filter(
+          (_, index) => index !== existingAttributeIndex
+        );
+        return { selectedAttributes: updatedAttributes };
+      } else {
+        return {
+          selectedAttributes: [
+            ...prevState.selectedAttributes,
+            { attributes, attrName },
+          ],
+        };
+      }
+    });
   };
 
   emptySelectedAttributes = () => {
@@ -77,7 +89,7 @@ class AppProvider extends Component {
   };
 
   emptyClicked = () => {
-    this.setState({ isClicked: [] });
+    this.setState({ isClicked: {} });
   };
 
   isClickedAtribute = (id, atributeId) => {

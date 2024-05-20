@@ -9,6 +9,7 @@ import { AppContext } from "../../context";
 import { INSERT_NEW_PRODUCT } from "../../apollo/queries";
 import { Mutation } from "@apollo/client/react/components";
 import { ApolloError } from "@apollo/client";
+import SingleAttribute from "./SingleAttribute";
 
 class QuickShop extends Component {
   handleInsertProduct = (insertNewProduct) => {
@@ -128,8 +129,6 @@ class QuickShop extends Component {
                     {Object.entries(productQuantities)
                       .reverse()
                       .map(([key, { product, quantity }]) => {
-                        console.log("prod", product);
-
                         return (
                           <div key={product.id} className="item-added">
                             <div className="wrapper-item">
@@ -147,37 +146,11 @@ class QuickShop extends Component {
                                 ))}
 
                               {product.optionClicked
-                                ? product.attributes.map((it) => {
+                                ? product.attributes.map((opt) => {
                                     return (
-                                      <div
-                                        key={it.attributes.id}
-                                        className="atr-size"
-                                      >
-                                        <div className={it.attributes.name}>
-                                          <span className="atr-name">
-                                            {it.attrName}
-                                          </span>
-
-                                          <div className={`attributes-nested`}>
-                                            <Button
-                                              key={it.attributes.id}
-                                              className={`${
-                                                it.attrName === "Color"
-                                                  ? "attributes-items color-box"
-                                                  : " attributes-items out "
-                                              }`}
-                                              id={`${"attributes in"}`}
-                                              backgroundColor={
-                                                it.attributes.value
-                                              }
-                                              icon={
-                                                it.attrName !== "Color" &&
-                                                it.attributes.value
-                                              }
-                                            ></Button>
-                                          </div>
-                                        </div>
-                                      </div>
+                                      <React.Fragment key={opt.id}>
+                                        <SingleAttribute opt={opt} />
+                                      </React.Fragment>
                                     );
                                   })
                                 : Array.isArray(product?.attributes) &&

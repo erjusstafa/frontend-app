@@ -59,7 +59,7 @@ class ProductDetails extends Component {
   };
 
   render() {
-    const { showAll, toggleButton, attrName } = this.state;
+    const { showAll, toggleButton } = this.state;
     const { data } = this.props;
 
     return (
@@ -82,26 +82,25 @@ class ProductDetails extends Component {
               isClickedAtribute(id, attributes.id);
             });
           };
-          
+
           const handleAddSelectedAttrToCart = (item) => {
-            updateBasketState([
-              ...basket,
-              {
-                attributes: selectedAttributes ,
-                optionClicked: true,
-                name: item.name,
-                gallery: item.gallery,
-                prices: [
-                  {
-                    amount: item.prices[0].amount,
-                    currency: {
-                      symbol: item.prices[0].currency.symbol,
-                      label: item.prices[0].currency.label,
-                    },
+            const newItem = {
+              attributes: selectedAttributes,
+              id: Math.floor(Math.random() * 1000000), // Unique ID
+              optionClicked: true,
+              name: item.name,
+              gallery: item.gallery,
+              prices: [
+                {
+                  amount: item.prices[0].amount,
+                  currency: {
+                    symbol: item.prices[0].currency.symbol,
+                    label: item.prices[0].currency.label,
                   },
-                ],
-              },
-            ]);
+                },
+              ],
+            };
+            updateBasketState([...basket, newItem]);
           };
 
           const addProductToCart = (item) => {
@@ -117,9 +116,6 @@ class ProductDetails extends Component {
               }
             }
           };
-
-          console.log("basket", basket);          console.log("vvvv", attrName);
-
 
           return (
             <div className="details-container">
