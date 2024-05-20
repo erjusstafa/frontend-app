@@ -49,7 +49,7 @@ class Carousel extends Component {
                   ? "vertical-image active"
                   : "vertical-image"
               }
-               
+              data-testid='product-gallery'
               onClick={() => this.selectImage(index)}
             />
           ))}
@@ -81,7 +81,7 @@ class Carousel extends Component {
               className={`card-img ${
                 stock ? " in-stock" : " out-stock"
               } `}
-              /* className="main-image" */
+              data_testid={'product-gallery'}
             />
           </div>
         </div>

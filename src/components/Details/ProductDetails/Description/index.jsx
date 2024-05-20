@@ -6,7 +6,7 @@ class Description extends Component {
     const { showAll, convertNodesToReact, parsedDescription, toggleShow } =
       this.props;
     return (
-      <div id="description">
+      <div id="description" data-testid='product-description' >
         {showAll
           ? convertNodesToReact(parsedDescription)
           : convertNodesToReact(parsedDescription.slice(0, 1))}

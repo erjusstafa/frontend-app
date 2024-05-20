@@ -166,6 +166,7 @@ class QuickShop extends Component {
                             </div>
                             <div className="quickshop-button">
                               <Button
+                              data-testid='cart-item-amount-decrease'
                                 className="add-button"
                                 icon={"+"}
                                 height="20px"
@@ -174,8 +175,9 @@ class QuickShop extends Component {
                                   handleClickButton("ADD", product)
                                 }
                               />
-                              <span>{quantity}</span>
+                              <span data-testid='cart-item-amount'>{quantity}</span>
                               <Button
+                               data_testid='cart-item-amount-increase' 
                                 className="add-button"
                                 icon={"-"}
                                 height="20px"
@@ -197,7 +199,7 @@ class QuickShop extends Component {
                       })                       
                     }
 
-                    <div className="total">
+                    <div className="total" data-testid='cart-total'>
                       <span>Total</span>
                       <span>$ {totalPrice.toFixed(2)} </span>
                     </div>

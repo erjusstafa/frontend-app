@@ -10,7 +10,7 @@ class Attribute extends Component {
     const { item, attribute, isClicked, OnClick } = this.props;
 
     return (
-      <div className="atr-size">
+      <div className="atr-size" data-testid={`product-attribute-${attribute?.name}`}>
         <div className={attribute.name}>
           <span className="atr-name">{attribute?.name}</span>
 
@@ -19,7 +19,7 @@ class Attribute extends Component {
               return (
                 <Button
                   key={atr.id}
-                  className={`${
+                   className={`${
                     attribute.name === "Color"
                       ? "attributes-items color-box"
                       : " attributes-items out "

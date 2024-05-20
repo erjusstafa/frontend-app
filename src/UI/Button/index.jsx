@@ -6,8 +6,9 @@ class Button extends Component {
   render() {
     const {
       id,
+      data_testid,
       className,
-       icon,
+      icon,
       height,
       width,
       backgroundColor,
@@ -15,9 +16,10 @@ class Button extends Component {
     } = this.props;
     return (
       <div
-      id={id}
+        id={id}
+        data-testid={data_testid}
         className={className}
-         style={{
+        style={{
           height: height,
           width: width,
           backgroundColor: backgroundColor,
@@ -33,6 +35,7 @@ Button.propTypes = {
   id: PropTypes.string,
   icon: PropTypes.any,
   disabled: PropTypes.bool,
+  data_testid: PropTypes.string,
   className: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,

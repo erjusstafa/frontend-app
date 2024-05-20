@@ -55,6 +55,7 @@ class ProductList extends Component {
                       className="card-item"
                       onMouseOver={() => this.handleMouseOver(product.id)}
                       onMouseOut={this.handleMouseOut}
+                      data-testid={`product-${product.name}`}
                     >
                       <div
                         className={`wrapper-img-card ${
