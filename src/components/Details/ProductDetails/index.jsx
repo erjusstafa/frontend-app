@@ -99,6 +99,7 @@ class ProductDetails extends Component {
                   },
                 },
               ],
+              quantity: item.quantity,
             };
             updateBasketState([...basket, newItem]);
           };
@@ -135,7 +136,7 @@ class ProductDetails extends Component {
                         <h2>{item.name}</h2>
                         {Array.isArray(item.attributes) &&
                           item.attributes.map((attribute) => (
-                            <React.Fragment key={attribute.id} >
+                            <React.Fragment key={attribute.id}>
                               <Attribute
                                 item={item}
                                 isClicked={isClicked}
@@ -159,7 +160,7 @@ class ProductDetails extends Component {
                           className={
                             item.inStock ? "add-to-cart in" : "add-to-cart out"
                           }
-                          data_testid='add-to-cart'
+                          data_testid="add-to-cart"
                           icon={
                             item.inStock
                               ? !toggleButton

@@ -45,7 +45,6 @@ class App extends Component {
                 {!isLoading && (
                   <Routes>
                     <Route
-                      exact
                       path="/"
                       element={<Products selectedCategory={selectedCategory} />}
                     />

@@ -29,6 +29,8 @@ class AppProvider extends Component {
     const { basket, clickedBasket } = this.state;
     const productIndex = basket.findIndex((item) => item.id === product.id);
     const isProductInClickedBasket = clickedBasket.includes(product?.id);
+    const isItemInCart = basket.some((cartItem) => cartItem.id === product.id); // check if the item is already in the cart
+
     switch (action) {
       case "TOGGLE":
         if (productIndex !== -1 || isProductInClickedBasket) {
@@ -41,16 +43,35 @@ class AppProvider extends Component {
         }
         break;
       case "ADD":
-        this.setState({
-          basket: [...basket, product],
-        });
+        if (isItemInCart) {
+          this.setState({
+            basket: basket.map((cartItem) =>
+              cartItem.id === product.id
+                ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                : cartItem
+            ),
+          });
+        } else {
+          this.setState({
+            basket: [...basket, { ...product, quantity: 1 }],
+          });
+        }
         break;
       case "DELETE":
-        this.setState((prevState) => ({
-          clickedBasket: prevState.clickedBasket.filter(
-            (id) => id !== product.id
-          ),
-        }));
+        this.updateBasketState(
+          basket
+            .map((cartItem) => {
+              if (cartItem.id === product.id) {
+                if (cartItem.quantity === 1) {
+                  return null; // Return null to indicate that this item needs to be removed from cart
+                } else {
+                  return { ...cartItem, quantity: cartItem.quantity - 1 };
+                }
+              }
+              return cartItem;
+            })
+            .filter(Boolean)
+        );
         break;
       default:
         break;

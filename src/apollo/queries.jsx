@@ -33,15 +33,15 @@ export const GET_PRODUCTS_BY_CATEGORY = gql`
           symbol
         }
       }
+      brand
+      quantity
     }
   }
 `;
 
-
-
-export const GET_PRODUCTS_BY_ID= gql`
+export const GET_PRODUCTS_BY_ID = gql`
   query GetDetails($id: String!) {
-    products(id:$id, category: "") {
+    products(id: $id, category: "") {
       id
       name
       gallery
@@ -64,12 +64,38 @@ export const GET_PRODUCTS_BY_ID= gql`
           symbol
         }
       }
+      brand
+      quantity
     }
   }
 `;
-
 export const INSERT_NEW_PRODUCT = gql`
   mutation InsertNewProduct($productInput: ProductInput!) {
-    insertNewProduct(productInput: $productInput)
+    insertNewProduct(productInput: $productInput) {
+      id
+      name
+      gallery
+      inStock
+      description
+      category
+      attributes {
+        id
+        items {
+          displayValue
+          value
+          id
+        }
+        name
+        type
+      }
+      prices {
+        amount
+        currency {
+          symbol
+        }
+      }
+      brand
+      quantity
+    }
   }
 `;
