@@ -18,7 +18,7 @@ class QuickShop extends Component {
     return (
       <AppContext.Consumer>
         {(context) => {
-          const { basket, handleClickButton } = context;
+          const { basket, handleClickButton, updateBasketState } = context;
 
           function removeTypename(obj) {
             if (Array.isArray(obj)) {
@@ -44,6 +44,7 @@ class QuickShop extends Component {
               })
                 .then((response) => {
                   console.log("Product inserted:", response.data);
+                  updateBasketState([]); //Once order is placed, cart is emptied
                 })
                 .catch((error) => {
                   if (error.networkError) {
@@ -101,83 +102,90 @@ class QuickShop extends Component {
                     <span className="wraper-title">
                       My Bag, &nbsp; <p>{totalItem} items</p>
                     </span>
-                    {Object.values(basket).map((product) => {
-                      const uniqueKey = generateUniqueKey(
-                        product.id,
-                        product.attributes
-                      );
-                      return (
-                        <div key={uniqueKey} className="item-added">
-                          <div className="wrapper-item">
-                            <div className="item-name-add">
-                              <p>{product.name ?? ""}</p>
-                            </div>
-                            {Array.isArray(product.prices) &&
-                              product.prices.map((price, index) => (
-                                <React.Fragment key={index}>
-                                  <Price
-                                    price={price}
-                                    singleProductDetails={product}
-                                  />
-                                </React.Fragment>
-                              ))}
-
-                            {product.optionClicked
-                              ? Array.isArray(product?.attributes) &&
-                                product?.attributes.map((opt, index) => {
-                                  return (
-                                    <React.Fragment key={index}>
-                                      <SingleAttribute opt={opt} />
-                                    </React.Fragment>
-                                  );
-                                })
-                              : Array.isArray(product?.attributes) &&
-                                product.attributes.map((attribute) => (
-                                  <React.Fragment key={attribute?.id}>
-                                    <Attribute
+                    {Object.values(basket)
+                      .map((product) => {
+                        const uniqueKey = generateUniqueKey(
+                          product.id,
+                          product.attributes
+                        );
+                        return (
+                          <div key={uniqueKey} className="item-added">
+                            <div className="wrapper-item">
+                              <div className="item-name-add">
+                                <p>{product.name ?? ""}</p>
+                              </div>
+                              {Array.isArray(product.prices) &&
+                                product.prices.map((price, index) => (
+                                  <React.Fragment key={index}>
+                                    <Price
+                                      price={price}
                                       singleProductDetails={product}
-                                      attribute={attribute}
-                                      stock={product?.inStock}
-                                      OnClick={() => console.log(null)}
                                     />
                                   </React.Fragment>
                                 ))}
+
+                              {product.optionClicked
+                                ? Array.isArray(product?.attributes) &&
+                                  product?.attributes.map((opt, index) => {
+                                    return (
+                                      <React.Fragment key={index}>
+                                        <SingleAttribute opt={opt} />
+                                      </React.Fragment>
+                                    );
+                                  })
+                                : Array.isArray(product?.attributes) &&
+                                  product.attributes.map((attribute) => (
+                                    <React.Fragment key={attribute?.id}>
+                                      <Attribute
+                                        singleProductDetails={product}
+                                        attribute={attribute}
+                                        stock={product?.inStock}
+                                        OnClick={(event) => {
+                                          event.preventDefault();
+                                          event.stopPropagation();
+                                        }}
+                                      />
+                                    </React.Fragment>
+                                  ))}
+                            </div>
+                            <div className="quickshop-button">
+                              <Button
+                                data-testid="cart-item-amount-decrease"
+                                className="add-button"
+                                icon={"+"}
+                                height="20px"
+                                width="20px"
+                                OnClick={() =>
+                                  handleClickButton("ADD", product)
+                                }
+                              />
+                              <span data-testid="cart-item-amount">
+                                {product.quantity}
+                              </span>
+                              <Button
+                                data_testid="cart-item-amount-increase"
+                                className="add-button"
+                                icon={"-"}
+                                height="20px"
+                                width="20px"
+                                OnClick={() =>
+                                  handleClickButton("DELETE", product)
+                                }
+                              />
+                            </div>
+                            <div className="item-image">
+                              <Img
+                                className=""
+                                src={product?.gallery ?? ""}
+                                height="100%"
+                                width="100%"
+                                alt={product.name ?? ""}
+                              />{" "}
+                            </div>
                           </div>
-                          <div className="quickshop-button">
-                            <Button
-                              data-testid="cart-item-amount-decrease"
-                              className="add-button"
-                              icon={"+"}
-                              height="20px"
-                              width="20px"
-                              OnClick={() => handleClickButton("ADD", product)}
-                            />
-                            <span data-testid="cart-item-amount">
-                              {product.quantity}
-                            </span>
-                            <Button
-                              data_testid="cart-item-amount-increase"
-                              className="add-button"
-                              icon={"-"}
-                              height="20px"
-                              width="20px"
-                              OnClick={() =>
-                                handleClickButton("DELETE", product)
-                              }
-                            />
-                          </div>
-                          <div className="item-image">
-                            <Img
-                              className=""
-                              src={product?.gallery ?? ""}
-                              height="100%"
-                              width="100%"
-                              alt={product.name ?? ""}
-                            />{" "}
-                          </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })
+                      .reverse()}
 
                     <div className="total" data-testid="cart-total">
                       <span>Total</span>
@@ -190,21 +198,30 @@ class QuickShop extends Component {
                           ? "place-order"
                           : "place-order-disabled"
                       }`}
-                      icon={"place order".toUpperCase()}
+                      icon={
+                        loading
+                          ? "Placing order...".toUpperCase()
+                          : "place order".toUpperCase()
+                      }
                       height="43px"
                       width="auto"
                       OnClick={() => {
                         handleInsertProduct(insertNewProduct);
                       }}
                     />
-                    {loading && <p>Placing order...</p>}
                     {error && (
                       <p style={{ color: "red" }}>
                         Error placing order: {error.message}
                       </p>
                     )}
                     {data && (
-                      <p style={{ color: "green" }}>
+                      <p
+                        style={{
+                          color: "green",
+                          textAlign: "center",
+                          paddingTop: "20px",
+                        }}
+                      >
                         Order placed successfully!
                       </p>
                     )}

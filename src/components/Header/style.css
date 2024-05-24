@@ -88,7 +88,7 @@
     min-height: 200px;
     transform: translateX(-100%);
     transition: all 0.45s;
-    color:  var(--white);
+    color: var(--white);
     line-height: 40px;
     justify-content: center;
     height: auto;
@@ -106,7 +106,7 @@
   }
   .Navbar > .nav-items > .li.active {
     border-bottom: none;
-    color: #645ece;
+    color: var(--laila);
   }
 
   .Navbar > .nav-items.open {
@@ -125,7 +125,7 @@
     position: relative;
     width: 25px;
     height: 2px;
-    background: #645ece;
+    background: var(--laila);
     transition: all 0.45s ease-in-out;
   }
 

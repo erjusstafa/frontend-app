@@ -120,6 +120,7 @@ class Header extends Component {
                       className={` ${
                         toggle ? "nav-basket  open" : "nav-basket"
                       }`}
+                      data-testid="cart-btn"
                       onClick={handleOpenQuickShop}
                     >
                       <SlBasket className="basket-icon" />

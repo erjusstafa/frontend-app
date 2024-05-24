@@ -11,7 +11,7 @@
   transform: translate(-50%, -60%);
 }
 .loading:before {
-  color: #aaa;
+  color: var( --laila);
   content: attr(data-loading-text);
 }
 

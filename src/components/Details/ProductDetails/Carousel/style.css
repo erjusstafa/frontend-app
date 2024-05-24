@@ -59,6 +59,7 @@
   .carousel-container {
     flex-direction: column-reverse;
     align-items: center;
+  row-gap: 10px;
   }
 
   .carousel {

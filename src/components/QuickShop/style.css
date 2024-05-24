@@ -1,7 +1,7 @@
 .wraper-quickshop {
   max-height: 450px;
   width: 325px;
-  padding: 32px 16px 32px 16px;
+  padding: 32px 16px;
   background-color: var(--white);
   opacity: 1 !important;
   position: absolute;

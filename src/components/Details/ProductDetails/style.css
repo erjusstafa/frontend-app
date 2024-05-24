@@ -141,6 +141,7 @@ div#active\ \ \ attributes\ in {
     justify-content: center;
     width: calc(100% - 150px);
     margin: auto;
+    padding-bottom: 28px;
   }
 
   .attributes-nested {
