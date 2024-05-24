@@ -30,7 +30,9 @@ class AppProvider extends Component {
     const productIndex = basket.findIndex((item) => item.id === product.id);
     const isProductInClickedBasket = clickedBasket.includes(product?.id);
     const isItemInCart = basket.some((cartItem) => cartItem.id === product.id); // check if the item is already in the cart
-
+    const existingCartItemIndex = basket.findIndex((cartItem) =>
+      this.areAttributesEqual(cartItem.attributes, product.attributes)
+    );
     switch (action) {
       case "TOGGLE":
         if (productIndex !== -1 || isProductInClickedBasket) {
@@ -58,20 +60,28 @@ class AppProvider extends Component {
         }
         break;
       case "DELETE":
-        this.updateBasketState(
-          basket
-            .map((cartItem) => {
-              if (cartItem.id === product.id) {
-                if (cartItem.quantity === 1) {
-                  return null; // Return null to indicate that this item needs to be removed from cart
-                } else {
-                  return { ...cartItem, quantity: cartItem.quantity - 1 };
-                }
+        this.setState((prevState) => ({
+          clickedBasket: prevState.clickedBasket.filter(
+            (id) => id !== product.id
+          ),
+        }));
+        if (existingCartItemIndex !== -1) {
+          // If the item exists, decrease its quantity
+          const updatedBasket = basket
+            .map((cartItem, index) => {
+              if (index === existingCartItemIndex) {
+                const newQuantity = cartItem.quantity - 1;
+                return newQuantity > 0
+                  ? { ...cartItem, quantity: newQuantity }
+                  : null; // Return null if quantity is 0
               }
               return cartItem;
             })
-            .filter(Boolean)
-        );
+            .filter(Boolean); // Filter out null values
+          this.updateBasketState(updatedBasket);
+        } else {
+          console.log("Item with specified attributes not found in the cart");
+        }
         break;
       default:
         break;
@@ -92,13 +102,12 @@ class AppProvider extends Component {
     }
   };
 
-  addSingleAttribute = (attributes, attrName) => {
+  addSingleAttribute = (items, id) => {
     this.setState((prevState) => {
       // Check if the attribute already exists
       const existingAttributeIndex = prevState.selectedAttributes.findIndex(
-        (attr) => attr.attrName === attrName
+        (attr) => attr.id === id
       );
-
       // If the attribute exists, remove it; otherwise, add a new one
       if (existingAttributeIndex !== -1) {
         const updatedAttributes = prevState.selectedAttributes.filter(
@@ -109,7 +118,7 @@ class AppProvider extends Component {
         return {
           selectedAttributes: [
             ...prevState.selectedAttributes,
-            { attributes, attrName },
+            { items: [items], id },
           ],
         };
       }
@@ -136,7 +145,26 @@ class AppProvider extends Component {
       };
     });
   };
+  areAttributesEqual = (attr1, attr2) => {
+    if (attr1.length !== attr2.length) {
+      return false;
+    }
 
+    // Sort the attributes arrays to ensure consistent comparison
+    const sortedAttr1 = attr1.slice().sort();
+    const sortedAttr2 = attr2.slice().sort();
+
+    // Compare each attribute to check for equality
+    for (let i = 0; i < sortedAttr1.length; i++) {
+      const isEqual =
+        JSON.stringify(sortedAttr1[i]) === JSON.stringify(sortedAttr2[i]);
+      if (!isEqual) {
+        return false;
+      }
+    }
+
+    return true;
+  };
   render() {
     const { basket, clickedBasket, selectedAttributes, isClicked } = this.state;
 
@@ -154,6 +182,7 @@ class AppProvider extends Component {
           addSingleAttribute: this.addSingleAttribute,
           emptyClicked: this.emptyClicked,
           isClickedAtribute: this.isClickedAtribute,
+          areAttributesEqual: this.areAttributesEqual,
         }}
       >
         {this.props.children}

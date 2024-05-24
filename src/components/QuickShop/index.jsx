@@ -26,7 +26,7 @@ class QuickShop extends Component {
             } else if (obj !== null && typeof obj === "object") {
               const newObj = {};
               for (const prop in obj) {
-                if (prop !== "__typename") {
+                if (prop !== "__typename" && prop !== "optionClicked") {
                   newObj[prop] = removeTypename(obj[prop]);
                 }
               }
@@ -40,7 +40,7 @@ class QuickShop extends Component {
           const handleInsertProduct = (insertNewProduct) => {
             removeTypename(basket).forEach((item) => {
               insertNewProduct({
-                variables: { productInput:  item },
+                variables: { productInput: item },
               })
                 .then((response) => {
                   console.log("Product inserted:", response.data);
@@ -68,6 +68,10 @@ class QuickShop extends Component {
             });
           };
 
+          const generateUniqueKey = (id, attributes) => {
+            const attributesString = JSON.stringify(attributes);
+            return `${id}-${attributesString}`;
+          };
           const getTotalPrice = () => {
             return basket.reduce((total, item) => {
               const itemPrice = item.prices[0].amount * item.quantity;
@@ -98,8 +102,12 @@ class QuickShop extends Component {
                       My Bag, &nbsp; <p>{totalItem} items</p>
                     </span>
                     {Object.values(basket).map((product) => {
+                      const uniqueKey = generateUniqueKey(
+                        product.id,
+                        product.attributes
+                      );
                       return (
-                        <div key={product.id} className="item-added">
+                        <div key={uniqueKey} className="item-added">
                           <div className="wrapper-item">
                             <div className="item-name-add">
                               <p>{product.name ?? ""}</p>
@@ -115,7 +123,8 @@ class QuickShop extends Component {
                               ))}
 
                             {product.optionClicked
-                              ? product.attributes.map((opt, index) => {
+                              ? Array.isArray(product?.attributes) &&
+                                product?.attributes.map((opt, index) => {
                                   return (
                                     <React.Fragment key={index}>
                                       <SingleAttribute opt={opt} />

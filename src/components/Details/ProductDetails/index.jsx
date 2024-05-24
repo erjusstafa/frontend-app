@@ -14,7 +14,7 @@ class ProductDetails extends Component {
     this.state = {
       showAll: false,
       toggleButton: false,
-      attrName: "",
+      id: "",
     };
   }
 
@@ -73,35 +73,55 @@ class ProductDetails extends Component {
             updateBasketState,
             isClickedAtribute,
             handleClickButton,
+            areAttributesEqual,
           } = context;
 
           //get clicked data
           const handleClickOption = (attributes, id) => {
-            this.setState({ attrName: id }, () => {
+            this.setState({ id: id }, () => {
               addSingleAttribute(attributes, id); // Use the updated value of id directly
               isClickedAtribute(id, attributes.id);
             });
           };
 
           const handleAddSelectedAttrToCart = (item) => {
-            const newItem = {
-              attributes: selectedAttributes,
-              id: Math.floor(Math.random() * 1000000), // Unique ID
-              optionClicked: true,
-              name: item.name,
-              gallery: item.gallery,
-              prices: [
-                {
-                  amount: item.prices[0].amount,
-                  currency: {
-                    symbol: item.prices[0].currency.symbol,
-                    label: item.prices[0].currency.label,
+            // Check if a product with the same attributes already exists in the basket
+            const existingCartItemIndex = basket.findIndex((cartItem) =>
+              areAttributesEqual(cartItem.attributes, selectedAttributes)
+            );
+
+            if (existingCartItemIndex !== -1) {
+              // If the item exists, increase its quantity
+              const updatedBasket = basket.map((cartItem, index) =>
+                index === existingCartItemIndex
+                  ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                  : cartItem
+              );
+              updateBasketState(updatedBasket);
+            } else {
+              const newItem = {
+                attributes: selectedAttributes,
+                id: item.id,
+                name: item.name,
+                description: item.description,
+                optionClicked: true,
+                inStock: item.inStock,
+                gallery: item.gallery,
+                category: item.category,
+                prices: [
+                  {
+                    amount: item.prices[0].amount,
+                    currency: {
+                      symbol: item.prices[0].currency.symbol,
+                      label: item.prices[0].currency.label,
+                    },
                   },
-                },
-              ],
-              quantity: item.quantity,
-            };
-            updateBasketState([...basket, newItem]);
+                ],
+                brand: item.brand,
+                quantity: item.quantity,
+              };
+              updateBasketState([...basket, newItem]);
+            }
           };
 
           const addProductToCart = (item) => {
@@ -165,7 +185,9 @@ class ProductDetails extends Component {
                             item.inStock
                               ? !toggleButton
                                 ? "add to cart".toUpperCase()
-                                : "remove from cart".toUpperCase()
+                                : basket.length > 0
+                                ? "remove from cart".toUpperCase()
+                                : "add to cart".toUpperCase()
                               : "out of stock".toUpperCase()
                           }
                           height="auto"
