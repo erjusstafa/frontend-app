@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import "./style.css";
 class Img extends Component {
   render() {
-    const { className,data_testid,  key, src, alt, height, width, onClick } = this.props;
+    const { className, data_testid, key, src, alt, height, width, onClick } =
+      this.props;
 
     return (
       <img
