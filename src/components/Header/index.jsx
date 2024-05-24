@@ -143,7 +143,7 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  link: PropTypes.any,
+  link: PropTypes.string,
   openQuickShop: PropTypes.bool,
   handleCategoryClick: PropTypes.func,
 };

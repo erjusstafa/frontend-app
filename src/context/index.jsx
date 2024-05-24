@@ -24,7 +24,7 @@ class AppProvider extends Component {
   componentDidUpdate() {
     localStorage.setItem("appState", JSON.stringify(this.state));
   }
-
+  // Handle different actions related to cart and clicked items
   handleClickButton = (action, product, hoveredProduct) => {
     const { basket, clickedBasket } = this.state;
     const productIndex = basket.findIndex((item) => item.id === product.id);
@@ -95,6 +95,7 @@ class AppProvider extends Component {
     }));
   };
 
+  // Update the basket state and synchronize clickedBasket if necessary
   updateBasketState = (updBasket) => {
     this.setState({ basket: updBasket });
     if (this.state.basket.length === 1) {
@@ -102,6 +103,7 @@ class AppProvider extends Component {
     }
   };
 
+  // Add or remove a single attribute for a product
   addSingleAttribute = (items, id) => {
     this.setState((prevState) => {
       // Check if the attribute already exists
@@ -125,14 +127,17 @@ class AppProvider extends Component {
     });
   };
 
+  // Empty the selectedAttributes array
   emptySelectedAttributes = () => {
     this.setState({ selectedAttributes: [] });
   };
 
+  // Reset the isClicked object
   emptyClicked = () => {
     this.setState({ isClicked: {} });
   };
 
+  // Toggle the clicked attribute state
   isClickedAtribute = (id, atributeId) => {
     // Check if the clicked item is already active
     this.setState((prevState) => {
@@ -145,6 +150,8 @@ class AppProvider extends Component {
       };
     });
   };
+
+  // Compare two attribute arrays for equality
   areAttributesEqual = (attr1, attr2) => {
     if (attr1.length !== attr2.length) {
       return false;
