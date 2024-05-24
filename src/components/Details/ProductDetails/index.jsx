@@ -7,6 +7,9 @@ import Price from "../../QuickShop/Prices";
 import Button from "../../../UI/Button";
 import { AppContext } from "../../../context";
 import Description from "./Description";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 class ProductDetails extends Component {
   constructor(props) {
@@ -132,6 +135,7 @@ class ProductDetails extends Component {
             } else {
               if (Object.keys(isClicked).length > 0) {
                 handleAddSelectedAttrToCart(item);
+                toast.success("Product with specific attribute(s) has been added to cart");
               } else {
                 handleClickButton("TOGGLE", item);
               }

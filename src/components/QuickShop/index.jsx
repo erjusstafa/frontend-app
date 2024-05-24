@@ -10,7 +10,8 @@ import { Mutation } from "@apollo/client/react/components";
 import SingleAttribute from "./SingleAttribute";
 import { INSERT_NEW_PRODUCT } from "../../apollo/queries";
 import { ApolloError } from "@apollo/client";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 class QuickShop extends Component {
   render() {
     const { openQuickShop } = this.props;
@@ -45,6 +46,7 @@ class QuickShop extends Component {
                 .then((response) => {
                   console.log("Product inserted:", response.data);
                   updateBasketState([]); //Once order is placed, cart is emptied
+                  toast.success("Order placed successfully!");
                 })
                 .catch((error) => {
                   if (error.networkError) {
@@ -92,7 +94,7 @@ class QuickShop extends Component {
 
           return (
             <Mutation mutation={INSERT_NEW_PRODUCT}>
-              {(insertNewProduct, { data, loading, error }) => (
+              {(insertNewProduct, { loading, error }) => (
                 <div
                   className={
                     openQuickShop ? "modal-container open" : "modal-container"
@@ -212,17 +214,6 @@ class QuickShop extends Component {
                     {error && (
                       <p style={{ color: "red" }}>
                         Error placing order: {error.message}
-                      </p>
-                    )}
-                    {data && (
-                      <p
-                        style={{
-                          color: "green",
-                          textAlign: "center",
-                          paddingTop: "20px",
-                        }}
-                      >
-                        Order placed successfully!
                       </p>
                     )}
                   </div>

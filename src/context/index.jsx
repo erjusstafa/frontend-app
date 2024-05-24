@@ -1,5 +1,7 @@
 import { createContext, Component } from "react";
 import PropTypes from "prop-types";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AppContext = createContext();
 
@@ -37,11 +39,18 @@ class AppProvider extends Component {
       case "TOGGLE":
         if (productIndex !== -1 || isProductInClickedBasket) {
           this.removeFromCart(product.id);
+          toast.success("Product removed from cart", {
+            style: {
+              background: "var(--white)",
+              color: "var(--red)",
+            },
+          });
         } else {
           this.setState((prevState) => ({
             basket: [...prevState.basket, product],
             clickedBasket: [...prevState.clickedBasket, hoveredProduct],
           }));
+          toast.success("Product added to cart");
         }
         break;
       case "ADD":
@@ -57,6 +66,7 @@ class AppProvider extends Component {
           this.setState({
             basket: [...basket, { ...product, quantity: 1 }],
           });
+          toast.success("Product added to cart");
         }
         break;
       case "DELETE":
@@ -193,6 +203,7 @@ class AppProvider extends Component {
         }}
       >
         {this.props.children}
+        <ToastContainer position="bottom-left" />
       </AppContext.Provider>
     );
   }
