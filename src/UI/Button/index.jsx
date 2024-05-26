@@ -12,7 +12,7 @@ class Button extends Component {
       height,
       width,
       backgroundColor,
-      OnClick,
+      handleOnClick,
     } = this.props;
     return (
       <div
@@ -24,7 +24,7 @@ class Button extends Component {
           width: width,
           backgroundColor: backgroundColor,
         }}
-        onClick={OnClick}
+        onClick={handleOnClick}
       >
         {icon}
       </div>
@@ -40,6 +40,6 @@ Button.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
   backgroundColor: PropTypes.any,
-  OnClick: PropTypes.func,
+  handleOnClick: PropTypes.func,
 };
 export default Button;

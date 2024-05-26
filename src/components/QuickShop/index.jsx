@@ -142,7 +142,7 @@ class QuickShop extends Component {
                                         singleProductDetails={product}
                                         attribute={attribute}
                                         stock={product?.inStock}
-                                        OnClick={(event) => {
+                                        handleOnClick={(event) => {
                                           event.preventDefault();
                                           event.stopPropagation();
                                         }}
@@ -157,7 +157,7 @@ class QuickShop extends Component {
                                 icon={"+"}
                                 height="20px"
                                 width="20px"
-                                OnClick={() =>
+                                handleOnClick={() =>
                                   handleClickButton("ADD", product)
                                 }
                               />
@@ -170,7 +170,7 @@ class QuickShop extends Component {
                                 icon={"-"}
                                 height="20px"
                                 width="20px"
-                                OnClick={() =>
+                                handleOnClick={() =>
                                   handleClickButton("DELETE", product)
                                 }
                               />
@@ -207,7 +207,7 @@ class QuickShop extends Component {
                       }
                       height="43px"
                       width="auto"
-                      OnClick={() => {
+                      handleOnClick={() => {
                         handleInsertProduct(insertNewProduct);
                       }}
                     />

@@ -13,7 +13,7 @@ const Details = () => {
         if (error) return <p>Error... </p>;
         return (
           <ProductDetails
-            data={data.products}
+            data={data.productsById}
              
           />
         );

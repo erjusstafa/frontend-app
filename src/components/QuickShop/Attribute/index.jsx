@@ -7,7 +7,7 @@ class Attribute extends Component {
   }
 
   render() {
-    const { item, attribute, isClicked, OnClick } = this.props;
+    const { item, attribute, isClicked, handleOnClick } = this.props;
 
     return (
       <div className="atr-size" data-testid={`product-attribute-${attribute?.name}`}>
@@ -33,8 +33,8 @@ class Attribute extends Component {
                   }  ${item?.inStock ? "attributes in" : " attributes out"}`}
                   backgroundColor={atr.value}
                   icon={attribute.name !== "Color" && atr.value}
-                  OnClick={() => {
-                    OnClick(atr, attribute.id);
+                  handleOnClick={() => {
+                    handleOnClick(atr, attribute.id);
                   }}
                 ></Button>
               );
@@ -51,6 +51,6 @@ Attribute.propTypes = {
   isClicked: PropTypes.any,
   attribute: PropTypes.object,
   item: PropTypes.object,
-  OnClick: PropTypes.func,
+  handleOnClick: PropTypes.func,
 };
 export default Attribute;

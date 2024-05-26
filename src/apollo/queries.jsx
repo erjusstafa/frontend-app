@@ -9,8 +9,8 @@ export const GET_CATEGORIES = gql`
 `;
 
 export const GET_PRODUCTS_BY_CATEGORY = gql`
-  query GetProducts($category: String!) {
-    products(id: "", category: $category) {
+  query GetProductsByCategory($category: String!) {
+    productsByCategory(category: $category) {
       id
       name
       gallery
@@ -40,8 +40,8 @@ export const GET_PRODUCTS_BY_CATEGORY = gql`
 `;
 
 export const GET_PRODUCTS_BY_ID = gql`
-  query GetDetails($id: String!) {
-    products(id: $id, category: "") {
+  query GetProductsById($id: String!) {
+    productsById(id: $id) {
       id
       name
       gallery

@@ -35,6 +35,20 @@
   font-weight: 600;
   padding: 12px 0;
 }
+
+.search-button {
+  border: 1px solid var(--green);
+  background-color: var(--white);
+  color: var(--laila);
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 7px;
+}
+.search-button:hover {
+  background-color: var(--green);
+  color: var(--white);
+  transition: 0.2s ease-in-out;
+}
 @media (max-width: 700px) {
   .carousel-button {
     width: 22px !important;
@@ -43,6 +57,9 @@
   }
 
   .add-to-cart {
+    font-size: 12px;
+  }
+  .search-button {
     font-size: 12px;
   }
 }

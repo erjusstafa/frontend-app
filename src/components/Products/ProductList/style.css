@@ -12,6 +12,13 @@
   text-transform: capitalize;
 }
 
+.container-products .container-input-search {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 120px;
+  column-gap: 13px;
+}
+
 .wrapper-product {
   display: grid;
 
@@ -33,6 +40,10 @@
   cursor: pointer;
   text-decoration: none;
   color: var(--gray);
+}
+.wrapper-product .not-found {
+  font-family: "Raleway", sans-serif;
+  padding: 100px 0;
 }
 .wrapper-product .card-item:hover {
   box-shadow: 0px 4px 35px 0px #a8acb030;
@@ -86,5 +97,8 @@
 @media screen and (max-width: 700px) {
   .container-products > h2 {
     padding: 0 10px;
+  }
+  .container-products .container-input-search {
+    padding: 0 20px;
   }
 }

@@ -64,14 +64,14 @@ class Carousel extends Component {
               icon={"<"}
               height="31.7px"
               width="31.7px"
-              OnClick={this.prevImage}
+              handleOnClick={this.prevImage}
             />
             <Button
               className="carousel-button"
               icon={">"}
               height="31.7px"
               width="31.7px"
-              OnClick={this.nextImage}
+              handleOnClick={this.nextImage}
             />
            </div>  }
           <div className="carousel-images">

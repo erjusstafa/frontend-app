@@ -165,7 +165,7 @@ class ProductDetails extends Component {
                                 item={item}
                                 isClicked={isClicked}
                                 attribute={attribute}
-                                OnClick={handleClickOption}
+                                handleOnClick={handleClickOption}
                               />
                             </React.Fragment>
                           ))}
@@ -196,7 +196,7 @@ class ProductDetails extends Component {
                           }
                           height="auto"
                           width="100%"
-                          OnClick={() => addProductToCart(item)}
+                          handleOnClick={() => addProductToCart(item)}
                         />
 
                         <Description
