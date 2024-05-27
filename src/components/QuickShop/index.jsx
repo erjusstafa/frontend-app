@@ -46,7 +46,7 @@ class QuickShop extends Component {
                 .then((response) => {
                   console.log("Product inserted:", response.data);
                   updateBasketState([]); //Once order is placed, cart is emptied
-                  toast.success("Order placed successfully!");
+                  toast.success("Order placed successfully!", { autoClose: 1000 });
                 })
                 .catch((error) => {
                   if (error.networkError) {

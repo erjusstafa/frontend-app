@@ -9,7 +9,7 @@ class Input extends Component {
       <input
         type={type}
         value={value}
-         placeholder={placeholder}
+        placeholder={placeholder}
         className={className}
         onChange={handleOnChange}
       />
@@ -19,7 +19,7 @@ class Input extends Component {
 Input.propTypes = {
   type: PropTypes.string,
   value: PropTypes.string,
-   placeholder: PropTypes.string,
+  placeholder: PropTypes.string,
   className: PropTypes.string,
   handleOnChange: PropTypes.func,
 };

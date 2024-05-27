@@ -98,7 +98,7 @@ class ProductList extends Component {
                 <Input
                   type={"text"}
                   value={valueInput}
-                  placeholder={"Search..."}
+                  placeholder={"Search for a product..."}
                   className={"input-search"}
                   handleOnChange={this.handleOnChange}
                 />

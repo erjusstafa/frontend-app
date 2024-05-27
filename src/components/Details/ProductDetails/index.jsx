@@ -10,7 +10,6 @@ import Description from "./Description";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 class ProductDetails extends Component {
   constructor(props) {
     super(props);
@@ -135,7 +134,10 @@ class ProductDetails extends Component {
             } else {
               if (Object.keys(isClicked).length > 0) {
                 handleAddSelectedAttrToCart(item);
-                toast.success("Product with specific attribute(s) has been added to cart");
+                toast.success(
+                  "Product with specific attribute(s) has been added to cart",
+                  { autoClose: 1000 }
+                );
               } else {
                 handleClickButton("TOGGLE", item);
               }
@@ -198,7 +200,6 @@ class ProductDetails extends Component {
                           width="100%"
                           handleOnClick={() => addProductToCart(item)}
                         />
-
                         <Description
                           showAll={showAll}
                           parsedDescription={this.parseHTML(item.description)}

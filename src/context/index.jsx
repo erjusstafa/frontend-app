@@ -40,6 +40,7 @@ class AppProvider extends Component {
         if (productIndex !== -1 || isProductInClickedBasket) {
           this.removeFromCart(product.id);
           toast.success("Product removed from cart", {
+            autoClose: 1000,
             style: {
               background: "var(--white)",
               color: "var(--red)",
@@ -50,7 +51,7 @@ class AppProvider extends Component {
             basket: [...prevState.basket, product],
             clickedBasket: [...prevState.clickedBasket, hoveredProduct],
           }));
-          toast.success("Product added to cart");
+          toast.success("Product added to cart", { autoClose: 1000 });
         }
         break;
       case "ADD":
@@ -66,7 +67,7 @@ class AppProvider extends Component {
           this.setState({
             basket: [...basket, { ...product, quantity: 1 }],
           });
-          toast.success("Product added to cart");
+          toast.success("Product added to cart", { autoClose: 1000 });
         }
         break;
       case "DELETE":
