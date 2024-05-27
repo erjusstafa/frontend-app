@@ -25,7 +25,7 @@ class Products extends Component {
           return (
             <ProductList
               selectedCategory={selectedCategory}
-              productsData={productsData.products}
+              productsData={productsData.productsByCategory}
             />
           );
         }}

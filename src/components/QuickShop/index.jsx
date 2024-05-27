@@ -112,7 +112,10 @@ class QuickShop extends Component {
                         );
                         return (
                           <div key={uniqueKey} className="item-added">
-                            <div className="wrapper-item">
+                            <div
+                              className="wrapper-item"
+                              style={{ pointerEvents: "none" }}
+                            >
                               <div className="item-name-add">
                                 <p>{product.name ?? ""}</p>
                               </div>
@@ -142,10 +145,6 @@ class QuickShop extends Component {
                                         singleProductDetails={product}
                                         attribute={attribute}
                                         stock={product?.inStock}
-                                        handleOnClick={(event) => {
-                                          event.preventDefault();
-                                          event.stopPropagation();
-                                        }}
                                       />
                                     </React.Fragment>
                                   ))}

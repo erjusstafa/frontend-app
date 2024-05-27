@@ -17,8 +17,7 @@ class ProductList extends Component {
     };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleFilterClick = this.handleFilterClick.bind(this);
-
-    this.debouncedHandleOnChange = this.debounce(this.handleOnChange, 500);
+    this.debouncedHandleOnChange = this.debounce(this.handleOnChange, 1000);
   }
 
   componentDidUpdate(prevProps) {
@@ -68,7 +67,7 @@ class ProductList extends Component {
           valueInput: "",
         });
       }
-    }, 500);
+    }, 1000);
   }
   debounce(func, wait) {
     let timeout;
@@ -112,11 +111,11 @@ class ProductList extends Component {
 
               <div className="wrapper-product">
                 {isLoading ? (
-                  <h3 style={{ color: "var(--laila)" }}>Loading...</h3>
-                ) : filteredData.length === 0 ? (
+                  <div className="loader-line" />
+                ) : Array.isArray(filteredData) && filteredData.length === 0 ? (
                   <div className="not-found">Not products found!</div>
                 ) : (
-                  filteredData.map((product) => {
+                  filteredData&& filteredData.map((product) => {
                     const productIsAdded = clickedBasket.includes(product.id);
 
                     return (
